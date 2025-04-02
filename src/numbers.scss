@@ -1,0 +1,34 @@
+.dgt_number {
+  position: relative;
+  height: var(--numberHeight);
+  width: var(--numberWidth);
+}
+
+.dgt_numberLabel {
+  color: black;
+  position: absolute;
+  background-color: white;
+  top: -1%;
+  left: -1%;
+}
+
+.dgt_parityMarker {
+  font-size: 32px;
+  color: gray;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  width: var(--labelSize);
+
+  &-even {
+    top: var(--labelSize);
+  }
+
+  &-odd {
+    bottom: var(--labelSize);
+  }
+}

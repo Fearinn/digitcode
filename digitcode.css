@@ -1,72 +1,100 @@
-/**
- *------
- * BGA framework: Gregory Isabelli & Emmanuel Colin & BoardGameArena
- * DigitCode implementation : © Matheus Gomes matheusgomesforwork@gmail.com
- *
- * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
- * See http://en.boardgamearena.com/#!doc/Studio for more information.
- * -----
- *
- * digitcode.css
- *
- * DigitCode stylesheet
- *
- */
+.dgt_solutionSheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
 
-/*
-    This is the CSS stylesheet of your game User Interface.
-    
-    Styles defined on this file will be applied to the HTML elements you define in your
-    HTML template (digitcode_digitcode.tpl), and to HTML elements you create dynamically
-    (in digitcode.js).
-    
-    Usually, you are using CSS to:
-    
-    1°) define the overall layout of your game
-        (ex: place the board on the top left, place player's hand beside, place the deck on the right, ...).
+.dgt_columnLabels {
+  display: flex;
+  gap: var(--majorGap);
+}
+.dgt_columnLabels .dgt_columnGroup {
+  display: flex;
+}
 
-    2°) create your CSS-sprites:
-        All images of your games should be gathered into a small number of image files. Then, using
-        background-image and background-position CSS properties, you create HTML blocks that can 
-        display these images correctly (see example below).
-    
-    3°) ... anything else:
-        It is really easy to add and remove CSS classes dynamically from your Javascript with
-        dojo.addClass and dojo.removeClass. It is also easy to check if an element has a class
-        (dojo.hasClass) or to get all elements with a specific class (dojo.query). This is why,
-        very often, using CSS classes for the logic of your user interface allow you to do complex
-        thing easily.
-        
-        
-     Note: on the production platform, this file will be compressed and comments will be removed.
-           Consequently, don't hesitate to put as many comments as necessary.
-*/
+.dgt_rowLabels {
+  display: flex;
+  flex-direction: column;
+}
 
+.dgt_label {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  width: 40px;
+}
 
-/* Note: you must not use any @import directive */
+.dgt_columnLabel:nth-child(odd) {
+  background-color: white;
+  border: 2px solid lightgray;
+}
+.dgt_columnLabel:nth-child(even) {
+  background-color: lightgray;
+}
 
+.dgt_rowLabel:nth-child(even) {
+  background-color: white;
+  border: 2px solid lightgray;
+}
+.dgt_rowLabel:nth-child(odd) {
+  background-color: lightgray;
+}
 
-/********* You can start writing your CSS below this line: **********/
+.dgt_sequence {
+  display: flex;
+  gap: var(--majorGap);
+}
 
+.dgt_number {
+  position: relative;
+  height: var(--numberHeight);
+  width: var(--numberWidth);
+}
 
-/*
-    Example of CSS sprites (a black token and a white token, 20x20px each, embedded in the same "tokens.png" 40x20px image):
+.dgt_numberLabel {
+  color: black;
+  position: absolute;
+  background-color: white;
+  top: -1%;
+  left: -1%;
+}
 
-    .white_token {
-        background-image: url('img/tokens.png');
-        background-position: 0px 0px;
-    }
-    .black_token {
-        background-image: url('img/tokens.png');
-        background-position: -20px 0px;
-    }
-    .token {
-        width: 20px;
-        height: 20px;
-        background-repeat: none;
-    }
-*/
+.dgt_parityMarker {
+  font-size: 32px;
+  color: gray;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  width: var(--labelSize);
+}
+.dgt_parityMarker-even {
+  top: var(--labelSize);
+}
+.dgt_parityMarker-odd {
+  bottom: var(--labelSize);
+}
 
+:root {
+  --labelSize: 40px;
+  --numberHeight: calc(var(--labelSize) * 5);
+  --numberWidth: calc(var(--labelSize) * 3);
+  --majorGap: calc(var(--labelSize) * 2);
+}
 
-
-
+.dgt_gameArea {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+}
+.dgt_gameArea * {
+  box-sizing: border-box;
+}

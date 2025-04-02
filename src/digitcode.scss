@@ -1,0 +1,21 @@
+@use "solutionSheet";
+@use "numbers";
+
+:root {
+  --labelSize: 40px;
+  --numberHeight: calc(var(--labelSize) * 5);
+  --numberWidth: calc(var(--labelSize) * 3);
+  --majorGap: calc(var(--labelSize) * 2);
+}
+
+.dgt_gameArea {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+
+  * {
+    box-sizing: border-box;
+  }
+}
