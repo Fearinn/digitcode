@@ -2,10 +2,12 @@
 @use "numbers";
 
 :root {
-  --labelSize: 40px;
-  --numberHeight: calc(var(--labelSize) * 5);
-  --numberWidth: calc(var(--labelSize) * 3);
-  --majorGap: calc(var(--labelSize) * 2);
+  --blockSize: 40px;
+  --numberHeight: calc(var(--blockSize) * 5);
+  --numberWidth: calc(var(--blockSize) * 3);
+  --numbersGap: calc(var(--blockSize) * 2);
+  --spaceHeight: 90px;
+  --spaceWidth: 20px;
 }
 
 .dgt_gameArea {

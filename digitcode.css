@@ -7,7 +7,8 @@
 
 .dgt_columnLabels {
   display: flex;
-  gap: var(--majorGap);
+  gap: var(--numbersGap);
+  margin-left: var(--numbersGap);
 }
 .dgt_columnLabels .dgt_columnGroup {
   display: flex;
@@ -23,43 +24,81 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid gray;
   aspect-ratio: 1;
   width: 40px;
 }
 
 .dgt_columnLabel:nth-child(odd) {
   background-color: white;
-  border: 2px solid lightgray;
 }
 .dgt_columnLabel:nth-child(even) {
   background-color: lightgray;
+  border-width: 2px 0;
 }
 
-.dgt_rowLabel:nth-child(even) {
-  background-color: white;
-  border: 2px solid lightgray;
-}
 .dgt_rowLabel:nth-child(odd) {
   background-color: lightgray;
+}
+.dgt_rowLabel:nth-child(even) {
+  background-color: white;
+  border-width: 0 2px;
 }
 
 .dgt_sequence {
   display: flex;
-  gap: var(--majorGap);
 }
 
-.dgt_number {
-  position: relative;
-  height: var(--numberHeight);
-  width: var(--numberWidth);
+.dgt_numbers {
+  display: flex;
+  gap: var(--numbersGap);
+  margin-left: calc(var(--blockSize) * 0.9);
 }
 
 .dgt_numberLabel {
   color: black;
   position: absolute;
   background-color: white;
-  top: -1%;
-  left: -1%;
+  top: -10%;
+  left: -12%;
+}
+
+.dgt_number {
+  position: relative;
+  display: flex;
+  height: var(--numberHeight);
+  width: var(--numberWidth);
+}
+
+.dgt_column {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+.dgt_column-left {
+  left: calc(var(--spaceWidth) / 2);
+}
+.dgt_column-right {
+  right: calc(var(--spaceWidth) / 2);
+}
+.dgt_column-middle {
+  gap: 0;
+  justify-content: space-between;
+}
+
+.dgt_space {
+  background-color: white;
+  height: var(--spaceHeight);
+  width: var(--spaceWidth);
+  clip-path: polygon(50% 0%, 100% 10%, 100% 90%, 50% 100%, 0% 90%, 0% 10%);
+}
+.dgt_space:is([data-column=B], [data-column=E], [data-column=H]) {
+  background-color: lightgray;
+  height: var(--spaceWidth);
+  width: var(--spaceHeight);
+  clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
 }
 
 .dgt_parityMarker {
@@ -72,20 +111,22 @@
   align-items: center;
   justify-content: center;
   aspect-ratio: 1;
-  width: var(--labelSize);
+  width: var(--blockSize);
 }
 .dgt_parityMarker-even {
-  top: var(--labelSize);
+  top: var(--blockSize);
 }
 .dgt_parityMarker-odd {
-  bottom: var(--labelSize);
+  bottom: var(--blockSize);
 }
 
 :root {
-  --labelSize: 40px;
-  --numberHeight: calc(var(--labelSize) * 5);
-  --numberWidth: calc(var(--labelSize) * 3);
-  --majorGap: calc(var(--labelSize) * 2);
+  --blockSize: 40px;
+  --numberHeight: calc(var(--blockSize) * 5);
+  --numberWidth: calc(var(--blockSize) * 3);
+  --numbersGap: calc(var(--blockSize) * 2);
+  --spaceHeight: 90px;
+  --spaceWidth: 20px;
 }
 
 .dgt_gameArea {

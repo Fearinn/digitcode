@@ -1,56 +1,57 @@
 .dgt_solutionSheet {
-    position: relative;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.dgt_columnLabels {
+  display: flex;
+  gap: var(--numbersGap);
+  margin-left: var(--numbersGap);
+
+  .dgt_columnGroup {
     display: flex;
-    flex-direction: column;
-    gap: 32px;
   }
-  
-  .dgt_columnLabels {
-    display: flex;
-    gap: var(--majorGap);
-  
-    .dgt_columnGroup {
-      display: flex;
-    }
-  }
-  
-  .dgt_rowLabels {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .dgt_label {
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    aspect-ratio: 1;
-    width: 40px;
-  }
-  
-  .dgt_columnLabel {
-    &:nth-child(odd) {
-      background-color: white;
-      border: 2px solid lightgray;
-    }
-  
-    &:nth-child(even) {
-      background-color: lightgray;
-    }
-  }
-  
-  .dgt_rowLabel {
-    &:nth-child(even) {
-      background-color: white;
-      border: 2px solid lightgray;
-    }
-  
-    &:nth-child(odd) {
-      background-color: lightgray;
-    }
+}
+
+.dgt_rowLabels {
+  display: flex;
+  flex-direction: column;
+}
+
+.dgt_label {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid gray;
+  aspect-ratio: 1;
+  width: 40px;
+}
+
+.dgt_columnLabel {
+  &:nth-child(odd) {
+    background-color: white;
   }
 
+  &:nth-child(even) {
+    background-color: lightgray;
+    border-width: 2px 0;
+  }
+}
+
+.dgt_rowLabel {
+  &:nth-child(odd) {
+    background-color: lightgray;
+  }
+
+  &:nth-child(even) {
+    background-color: white;
+    border-width: 0 2px;
+  }
+}
+
 .dgt_sequence {
-    display: flex;
-    gap: var(--majorGap);
+  display: flex;
 }
