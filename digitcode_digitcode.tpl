@@ -126,6 +126,18 @@
               </div>
             </div>
           </div>
+          <div class="dgt_optionMarkers">
+            <div id="dgt_optionMarker-T0" class="dgt_optionMarker">0</div>
+            <div id="dgt_optionMarker-T1" class="dgt_optionMarker">1</div>
+            <div id="dgt_optionMarker-T2" class="dgt_optionMarker">2</div>
+            <div id="dgt_optionMarker-T3" class="dgt_optionMarker">3</div>
+            <div id="dgt_optionMarker-T4" class="dgt_optionMarker">4</div>
+            <div id="dgt_optionMarker-T5" class="dgt_optionMarker">5</div>
+            <div id="dgt_optionMarker-T6" class="dgt_optionMarker">6</div>
+            <div id="dgt_optionMarker-T7" class="dgt_optionMarker">7</div>
+            <div id="dgt_optionMarker-T8" class="dgt_optionMarker">8</div>
+            <div id="dgt_optionMarker-T9" class="dgt_optionMarker">9</div>
+          </div>
         </div>
         <div id="dgt_number-U" class="dgt_number">
           <div id="dgt_numberLabel-U" class="dgt_numberLabel dgt_label">U</div>
@@ -215,6 +227,18 @@
               </div>
             </div>
           </div>
+          <div class="dgt_optionMarkers">
+            <div id="dgt_optionMarker-U0" class="dgt_optionMarker">0</div>
+            <div id="dgt_optionMarker-U1" class="dgt_optionMarker">1</div>
+            <div id="dgt_optionMarker-U2" class="dgt_optionMarker">2</div>
+            <div id="dgt_optionMarker-U3" class="dgt_optionMarker">3</div>
+            <div id="dgt_optionMarker-U4" class="dgt_optionMarker">4</div>
+            <div id="dgt_optionMarker-U5" class="dgt_optionMarker">5</div>
+            <div id="dgt_optionMarker-U6" class="dgt_optionMarker">6</div>
+            <div id="dgt_optionMarker-U7" class="dgt_optionMarker">7</div>
+            <div id="dgt_optionMarker-U8" class="dgt_optionMarker">8</div>
+            <div id="dgt_optionMarker-U9" class="dgt_optionMarker">9</div>
+          </div>
         </div>
         <div id="dgt_number-V" class="dgt_number">
           <div id="dgt_numberLabel-V" class="dgt_numberLabel dgt_label">V</div>
@@ -303,6 +327,18 @@
                 ></div>
               </div>
             </div>
+          </div>
+          <div class="dgt_optionMarkers">
+            <div id="dgt_optionMarker-V0" class="dgt_optionMarker">0</div>
+            <div id="dgt_optionMarker-V1" class="dgt_optionMarker">1</div>
+            <div id="dgt_optionMarker-V2" class="dgt_optionMarker">2</div>
+            <div id="dgt_optionMarker-V3" class="dgt_optionMarker">3</div>
+            <div id="dgt_optionMarker-V4" class="dgt_optionMarker">4</div>
+            <div id="dgt_optionMarker-V5" class="dgt_optionMarker">5</div>
+            <div id="dgt_optionMarker-V6" class="dgt_optionMarker">6</div>
+            <div id="dgt_optionMarker-V7" class="dgt_optionMarker">7</div>
+            <div id="dgt_optionMarker-V8" class="dgt_optionMarker">8</div>
+            <div id="dgt_optionMarker-V9" class="dgt_optionMarker">9</div>
           </div>
         </div>
       </div>
@@ -426,6 +462,18 @@
               </div>
             </div>
           </div>
+          <div class="dgt_optionMarkers">
+            <div id="dgt_optionMarker-W0" class="dgt_optionMarker">0</div>
+            <div id="dgt_optionMarker-W1" class="dgt_optionMarker">1</div>
+            <div id="dgt_optionMarker-W2" class="dgt_optionMarker">2</div>
+            <div id="dgt_optionMarker-W3" class="dgt_optionMarker">3</div>
+            <div id="dgt_optionMarker-W4" class="dgt_optionMarker">4</div>
+            <div id="dgt_optionMarker-W5" class="dgt_optionMarker">5</div>
+            <div id="dgt_optionMarker-W6" class="dgt_optionMarker">6</div>
+            <div id="dgt_optionMarker-W7" class="dgt_optionMarker">7</div>
+            <div id="dgt_optionMarker-W8" class="dgt_optionMarker">8</div>
+            <div id="dgt_optionMarker-W9" class="dgt_optionMarker">9</div>
+          </div>
         </div>
         <div id="dgt_number-X" class="dgt_number">
           <div id="dgt_numberLabel-X" class="dgt_numberLabel dgt_label">X</div>
@@ -515,6 +563,18 @@
               </div>
             </div>
           </div>
+          <div class="dgt_optionMarkers">
+            <div id="dgt_optionMarker-X0" class="dgt_optionMarker">0</div>
+            <div id="dgt_optionMarker-X1" class="dgt_optionMarker">1</div>
+            <div id="dgt_optionMarker-X2" class="dgt_optionMarker">2</div>
+            <div id="dgt_optionMarker-X3" class="dgt_optionMarker">3</div>
+            <div id="dgt_optionMarker-X4" class="dgt_optionMarker">4</div>
+            <div id="dgt_optionMarker-X5" class="dgt_optionMarker">5</div>
+            <div id="dgt_optionMarker-X6" class="dgt_optionMarker">6</div>
+            <div id="dgt_optionMarker-X7" class="dgt_optionMarker">7</div>
+            <div id="dgt_optionMarker-X8" class="dgt_optionMarker">8</div>
+            <div id="dgt_optionMarker-X9" class="dgt_optionMarker">9</div>
+          </div>
         </div>
         <div id="dgt_number-Y" class="dgt_number">
           <div id="dgt_numberLabel-Y" class="dgt_numberLabel dgt_label">Y</div>
@@ -603,6 +663,18 @@
                 ></div>
               </div>
             </div>
+          </div>
+          <div class="dgt_optionMarkers">
+            <div id="dgt_optionMarker-Y0" class="dgt_optionMarker">0</div>
+            <div id="dgt_optionMarker-Y1" class="dgt_optionMarker">1</div>
+            <div id="dgt_optionMarker-Y2" class="dgt_optionMarker">2</div>
+            <div id="dgt_optionMarker-Y3" class="dgt_optionMarker">3</div>
+            <div id="dgt_optionMarker-Y4" class="dgt_optionMarker">4</div>
+            <div id="dgt_optionMarker-Y5" class="dgt_optionMarker">5</div>
+            <div id="dgt_optionMarker-Y6" class="dgt_optionMarker">6</div>
+            <div id="dgt_optionMarker-Y7" class="dgt_optionMarker">7</div>
+            <div id="dgt_optionMarker-Y8" class="dgt_optionMarker">8</div>
+            <div id="dgt_optionMarker-Y9" class="dgt_optionMarker">9</div>
           </div>
         </div>
       </div>

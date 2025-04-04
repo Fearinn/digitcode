@@ -15,13 +15,20 @@
 .dgt_number {
   position: relative;
   display: flex;
+  align-items: center;
   height: var(--numberHeight);
   width: var(--numberWidth);
+  overflow-x: visible;
+
+  &:last-child {
+    margin-right: var(--blockSize);
+  }
 }
 
 .dgt_spaces {
   position: relative;
   display: flex;
+  height: 100%;
 }
 
 .dgt_column {
@@ -40,7 +47,6 @@
   }
 
   &-middle {
-    gap: 0;
     justify-content: space-between;
   }
 }
@@ -104,4 +110,17 @@
     display: flex;
     gap: 4px;
   }
+}
+
+.dgt_optionMarkers {
+  display: grid;
+  align-content: space-between;
+  grid-template-columns: repeat(2, var(--spaceWidth));
+  height: calc(var(--spaceHeight) * 2);
+}
+
+.dgt_optionMarker {
+  font-size: 20px;
+  font-weight: bold;
+  color: gray;
 }
