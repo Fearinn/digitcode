@@ -12,7 +12,7 @@
 
 <div id="dgt_gameArea" class="dgt_gameArea">
   <div id="dgt_solutionSheet" class="dgt_solutionSheet whiteblock">
-    <div id="dgt_columnLabels" class="dgt_columnLabels">
+    <div class="dgt_columnLabels">
       <div class="dgt_columnGroup">
         <div id="dgt_columnLabel-A" class="dgt_columnLabel dgt_label">A</div>
         <div id="dgt_columnLabel-B" class="dgt_columnLabel dgt_label">B</div>
@@ -306,9 +306,31 @@
           </div>
         </div>
       </div>
+      <div class="dgt_rowMarkers dgt_rowLabels">
+        <div
+          id="dgt_rowMarker-J"
+          class="dgt_rowMarker dgt_rowLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_rowMarker-K"
+          class="dgt_rowMarker dgt_rowLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_rowMarker-L"
+          class="dgt_rowMarker dgt_rowLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_rowMarker-M"
+          class="dgt_rowMarker dgt_rowLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_rowMarker-N"
+          class="dgt_rowMarker dgt_rowLabel dgt_label"
+        ></div>
+      </div>
     </div>
     <div id="dgt_sequence-2" class="dgt_sequence">
-      <div id="dgt_sequence-2-rowLabels" class="dgt_rowLabels">
+      <div class="dgt_rowLabels">
         <div id="dgt_rowLabel-O" class="dgt_rowLabel dgt_label">O</div>
         <div id="dgt_rowLabel-P" class="dgt_rowLabel dgt_label">P</div>
         <div id="dgt_rowLabel-Q" class="dgt_rowLabel dgt_label">Q</div>
@@ -583,6 +605,72 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="dgt_rowMarkers dgt_rowLabels">
+        <div
+          id="dgt_rowMarker-O"
+          class="dgt_rowMarker dgt_rowLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_rowMarker-P"
+          class="dgt_rowMarker dgt_rowLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_rowMarker-Q"
+          class="dgt_rowMarker dgt_rowLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_rowMarker-R"
+          class="dgt_rowMarker dgt_rowLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_rowMarker-S"
+          class="dgt_rowMarker dgt_rowLabel dgt_label"
+        ></div>
+      </div>
+    </div>
+    <div class="dgt_columnMarkers dgt_columnLabels">
+      <div class="dgt_columnGroup">
+        <div
+          id="dgt_columnMarker-A"
+          class="dgt_columnMarker dgt_columnLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_columnMarker-B"
+          class="dgt_columnMarker dgt_columnLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_columnMarker-C"
+          class="dgt_columnMarker dgt_columnLabel dgt_label"
+        ></div>
+      </div>
+      <div class="dgt_columnGroup">
+        <div
+          id="dgt_columnMarker-D"
+          class="dgt_columnMarker dgt_columnLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_columnMarker-E"
+          class="dgt_columnMarker dgt_columnLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_columnMarker-F"
+          class="dgt_columnMarker dgt_columnLabel dgt_label"
+        ></div>
+      </div>
+      <div class="dgt_columnGroup">
+        <div
+          id="dgt_columnMarker-G"
+          class="dgt_columnMarker dgt_columnLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_columnMarker-H"
+          class="dgt_columnMarker dgt_columnLabel dgt_label"
+        ></div>
+        <div
+          id="dgt_columnMarker-I"
+          class="dgt_columnMarker dgt_columnLabel dgt_label"
+        ></div>
       </div>
     </div>
   </div>

@@ -52,7 +52,7 @@
 .dgt_numbers {
   display: flex;
   gap: var(--numbersGap);
-  margin-left: calc(var(--blockSize) * 0.9);
+  margin: 0 calc(var(--blockSize) * 0.9);
 }
 
 .dgt_numberLabel {
