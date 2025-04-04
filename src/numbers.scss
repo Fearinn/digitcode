@@ -19,6 +19,11 @@
   width: var(--numberWidth);
 }
 
+.dgt_spaces {
+  position: relative;
+  display: flex;
+}
+
 .dgt_column {
   position: relative;
   display: flex;
@@ -40,37 +45,63 @@
   }
 }
 
-.dgt_space {
-  background-color: white;
+.dgt_spaceContainer {
+  --spaceShape: polygon(50% 0%, 100% 10%, 100% 90%, 50% 100%, 0% 90%, 0% 10%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
   height: var(--spaceHeight);
   width: var(--spaceWidth);
-  clip-path: polygon(50% 0%, 100% 10%, 100% 90%, 50% 100%, 0% 90%, 0% 10%);
+  clip-path: var(--spaceShape);
 
-  &:is([data-column="B"], [data-column="E"], [data-column="H"]) {
-    background-color: lightgray;
+  &-middle {
+    --spaceShape: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+    
     height: var(--spaceWidth);
     width: var(--spaceHeight);
-    clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+    z-index: 1;
   }
 }
 
-.dgt_parityMarker {
-  font-size: 32px;
-  color: gray;
+.dgt_space {
+  background-color: white;
+  height: 98%;
+  width: 90%;
+  clip-path: var(--spaceShape); 
+
+  &-middle {
+    height: 90%;
+    width: 98%;
+    background-color: lightgray;
+    clip-path: var(--spaceShape);
+  }
+}
+
+.dgt_parityMarkers {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  top: var(--blockSize);
+  left: calc(50% + var(--spaceWidth) / 4);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--blockSize) * 1.75);
+}
+
+.dgt_parityMarker {
+  font-size: 8px;
+  color: gray;
   display: flex;
   align-items: center;
   justify-content: center;
   aspect-ratio: 1;
-  width: var(--blockSize);
+  width: var(--spaceWidth);
 
   &-even {
-    top: var(--blockSize);
-  }
-
-  &-odd {
-    bottom: var(--blockSize);
+    display: flex;
+    gap: 4px;
   }
 }
