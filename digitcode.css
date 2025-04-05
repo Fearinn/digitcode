@@ -5,10 +5,38 @@
   gap: 32px;
 }
 
+.dgt_comparisonMarkers {
+  font-size: 20px;
+  position: absolute;
+  left: calc(var(--numbersGap) * 2.25);
+  display: flex;
+  gap: calc(var(--numbersGap) * 1.75);
+  z-index: -1;
+}
+.dgt_comparisonMarkers-left {
+  top: calc(var(--numbersGap) * 1.5);
+}
+.dgt_comparisonMarkers-middle {
+  top: calc(var(--numbersGap) * 2.5);
+  left: calc(var(--numbersGap) + var(--spaceWidth) / 2);
+  gap: calc(var(--numbersGap) * 1.25 + var(--blockSize) * 1.4);
+}
+.dgt_comparisonMarkers-middle .dgt_comparisonMarker {
+  transform: rotate(90deg);
+}
+.dgt_comparisonMarkers-right {
+  bottom: calc(var(--numbersGap) * 1.5);
+}
+
+.dgt_comparisonMarker {
+  height: 24px;
+  width: 35px;
+}
+
 .dgt_columnLabels {
   display: flex;
   gap: var(--numbersGap);
-  margin-left: var(--numbersGap);
+  margin-left: calc(var(--blockSize) * 2);
 }
 .dgt_columnLabels .dgt_columnGroup {
   display: flex;
@@ -43,6 +71,13 @@
 .dgt_rowLabel:nth-child(even) {
   background-color: white;
   border-width: 0 2px;
+}
+
+.dgt_sequences {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  width: 100%;
 }
 
 .dgt_sequence {
@@ -171,7 +206,7 @@
   --blockSize: 40px;
   --numberHeight: calc(var(--blockSize) * 5);
   --numberWidth: calc(var(--blockSize) * 3);
-  --numbersGap: calc(var(--blockSize) * 2);
+  --numbersGap: calc(var(--blockSize) * 3);
   --spaceHeight: 90px;
   --spaceWidth: 20px;
 }
