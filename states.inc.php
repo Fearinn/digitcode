@@ -28,15 +28,14 @@ $machinestates = [
 
     2 => [
         "name" => "playerTurn",
-        "description" => clienttranslate(''),
-        "descriptionmyturn" => clienttranslate(''),
+        "description" => clienttranslate('${player_name} must ask a question or submit an answer'),
+        "descriptionmyturn" => clienttranslate('${you} must ask a question or submit an answer'),
         "type" => "activeplayer",
         "args" => "argPlayerTurn",
         "possibleactions" => [
-            "actPlayCard", 
-            "actPass",
+            "actAskQuestion", 
         ],
-        "transitions" => ["playCard" => 3, "pass" => 3]
+        "transitions" => ["nextPlayer" => 3],
     ],
 
     3 => [

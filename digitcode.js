@@ -10,75 +10,63 @@
  * digitcode.js
  *
  * DigitCode user interface script
- * 
+ *
  * In this file, you are describing the logic of your user interface, in Javascript language.
  *
  */
 
 define([
-    "dojo","dojo/_base/declare",
-    "ebg/core/gamegui",
-    "ebg/counter"
-],
-function (dojo, declare) {
-    return declare("bgagame.digitcode", ebg.core.gamegui, {
-        constructor: function(){
-            console.log('digitcode constructor');
-        },
-        
-        setup: function( gamedatas )
-        {
-            this.setupNotifications();
+  "dojo",
+  "dojo/_base/declare",
+  "ebg/core/gamegui",
+  "ebg/counter",
+], function (dojo, declare) {
+  return declare("bgagame.digitcode", ebg.core.gamegui, {
+    constructor: function () {
+      console.log("digitcode constructor");
+    },
 
-            console.log( "Ending game setup" );
-        },
-       
+    setup: function (gamedatas) {
+      this.setupNotifications();
 
-        ///////////////////////////////////////////////////
-        //// Game & client states
-        
-        onEnteringState: function( stateName, args )
-        {
-            console.log( 'Entering state: '+stateName, args );
-            
-            switch( stateName )
-            {
-            
-            case 'dummy':
-                break;
-            }
-        },
+      console.log(gamedatas.code, "CODE");
+      console.log("Ending game setup");
+    },
 
-        onLeavingState: function( stateName )
-        {
-            console.log( 'Leaving state: '+stateName );
-            
-            switch( stateName )
-            {
-            
-            case 'dummy':
-                break;
-            }               
-        }, 
-     
-        onUpdateActionButtons: function( stateName, args )
-        {
-           
-        },        
+    ///////////////////////////////////////////////////
+    //// Game & client states
 
-        ///////////////////////////////////////////////////
-        //// Utility methods
+    onEnteringState: function (stateName, args) {
+      console.log("Entering state: " + stateName, args);
 
+      switch (stateName) {
+        case "dummy":
+          break;
+      }
+    },
 
-        ///////////////////////////////////////////////////
-        //// Player's action
-        
-        ///////////////////////////////////////////////////
-        //// Reaction to cometD notifications
+    onLeavingState: function (stateName) {
+      console.log("Leaving state: " + stateName);
 
-        setupNotifications: function()
-        {
-            console.log( 'notifications subscriptions setup' );
-        },  
-   });             
+      switch (stateName) {
+        case "dummy":
+          break;
+      }
+    },
+
+    onUpdateActionButtons: function (stateName, args) {},
+
+    ///////////////////////////////////////////////////
+    //// Utility methods
+
+    ///////////////////////////////////////////////////
+    //// Player's action
+
+    ///////////////////////////////////////////////////
+    //// Reaction to cometD notifications
+
+    setupNotifications: function () {
+      console.log("notifications subscriptions setup");
+    },
+  });
 });

@@ -1,4 +1,5 @@
 <?php
+
 /**
  *------
  * BGA framework: Gregory Isabelli & Emmanuel Colin & BoardGameArena
@@ -14,6 +15,7 @@
  *
  * In this PHP file, you are going to defines the rules of the game.
  */
+
 declare(strict_types=1);
 
 namespace Bga\Games\DigitCode;
@@ -36,7 +38,7 @@ class Game extends \Table
     {
         parent::__construct();
 
-        $this->initGameStateLabels([]);        
+        $this->initGameStateLabels([]);
     }
 
     /**
@@ -44,25 +46,7 @@ class Game extends \Table
      *
      * @throws BgaUserException
      */
-    public function actPlayCard(int $card_id): void
-    {
-
-    }
-
-    public function actPass(): void
-    {
-        // Retrieve the active player ID.
-        $player_id = (int)$this->getActivePlayerId();
-
-        // Notify all players about the choice to pass.
-        $this->notify->all("pass", clienttranslate('${player_name} passes'), [
-            "player_id" => $player_id,
-            "player_name" => $this->getActivePlayerName(), // remove this line if you uncomment notification decorator
-        ]);
-
-        // at the end of the action, move to the next state
-        $this->gamestate->nextState("pass");
-    }
+    public function actAskQuestion(): void {}
 
     /**
      * Game state arguments, example content.
@@ -75,6 +59,55 @@ class Game extends \Table
     public function argPlayerTurn(): array
     {
         return [];
+    }
+
+    // Utility functions
+
+    public function setupCode(array &$digitsCounts, int $position = 1): void
+    {
+        if ($position > 6) {
+            return;
+        }
+
+        $digits = range(0, 9);
+        $index = bga_rand(0, 9);
+        $digit = $digits[$index];
+
+        $equalAdjacent = false;
+
+        foreach ([1, 3] as $shift) {
+            if (($position === 1 || $position === 4) && $shift === 1) {
+                continue;
+            }
+
+            $adjacent_position = $position - $shift;
+
+            if ($this->globals->get("digit-{$adjacent_position}") === $digit) {
+                $equalAdjacent = true;
+                break;
+            }
+        }
+
+        $limitReached = $digitsCounts[$digit] === 2;
+
+        if (!$equalAdjacent && !$limitReached) {
+            $this->globals->set("digit-$position", $digit);
+            $digitsCounts[$digit]++;
+            $position++;
+        }
+
+        $this->setupCode($digitsCounts, $position);
+    }
+
+    public function getCode(): int
+    {
+        $code = "";
+        for ($position = 1; $position <= 6; $position++) {
+            $digit = $this->globals->get("digit-{$position}");
+            $code .= "$digit";
+        }
+
+        return (int) $code;
     }
 
     /**
@@ -99,8 +132,7 @@ class Game extends \Table
      *
      * The action method of state `nextPlayer` is called everytime the current game state is set to `nextPlayer`.
      */
-    public function stNextPlayer(): void {
-    }
+    public function stNextPlayer(): void {}
 
     /**
      * Migrate database.
@@ -115,21 +147,21 @@ class Game extends \Table
      */
     public function upgradeTableDb($from_version)
     {
-//       if ($from_version <= 1404301345)
-//       {
-//            // ! important ! Use DBPREFIX_<table_name> for all tables
-//
-//            $sql = "ALTER TABLE DBPREFIX_xxxxxxx ....";
-//            $this->applyDbUpgradeToAllDB( $sql );
-//       }
-//
-//       if ($from_version <= 1405061421)
-//       {
-//            // ! important ! Use DBPREFIX_<table_name> for all tables
-//
-//            $sql = "CREATE TABLE DBPREFIX_xxxxxxx ....";
-//            $this->applyDbUpgradeToAllDB( $sql );
-//       }
+        //       if ($from_version <= 1404301345)
+        //       {
+        //            // ! important ! Use DBPREFIX_<table_name> for all tables
+        //
+        //            $sql = "ALTER TABLE DBPREFIX_xxxxxxx ....";
+        //            $this->applyDbUpgradeToAllDB( $sql );
+        //       }
+        //
+        //       if ($from_version <= 1405061421)
+        //       {
+        //            // ! important ! Use DBPREFIX_<table_name> for all tables
+        //
+        //            $sql = "CREATE TABLE DBPREFIX_xxxxxxx ....";
+        //            $this->applyDbUpgradeToAllDB( $sql );
+        //       }
     }
 
     /*
@@ -144,14 +176,12 @@ class Game extends \Table
     {
         $result = [];
 
-        // WARNING: We must only return information visible by the current player.
         $current_player_id = (int) $this->getCurrentPlayerId();
 
-        // Get information about players.
-        // NOTE: you can retrieve some extra field you added for "player" table in `dbmodel.sql` if you need it.
         $result["players"] = $this->getCollectionFromDb(
             "SELECT `player_id` `id`, `player_score` `score` FROM `player`"
         );
+        // $result["code"] = $this->getCode();
 
         return $result;
     }
@@ -197,6 +227,9 @@ class Game extends \Table
         $this->reattributeColorsBasedOnPreferences($players, $gameinfos["player_colors"]);
         $this->reloadPlayersBasicInfos();
 
+        $digitsCounts = array_fill(0, 10, 0);
+        $this->setupCode($digitsCounts);
+
         $this->activeNextPlayer();
     }
 
@@ -222,11 +255,10 @@ class Game extends \Table
 
         if ($state["type"] === "activeplayer") {
             switch ($state_name) {
-                default:
-                {
-                    $this->gamestate->nextState("zombiePass");
-                    break;
-                }
+                default: {
+                        $this->gamestate->nextState("zombiePass");
+                        break;
+                    }
             }
 
             return;
@@ -238,5 +270,11 @@ class Game extends \Table
         }
 
         throw new \feException("Zombie mode not supported at this game state: \"{$state_name}\".");
+    }
+
+    public function debug_setupCode()
+    {
+        $digitsCounts = array_fill(0, 10, 0);
+        $this->setupCode($digitsCounts);
     }
 }
