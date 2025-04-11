@@ -173,6 +173,7 @@
   align-items: center;
   justify-content: center;
   gap: calc(var(--blockSize) * 1.75);
+  z-index: 1;
 }
 
 .dgt_parityMarker {
@@ -206,7 +207,7 @@
   border-color: green;
   border-style: dashed;
   cursor: pointer;
-  z-index: 1;
+  z-index: 2;
 }
 .dgt_label-unselectable {
   cursor: not-allowed;
@@ -216,7 +217,11 @@
   border-width: 2px !important;
   border-style: solid;
   transform: scale(1.1);
-  z-index: 2;
+  z-index: 3;
+}
+
+.dgt_parityMarker-confirmed {
+  color: red;
 }
 
 :root {

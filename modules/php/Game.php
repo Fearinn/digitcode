@@ -21,6 +21,7 @@ declare(strict_types=1);
 namespace Bga\Games\DigitCode;
 
 const COUNTABLE_LINES = "countableLines";
+const CHECKABLE_DIGITS = "checkableDigits";
 
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
 
@@ -106,17 +107,72 @@ class Game extends \Table
         );
         $this->globals->set(COUNTABLE_LINES, array_values($countableLines));
 
+        $type_label = $lineType === "row" ? clienttranslate("row") : clienttranslate("column");
+
         $this->notify->all(
-            "countSpaces",
-            clienttranslate('${player_name} finds ${spaceCount} space(s) in ${line_type} ${line_id}'),
+            "message",
+            clienttranslate('${player_name} counts the spaces of ${type_label} ${line_id}'),
             [
                 "player_id" => $player_id,
                 "player_name" => $this->getPlayerNameById($player_id),
+                "type_label" => $type_label,
+                "i18n" => ["type_label"],
+            ]
+        );
+
+        $this->notify->all(
+            "countSpaces",
+            clienttranslate('${type_label} ${line_id} has ${spaceCount} filled spaces'),
+            [
                 "spaceCount" => $spaceCount,
                 "lineType" => $lineType,
-                "line_type" => $lineType === "row" ? clienttranslate("row") : clienttranslate("column"),
+                "type_label" => $type_label,
                 "line_id" => $line_id,
-                "i18n" => ["line_type"],
+                "i18n" => ["type_label"],
+            ]
+        );
+
+        $this->gamestate->nextState("nextPlayer");
+    }
+
+    public function actCheckParity(?int $clientVersion, string $digit_id): void
+    {
+        $player_id = (int) $this->getActivePlayerId();
+
+        $digit = (array) $this->DIGITS[$digit_id];
+        $digitPosition = (int) $digit["position"];
+        $algarism = $this->globals->get("digit-{$digitPosition}");
+
+        $checkableDigits = $this->globals->get(CHECKABLE_DIGITS);
+
+        $checkableDigits = array_filter(
+            $checkableDigits,
+            function ($l_digit_id) use ($digit_id) {
+                return $l_digit_id !== $digit_id;
+            }
+        );
+        $this->globals->set(CHECKABLE_DIGITS, array_values($checkableDigits));
+
+        $parity = $algarism % 2 === 0 ? "even" : "odd";
+
+        $this->notify->all(
+            "message",
+            clienttranslate('${player_name} asks the parity of ${digit_id}'),
+            [
+                "player_id" => $player_id,
+                "player_name" => $this->getPlayerNameById($player_id),
+                "digit_id" => $digit_id,
+            ]
+        );
+
+        $this->notify->all(
+            "checkParity",
+            clienttranslate('${digit_id} is ${parity_label}'),
+            [
+                "parity_label" => $parity === "even" ? _("even") : _("odd"),
+                "parity" => $parity,
+                "digit_id" => $digit_id,
+                "i18n" => ["parity_label"],
             ]
         );
 
@@ -134,8 +190,11 @@ class Game extends \Table
     public function arg_playerTurn(): array
     {
         $countableLines = $this->globals->get(COUNTABLE_LINES);
+        $checkableDigits = $this->globals->get(CHECKABLE_DIGITS);
+
         return [
             "countableLines" => $countableLines,
+            "checkableDigits" => $checkableDigits,
         ];
     }
 
@@ -318,6 +377,7 @@ class Game extends \Table
         $this->setupCode($algarismsCounts);
 
         $this->globals->set(COUNTABLE_LINES, array_keys($this->LINES));
+        $this->globals->set(CHECKABLE_DIGITS, array_keys($this->DIGITS));
 
         $this->activeNextPlayer();
     }

@@ -43,8 +43,20 @@ define([
         return;
       }
 
+      if (stateName.includes("client_")) {
+        this.statusBar.addActionButton(
+          _("Cancel"),
+          () => {
+            this.restoreServerGameState();
+          },
+          {
+            color: "alert",
+          }
+        );
+      }
+
       if (stateName === "playerTurn") {
-        const { countableLines } = args.args;
+        const { countableLines, checkableDigits } = args.args;
 
         this.statusBar.addActionButton(_("Count spaces"), () => {
           this.setClientState("client_countSpaces", {
@@ -56,22 +68,31 @@ define([
             },
           });
         });
+
+        this.statusBar.addActionButton(_("Check parity"), () => {
+          this.setClientState("client_checkParity", {
+            descriptionmyturn: _(
+              "${you} must pick a digit to check its parity"
+            ),
+            client_args: {
+              checkableDigits,
+            },
+          });
+        });
       }
 
       if (stateName === "client_countSpaces") {
         const { countableLines } = args.client_args;
-        console.log(countableLines, "TEST");
+        this.setSelectableLabels(countableLines, (label_id) => {
+          this.actCountSpaces(label_id);
+        });
+      }
 
-        this.statusBar.addActionButton(
-          _("Cancel"),
-          () => {
-            this.restoreServerGameState();
-          },
-          {
-            color: "alert",
-          }
-        );
-        this.setSelectableLabels(countableLines);
+      if (stateName === "client_checkParity") {
+        const { checkableDigits } = args.client_args;
+        this.setSelectableLabels(checkableDigits, (label_id) => {
+          this.actCheckParity(label_id);
+        });
       }
     },
 
@@ -79,7 +100,11 @@ define([
       console.log("Leaving state: " + stateName);
 
       if (stateName === "client_countSpaces") {
-        this.setSelectableLabels(null, true);
+        this.setSelectableLabels(null, null, true);
+      }
+
+      if (stateName === "client_checkParity") {
+        this.setSelectableLabels(null, null, true);
       }
     },
 
@@ -106,7 +131,11 @@ define([
       );
     },
 
-    setSelectableLabels: function (selectableLabels, unselect = false) {
+    setSelectableLabels: function (
+      selectableLabels,
+      callback,
+      unselect = false
+    ) {
       const labelElements = document.querySelectorAll("[data-label]");
       labelElements.forEach((labelElement) => {
         if (unselect) {
@@ -128,7 +157,7 @@ define([
             const isSelected = !labelElement.classList.contains(selectedClass);
 
             this.toggleConfirmationBtn(isSelected, () => {
-              this.actCountSpaces(label_id);
+              callback(label_id);
             });
 
             if (isSelected) {
@@ -159,6 +188,10 @@ define([
       this.performAction("actCountSpaces", { line_id });
     },
 
+    actCheckParity: function (digit_id) {
+      this.performAction("actCheckParity", { digit_id });
+    },
+
     ///////////////////////////////////////////////////
     //// Reaction to cometD notifications
 
@@ -171,6 +204,13 @@ define([
       const { line_id, lineType, spaceCount } = args;
       document.getElementById(`dgt_${lineType}Marker-${line_id}`).textContent =
         spaceCount;
+    },
+
+    notif_checkParity: function (args) {
+      const { parity, digit_id } = args;
+      document
+        .getElementById(`dgt_parityMarker-${parity}-${digit_id}`)
+        .classList.add("dgt_parityMarker-confirmed");
     },
   });
 });

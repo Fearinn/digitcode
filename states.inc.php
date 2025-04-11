@@ -32,7 +32,7 @@ $machinestates = [
         "args" => "arg_playerTurn",
         "possibleactions" => [
             "actCountSpaces",
-            "actAskParity",
+            "actCheckParity",
             "actCompareDigits",
             "actCheckSpace",
         ],

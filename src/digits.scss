@@ -95,6 +95,7 @@
   align-items: center;
   justify-content: center;
   gap: calc(var(--blockSize) * 1.75);
+  z-index: 1;
 }
 
 .dgt_parityMarker {
