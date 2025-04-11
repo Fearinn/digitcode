@@ -15,9 +15,7 @@
  */
 
 $machinestates = [
-
     // The initial state. Please do not modify.
-
     1 => array(
         "name" => "gameSetup",
         "description" => "",
@@ -33,16 +31,19 @@ $machinestates = [
         "type" => "activeplayer",
         "args" => "argPlayerTurn",
         "possibleactions" => [
-            "actAskQuestion", 
+            "actCountSpaces",
+            "actAskParity",
+            "actCompareDigits",
+            "actCheckSpace",
         ],
         "transitions" => ["nextPlayer" => 3],
     ],
 
     3 => [
-        "name" => "nextPlayer",
+        "name" => "betweenPlayers",
         "description" => '',
         "type" => "game",
-        "action" => "stNextPlayer",
+        "action" => "st_betweenPlayers",
         "updateGameProgression" => true,
         "transitions" => ["endGame" => 99, "nextPlayer" => 2]
     ],
@@ -56,7 +57,6 @@ $machinestates = [
         "action" => "stGameEnd",
         "args" => "argGameEnd"
     ],
-
 ];
 
 

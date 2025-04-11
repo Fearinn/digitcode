@@ -1,10 +1,10 @@
-.dgt_numbers {
+.dgt_digits {
   display: flex;
-  gap: var(--numbersGap);
+  gap: var(--digitsGap);
   margin: 0 calc(var(--blockSize) * 0.9);
 }
 
-.dgt_numberLabel {
+.dgt_digitLabel {
   color: black;
   position: absolute;
   background-color: white;
@@ -12,12 +12,12 @@
   left: -12%;
 }
 
-.dgt_number {
+.dgt_digit {
   position: relative;
   display: flex;
   align-items: center;
-  height: var(--numberHeight);
-  width: var(--numberWidth);
+  height: var(--digitHeight);
+  width: var(--digitWidth);
   overflow-x: visible;
 
   &:last-child {

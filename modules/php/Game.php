@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 namespace Bga\Games\DigitCode;
 
+use Bga\GameFramework\Actions\Types\StringParam;
+
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
 
 class Game extends \Table
@@ -34,9 +36,15 @@ class Game extends \Table
      * NOTE: afterward, you can get/set the global variables with `getGameStateValue`, `setGameStateInitialValue` or
      * `setGameStateValue` functions.
      */
+    public array $DIGITS;
+    public array $LINES;
+    public array $ALGARISMS;
+
     public function __construct()
     {
         parent::__construct();
+
+        require "material.inc.php";
 
         $this->initGameStateLabels([]);
     }
@@ -46,7 +54,60 @@ class Game extends \Table
      *
      * @throws BgaUserException
      */
-    public function actAskQuestion(): void {}
+
+    public function actCountSpaces(?int $clientVersion, string $line_id)
+    {
+        $player_id = $this->getActivePlayerId();
+
+        $line = (array) $this->LINES[$line_id];
+
+        $lineType = (string) $line["type"];
+        $linePosition = (int) $line["position"];
+        $digit_ids = (array) $line["digits"];
+
+        $spaceCount = 0;
+        foreach ($digit_ids as $digit_id) {
+            $digit = (array) $this->DIGITS[$digit_id];
+            $digitPosition = (int) $digit["position"];
+
+            $algarism = (int) $this->globals->get("digit-{$digitPosition}");
+            $algarismSpaces = (array) $this->ALGARISMS[$algarism];
+
+            if ($lineType === "column") {
+                foreach ($algarismSpaces as $row) {
+                    $space = (int) $row[$linePosition];
+                    if ($space === 1) {
+                        $spaceCount++;
+                    }
+                }
+            }
+
+            if ($lineType === "row") {
+                $row = (array) $algarismSpaces[$linePosition];
+                foreach ($row as $space) {
+                    if ($space === 1) {
+                        $spaceCount++;
+                    }
+                }
+            }
+        }
+
+        $this->notify->all(
+            "countSpaces",
+            clienttranslate('${player_name} finds ${spaceCount} space(s) ${line_type} ${line_id}'),
+            [
+                "player_id" => $player_id,
+                "player_name" => $this->getPlayerNameById($player_id),
+                "spaceCount" => $spaceCount,
+                "lineType" => $lineType,
+                "line_type" => $lineType === "row" ? clienttranslate("row") : clienttranslate("column"),
+                "line_id" => $line_id,
+                "i18n" => ["line_type"],
+            ]
+        );
+
+        $this->gamestate->nextState("nextPlayer");
+    }
 
     /**
      * Game state arguments, example content.
@@ -61,17 +122,26 @@ class Game extends \Table
         return [];
     }
 
+    public function st_betweenPlayers(): void
+    {
+        $player_id = $this->getActivePlayerId();
+        $this->giveExtraTime($player_id);
+        $this->activeNextPlayer();
+
+        $this->gamestate->nextState("nextPlayer");
+    }
+
     // Utility functions
 
-    public function setupCode(array &$digitsCounts, int $position = 1): void
+    public function setupCode(array &$algarismsCounts, int $position = 1): void
     {
         if ($position > 6) {
             return;
         }
 
-        $digits = range(0, 9);
+        $algarisms = range(0, 9);
         $index = bga_rand(0, 9);
-        $digit = $digits[$index];
+        $digit = $algarisms[$index];
 
         $equalAdjacent = false;
 
@@ -88,15 +158,15 @@ class Game extends \Table
             }
         }
 
-        $limitReached = $digitsCounts[$digit] === 2;
+        $limitReached = $algarismsCounts[$digit] === 2;
 
         if (!$equalAdjacent && !$limitReached) {
             $this->globals->set("digit-$position", $digit);
-            $digitsCounts[$digit]++;
+            $algarismsCounts[$digit]++;
             $position++;
         }
 
-        $this->setupCode($digitsCounts, $position);
+        $this->setupCode($algarismsCounts, $position);
     }
 
     public function getCode(): int
@@ -181,7 +251,7 @@ class Game extends \Table
         $result["players"] = $this->getCollectionFromDb(
             "SELECT `player_id` `id`, `player_score` `score` FROM `player`"
         );
-        // $result["code"] = $this->getCode();
+        $result["code"] = $this->getCode();
 
         return $result;
     }
@@ -227,8 +297,8 @@ class Game extends \Table
         $this->reattributeColorsBasedOnPreferences($players, $gameinfos["player_colors"]);
         $this->reloadPlayersBasicInfos();
 
-        $digitsCounts = array_fill(0, 10, 0);
-        $this->setupCode($digitsCounts);
+        $algarismsCounts = array_fill(0, 10, 0);
+        $this->setupCode($algarismsCounts);
 
         $this->activeNextPlayer();
     }
@@ -272,9 +342,14 @@ class Game extends \Table
         throw new \feException("Zombie mode not supported at this game state: \"{$state_name}\".");
     }
 
-    public function debug_setupCode()
+    public function debug_setupCode(): void
     {
-        $digitsCounts = array_fill(0, 10, 0);
-        $this->setupCode($digitsCounts);
+        $algarismsCounts = array_fill(0, 10, 0);
+        $this->setupCode($algarismsCounts);
+    }
+
+    public function debug_countSpaces(string $line_id): void
+    {
+        $this->actCountSpaces(null, $line_id);
     }
 }

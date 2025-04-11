@@ -48,33 +48,65 @@
     </div>
     <div class="dgt_columnLabels">
       <div class="dgt_columnGroup">
-        <div id="dgt_columnLabel-A" class="dgt_columnLabel dgt_label">A</div>
-        <div id="dgt_columnLabel-B" class="dgt_columnLabel dgt_label">B</div>
-        <div id="dgt_columnLabel-C" class="dgt_columnLabel dgt_label">C</div>
+        <div id="dgt_label-A" class="dgt_columnLabel dgt_label" data-label="A">
+          A
+        </div>
+        <div id="dgt_label-B" class="dgt_columnLabel dgt_label" data-label="B">
+          B
+        </div>
+        <div id="dgt_label-C" class="dgt_columnLabel dgt_label" data-label="C">
+          C
+        </div>
       </div>
       <div class="dgt_columnGroup">
-        <div id="dgt_columnLabel-D" class="dgt_columnLabel dgt_label">D</div>
-        <div id="dgt_columnLabel-E" class="dgt_columnLabel dgt_label">E</div>
-        <div id="dgt_columnLabel-F" class="dgt_columnLabel dgt_label">F</div>
+        <div id="dgt_label-D" class="dgt_columnLabel dgt_label" data-label="D">
+          D
+        </div>
+        <div id="dgt_label-E" class="dgt_columnLabel dgt_label" data-label="E">
+          E
+        </div>
+        <div id="dgt_label-F" class="dgt_columnLabel dgt_label" data-label="F">
+          F
+        </div>
       </div>
       <div class="dgt_columnGroup">
-        <div id="dgt_columnLabel-G" class="dgt_columnLabel dgt_label">G</div>
-        <div id="dgt_columnLabel-H" class="dgt_columnLabel dgt_label">H</div>
-        <div id="dgt_columnLabel-I" class="dgt_columnLabel dgt_label">I</div>
+        <div id="dgt_label-G" class="dgt_columnLabel dgt_label" data-label="G">
+          G
+        </div>
+        <div id="dgt_label-H" class="dgt_columnLabel dgt_label" data-label="H">
+          H
+        </div>
+        <div id="dgt_label-I" class="dgt_columnLabel dgt_label" data-label="I">
+          I
+        </div>
       </div>
     </div>
     <div class="dgt_sequences">
       <div id="dgt_sequence-1" class="dgt_sequence">
         <div id="dgt_sequence-1-rowLabels" class="dgt_rowLabels">
-          <div id="dgt_rowLabel-J" class="dgt_rowLabel dgt_label">J</div>
-          <div id="dgt_rowLabel-K" class="dgt_rowLabel dgt_label">K</div>
-          <div id="dgt_rowLabel-L" class="dgt_rowLabel dgt_label">L</div>
-          <div id="dgt_rowLabel-M" class="dgt_rowLabel dgt_label">M</div>
-          <div id="dgt_rowLabel-N" class="dgt_rowLabel dgt_label">N</div>
+          <div id="dgt_label-J" class="dgt_rowLabel dgt_label" data-label="J">
+            J
+          </div>
+          <div id="dgt_label-K" class="dgt_rowLabel dgt_label" data-label="K">
+            K
+          </div>
+          <div id="dgt_label-L" class="dgt_rowLabel dgt_label" data-label="L">
+            L
+          </div>
+          <div id="dgt_label-M" class="dgt_rowLabel dgt_label" data-label="M">
+            M
+          </div>
+          <div id="dgt_label-N" class="dgt_rowLabel dgt_label" data-label="N">
+            N
+          </div>
         </div>
-        <div class="dgt_numbers">
-          <div id="dgt_number-T" class="dgt_number">
-            <div id="dgt_numberLabel-T" class="dgt_numberLabel dgt_label">
+        <div class="dgt_digits">
+          <div id="dgt_digit-T" class="dgt_digit">
+            <div
+              id="dgt_digitLabel-T"
+              class="dgt_digitLabel dgt_label"
+              data-label="T"
+            >
               T
             </div>
             <div class="dgt_parityMarkers">
@@ -98,7 +130,7 @@
                   <div
                     id="dgt_space-TAK"
                     class="dgt_space"
-                    data-number="T"
+                    data-digit="T"
                     data-column="A"
                     data-row="K"
                   ></div>
@@ -107,7 +139,7 @@
                   <div
                     id="dgt_space-TAM"
                     class="dgt_space"
-                    data-number="T"
+                    data-digit="T"
                     data-column="A"
                     data-row="M"
                   ></div>
@@ -118,7 +150,7 @@
                   <div
                     id="dgt_space-TBJ"
                     class="dgt_space-middle dgt_space"
-                    data-number="T"
+                    data-digit="T"
                     data-column="B"
                     data-row="J"
                   ></div>
@@ -127,7 +159,7 @@
                   <div
                     id="dgt_space-TBL"
                     class="dgt_space-middle dgt_space"
-                    data-number="T"
+                    data-digit="T"
                     data-column="B"
                     data-row="L"
                   ></div>
@@ -136,7 +168,7 @@
                   <div
                     id="dgt_space-TBN"
                     class="dgt_space-middle dgt_space"
-                    data-number="T"
+                    data-digit="T"
                     data-column="B"
                     data-row="N"
                   ></div>
@@ -147,7 +179,7 @@
                   <div
                     id="dgt_space-TBK"
                     class="dgt_space"
-                    data-number="T"
+                    data-digit="T"
                     data-column="C"
                     data-row="K"
                   ></div>
@@ -156,7 +188,7 @@
                   <div
                     id="dgt_space-TCM"
                     class="dgt_space"
-                    data-number="T"
+                    data-digit="T"
                     data-column="C"
                     data-row="M"
                   ></div>
@@ -176,8 +208,12 @@
               <div id="dgt_optionMarker-T9" class="dgt_optionMarker">9</div>
             </div>
           </div>
-          <div id="dgt_number-U" class="dgt_number">
-            <div id="dgt_numberLabel-U" class="dgt_numberLabel dgt_label">
+          <div id="dgt_digit-U" class="dgt_digit">
+            <div
+              id="dgt_digitLabel-U"
+              class="dgt_digitLabel dgt_label"
+              data-label="U"
+            >
               U
             </div>
             <div class="dgt_parityMarkers">
@@ -205,7 +241,7 @@
                   <div
                     id="dgt_space-UDK"
                     class="dgt_space"
-                    data-number="U"
+                    data-digit="U"
                     data-column="D"
                     data-row="K"
                   ></div>
@@ -214,7 +250,7 @@
                   <div
                     id="dgt_space-UDM"
                     class="dgt_space"
-                    data-number="T"
+                    data-digit="T"
                     data-column="D"
                     data-row="M"
                   ></div>
@@ -225,7 +261,7 @@
                   <div
                     id="dgt_space-UEJ"
                     class="dgt_space-middle dgt_space"
-                    data-number="U"
+                    data-digit="U"
                     data-column="E"
                     data-row="J"
                   ></div>
@@ -234,7 +270,7 @@
                   <div
                     id="dgt_space-UEL"
                     class="dgt_space-middle dgt_space"
-                    data-number="U"
+                    data-digit="U"
                     data-column="E"
                     data-row="L"
                   ></div>
@@ -243,7 +279,7 @@
                   <div
                     id="dgt_space-UEN"
                     class="dgt_space-middle dgt_space"
-                    data-number="U"
+                    data-digit="U"
                     data-column="E"
                     data-row="N"
                   ></div>
@@ -254,7 +290,7 @@
                   <div
                     id="dgt_space-UFK"
                     class="dgt_space"
-                    data-number="U"
+                    data-digit="U"
                     data-column="F"
                     data-row="K"
                   ></div>
@@ -263,7 +299,7 @@
                   <div
                     id="dgt_space-UFM"
                     class="dgt_space"
-                    data-number="U"
+                    data-digit="U"
                     data-column="F"
                     data-row="M"
                   ></div>
@@ -283,8 +319,12 @@
               <div id="dgt_optionMarker-U9" class="dgt_optionMarker">9</div>
             </div>
           </div>
-          <div id="dgt_number-V" class="dgt_number">
-            <div id="dgt_numberLabel-V" class="dgt_numberLabel dgt_label">
+          <div id="dgt_digit-V" class="dgt_digit">
+            <div
+              id="dgt_digitLabel-V"
+              class="dgt_digitLabel dgt_label"
+              data-label="V"
+            >
               V
             </div>
             <div class="dgt_parityMarkers">
@@ -312,7 +352,7 @@
                   <div
                     id="dgt_space-VGK"
                     class="dgt_space"
-                    data-number="V"
+                    data-digit="V"
                     data-column="G"
                     data-row="K"
                   ></div>
@@ -321,7 +361,7 @@
                   <div
                     id="dgt_space-VGM"
                     class="dgt_space"
-                    data-number="V"
+                    data-digit="V"
                     data-column="G"
                     data-row="M"
                   ></div>
@@ -332,7 +372,7 @@
                   <div
                     id="dgt_space-VHJ"
                     class="dgt_space-middle dgt_space"
-                    data-number="V"
+                    data-digit="V"
                     data-column="H"
                     data-row="J"
                   ></div>
@@ -341,7 +381,7 @@
                   <div
                     id="dgt_space-VHL"
                     class="dgt_space-middle dgt_space"
-                    data-number="V"
+                    data-digit="V"
                     data-column="H"
                     data-row="L"
                   ></div>
@@ -350,7 +390,7 @@
                   <div
                     id="dgt_space-VHN"
                     class="dgt_space-middle dgt_space"
-                    data-number="V"
+                    data-digit="V"
                     data-column="H"
                     data-row="N"
                   ></div>
@@ -361,7 +401,7 @@
                   <div
                     id="dgt_space-VIK"
                     class="dgt_space"
-                    data-number="V"
+                    data-digit="V"
                     data-column="I"
                     data-row="K"
                   ></div>
@@ -370,7 +410,7 @@
                   <div
                     id="dgt_space-VIM"
                     class="dgt_space"
-                    data-number="V"
+                    data-digit="V"
                     data-column="I"
                     data-row="M"
                   ></div>
@@ -416,15 +456,49 @@
       </div>
       <div id="dgt_sequence-2" class="dgt_sequence">
         <div class="dgt_rowLabels">
-          <div id="dgt_rowLabel-O" class="dgt_rowLabel dgt_label">O</div>
-          <div id="dgt_rowLabel-P" class="dgt_rowLabel dgt_label">P</div>
-          <div id="dgt_rowLabel-Q" class="dgt_rowLabel dgt_label">Q</div>
-          <div id="dgt_rowLabel-R" class="dgt_rowLabel dgt_label">R</div>
-          <div id="dgt_rowLabel-S" class="dgt_rowLabel dgt_label">S</div>
+          <div
+            id="dgt_rowLabel-O"
+            class="dgt_rowLabel dgt_label"
+            data-label="O"
+          >
+            O
+          </div>
+          <div
+            id="dgt_rowLabel-P"
+            class="dgt_rowLabel dgt_label"
+            data-label="P"
+          >
+            P
+          </div>
+          <div
+            id="dgt_rowLabel-Q"
+            class="dgt_rowLabel dgt_label"
+            data-label="Q"
+          >
+            Q
+          </div>
+          <div
+            id="dgt_rowLabel-R"
+            class="dgt_rowLabel dgt_label"
+            data-label="R"
+          >
+            R
+          </div>
+          <div
+            id="dgt_rowLabel-S"
+            class="dgt_rowLabel dgt_label"
+            data-label="S"
+          >
+            S
+          </div>
         </div>
-        <div class="dgt_numbers">
-          <div id="dgt_number-W" class="dgt_number">
-            <div id="dgt_numberLabel-W" class="dgt_numberLabel dgt_label">
+        <div class="dgt_digits">
+          <div id="dgt_digit-W" class="dgt_digit">
+            <div
+              id="dgt_digitLabel-W"
+              class="dgt_digitLabel dgt_label"
+              data-label="W"
+            >
               W
             </div>
             <div class="dgt_parityMarkers">
@@ -452,7 +526,7 @@
                   <div
                     id="dgt_space-WAP"
                     class="dgt_space"
-                    data-number="W"
+                    data-digit="W"
                     data-column="A"
                     data-row="P"
                   ></div>
@@ -461,7 +535,7 @@
                   <div
                     id="dgt_space-WAR"
                     class="dgt_space"
-                    data-number="W"
+                    data-digit="W"
                     data-column="A"
                     data-row="R"
                   ></div>
@@ -472,7 +546,7 @@
                   <div
                     id="dgt_space-WBO"
                     class="dgt_space-middle dgt_space"
-                    data-number="W"
+                    data-digit="W"
                     data-column="B"
                     data-row="O"
                   ></div>
@@ -481,7 +555,7 @@
                   <div
                     id="dgt_space-WBQ"
                     class="dgt_space-middle dgt_space"
-                    data-number="W"
+                    data-digit="W"
                     data-column="B"
                     data-row="Q"
                   ></div>
@@ -490,7 +564,7 @@
                   <div
                     id="dgt_space-WBS"
                     class="dgt_space-middle dgt_space"
-                    data-number="W"
+                    data-digit="W"
                     data-column="B"
                     data-row="S"
                   ></div>
@@ -501,7 +575,7 @@
                   <div
                     id="dgt_space-WCP"
                     class="dgt_space"
-                    data-number="W"
+                    data-digit="W"
                     data-column="C"
                     data-row="P"
                   ></div>
@@ -510,7 +584,7 @@
                   <div
                     id="dgt_space-WCR"
                     class="dgt_space"
-                    data-number="W"
+                    data-digit="W"
                     data-column="C"
                     data-row="R"
                   ></div>
@@ -530,8 +604,12 @@
               <div id="dgt_optionMarker-W9" class="dgt_optionMarker">9</div>
             </div>
           </div>
-          <div id="dgt_number-X" class="dgt_number">
-            <div id="dgt_numberLabel-X" class="dgt_numberLabel dgt_label">
+          <div id="dgt_digit-X" class="dgt_digit">
+            <div
+              id="dgt_digitLabel-X"
+              class="dgt_digitLabel dgt_label"
+              data-label="X"
+            >
               X
             </div>
             <div class="dgt_parityMarkers">
@@ -559,7 +637,7 @@
                   <div
                     id="dgt_space-XDP"
                     class="dgt_space"
-                    data-number="X"
+                    data-digit="X"
                     data-column="D"
                     data-row="P"
                   ></div>
@@ -568,7 +646,7 @@
                   <div
                     id="dgt_space-XDR"
                     class="dgt_space"
-                    data-number="X"
+                    data-digit="X"
                     data-column="D"
                     data-row="R"
                   ></div>
@@ -579,7 +657,7 @@
                   <div
                     id="dgt_space-XEO"
                     class="dgt_space-middle dgt_space"
-                    data-number="X"
+                    data-digit="X"
                     data-column="E"
                     data-row="O"
                   ></div>
@@ -588,7 +666,7 @@
                   <div
                     id="dgt_space-XEQ"
                     class="dgt_space-middle dgt_space"
-                    data-number="X"
+                    data-digit="X"
                     data-column="E"
                     data-row="Q"
                   ></div>
@@ -597,7 +675,7 @@
                   <div
                     id="dgt_space-XES"
                     class="dgt_space-middle dgt_space"
-                    data-number="X"
+                    data-digit="X"
                     data-column="E"
                     data-row="S"
                   ></div>
@@ -608,7 +686,7 @@
                   <div
                     id="dgt_space-XFP"
                     class="dgt_space"
-                    data-number="X"
+                    data-digit="X"
                     data-column="F"
                     data-row="P"
                   ></div>
@@ -617,7 +695,7 @@
                   <div
                     id="dgt_space-XFR"
                     class="dgt_space"
-                    data-number="X"
+                    data-digit="X"
                     data-column="F"
                     data-row="R"
                   ></div>
@@ -637,8 +715,12 @@
               <div id="dgt_optionMarker-X9" class="dgt_optionMarker">9</div>
             </div>
           </div>
-          <div id="dgt_number-Y" class="dgt_number">
-            <div id="dgt_numberLabel-Y" class="dgt_numberLabel dgt_label">
+          <div id="dgt_digit-Y" class="dgt_digit">
+            <div
+              id="dgt_digitLabel-Y"
+              class="dgt_digitLabel dgt_label"
+              data-label="Y"
+            >
               Y
             </div>
             <div class="dgt_parityMarkers">
@@ -666,7 +748,7 @@
                   <div
                     id="dgt_space-YGP"
                     class="dgt_space"
-                    data-number="Y"
+                    data-digit="Y"
                     data-column="G"
                     data-row="P"
                   ></div>
@@ -675,7 +757,7 @@
                   <div
                     id="dgt_space-YGR"
                     class="dgt_space"
-                    data-number="Y"
+                    data-digit="Y"
                     data-column="G"
                     data-row="R"
                   ></div>
@@ -686,7 +768,7 @@
                   <div
                     id="dgt_space-YHO"
                     class="dgt_space-middle dgt_space"
-                    data-number="Y"
+                    data-digit="Y"
                     data-column="H"
                     data-row="O"
                   ></div>
@@ -695,7 +777,7 @@
                   <div
                     id="dgt_space-YHQ"
                     class="dgt_space-middle dgt_space"
-                    data-number="Y"
+                    data-digit="Y"
                     data-column="H"
                     data-row="Q"
                   ></div>
@@ -704,7 +786,7 @@
                   <div
                     id="dgt_space-YHS"
                     class="dgt_space-middle dgt_space"
-                    data-number="Y"
+                    data-digit="Y"
                     data-column="H"
                     data-row="S"
                   ></div>
@@ -715,7 +797,7 @@
                   <div
                     id="dgt_space-YIP"
                     class="dgt_space"
-                    data-number="Y"
+                    data-digit="Y"
                     data-column="I"
                     data-row="P"
                   ></div>
@@ -724,7 +806,7 @@
                   <div
                     id="dgt_space-YIR"
                     class="dgt_space"
-                    data-number="Y"
+                    data-digit="Y"
                     data-column="I"
                     data-row="R"
                   ></div>

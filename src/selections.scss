@@ -1,0 +1,19 @@
+.dgt_label {
+  &-selectable {
+    border-color: green;
+    border-style: dashed;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  &-unselectable {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &-selected {
+    position: relative;
+    border-style: solid;
+    transform: scale(1.1);
+  }
+}

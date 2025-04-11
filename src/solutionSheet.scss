@@ -8,19 +8,19 @@
 .dgt_comparisonMarkers {
   font-size: 20px;
   position: absolute;
-  left: calc(var(--numbersGap) * 2.25);
+  left: calc(var(--digitsGap) * 2.25);
   display: flex;
-  gap: calc(var(--numbersGap) * 1.75);
+  gap: calc(var(--digitsGap) * 1.75);
   z-index: -1;
 
   &-left {
-    top: calc(var(--numbersGap) * 1.5);
+    top: calc(var(--digitsGap) * 1.5);
   }
 
   &-middle {
-    top: calc(var(--numbersGap) * 2.5);
-    left: calc(var(--numbersGap) + calc(var(--spaceWidth) / 2));
-    gap: calc(var(--numbersGap) * 1.25 + var(--blockSize) * 1.4);
+    top: calc(var(--digitsGap) * 2.5);
+    left: calc(var(--digitsGap) + calc(var(--spaceWidth) / 2));
+    gap: calc(var(--digitsGap) * 1.25 + var(--blockSize) * 1.4);
 
     .dgt_comparisonMarker {
       transform: rotate(90deg);
@@ -28,7 +28,7 @@
   }
 
   &-right {
-    bottom: calc(var(--numbersGap) * 1.5);
+    bottom: calc(var(--digitsGap) * 1.5);
   }
 }
 
@@ -39,7 +39,7 @@
 
 .dgt_columnLabels {
   display: flex;
-  gap: var(--numbersGap);
+  gap: var(--digitsGap);
   margin-left: calc(var(--blockSize) * 2);
 
   .dgt_columnGroup {

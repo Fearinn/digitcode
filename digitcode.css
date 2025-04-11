@@ -8,24 +8,24 @@
 .dgt_comparisonMarkers {
   font-size: 20px;
   position: absolute;
-  left: calc(var(--numbersGap) * 2.25);
+  left: calc(var(--digitsGap) * 2.25);
   display: flex;
-  gap: calc(var(--numbersGap) * 1.75);
+  gap: calc(var(--digitsGap) * 1.75);
   z-index: -1;
 }
 .dgt_comparisonMarkers-left {
-  top: calc(var(--numbersGap) * 1.5);
+  top: calc(var(--digitsGap) * 1.5);
 }
 .dgt_comparisonMarkers-middle {
-  top: calc(var(--numbersGap) * 2.5);
-  left: calc(var(--numbersGap) + var(--spaceWidth) / 2);
-  gap: calc(var(--numbersGap) * 1.25 + var(--blockSize) * 1.4);
+  top: calc(var(--digitsGap) * 2.5);
+  left: calc(var(--digitsGap) + var(--spaceWidth) / 2);
+  gap: calc(var(--digitsGap) * 1.25 + var(--blockSize) * 1.4);
 }
 .dgt_comparisonMarkers-middle .dgt_comparisonMarker {
   transform: rotate(90deg);
 }
 .dgt_comparisonMarkers-right {
-  bottom: calc(var(--numbersGap) * 1.5);
+  bottom: calc(var(--digitsGap) * 1.5);
 }
 
 .dgt_comparisonMarker {
@@ -35,7 +35,7 @@
 
 .dgt_columnLabels {
   display: flex;
-  gap: var(--numbersGap);
+  gap: var(--digitsGap);
   margin-left: calc(var(--blockSize) * 2);
 }
 .dgt_columnLabels .dgt_columnGroup {
@@ -84,13 +84,13 @@
   display: flex;
 }
 
-.dgt_numbers {
+.dgt_digits {
   display: flex;
-  gap: var(--numbersGap);
+  gap: var(--digitsGap);
   margin: 0 calc(var(--blockSize) * 0.9);
 }
 
-.dgt_numberLabel {
+.dgt_digitLabel {
   color: black;
   position: absolute;
   background-color: white;
@@ -98,15 +98,15 @@
   left: -12%;
 }
 
-.dgt_number {
+.dgt_digit {
   position: relative;
   display: flex;
   align-items: center;
-  height: var(--numberHeight);
-  width: var(--numberWidth);
+  height: var(--digitHeight);
+  width: var(--digitWidth);
   overflow-x: visible;
 }
-.dgt_number:last-child {
+.dgt_digit:last-child {
   margin-right: var(--blockSize);
 }
 
@@ -202,11 +202,27 @@
   color: gray;
 }
 
+.dgt_label-selectable {
+  border-color: green;
+  border-style: dashed;
+  cursor: pointer;
+  z-index: 1;
+}
+.dgt_label-unselectable {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.dgt_label-selected {
+  position: relative;
+  border-style: solid;
+  transform: scale(1.1);
+}
+
 :root {
   --blockSize: 40px;
-  --numberHeight: calc(var(--blockSize) * 5);
-  --numberWidth: calc(var(--blockSize) * 3);
-  --numbersGap: calc(var(--blockSize) * 3);
+  --digitHeight: calc(var(--blockSize) * 5);
+  --digitWidth: calc(var(--blockSize) * 3);
+  --digitsGap: calc(var(--blockSize) * 3);
   --spaceHeight: 90px;
   --spaceWidth: 20px;
 }

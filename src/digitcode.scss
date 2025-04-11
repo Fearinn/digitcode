@@ -1,11 +1,12 @@
 @use "solutionSheet";
-@use "numbers";
+@use "digits";
+@use "selections";
 
 :root {
   --blockSize: 40px;
-  --numberHeight: calc(var(--blockSize) * 5);
-  --numberWidth: calc(var(--blockSize) * 3);
-  --numbersGap: calc(var(--blockSize) * 3);
+  --digitHeight: calc(var(--blockSize) * 5);
+  --digitWidth: calc(var(--blockSize) * 3);
+  --digitsGap: calc(var(--blockSize) * 3);
   --spaceHeight: 90px;
   --spaceWidth: 20px;
 }
