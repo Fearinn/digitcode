@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 namespace Bga\Games\DigitCode;
 
-use Bga\GameFramework\Actions\Types\StringParam;
+const COUNTABLE_LINES = "countableLines";
 
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
 
@@ -92,9 +92,23 @@ class Game extends \Table
             }
         }
 
+        $countableLines = $this->globals->get(COUNTABLE_LINES);
+
+        if (!in_array($line_id, $countableLines)) {
+            throw new \BgaVisibleSystemException("Invalid row or column");
+        }
+
+        $countableLines = array_filter(
+            $countableLines,
+            function ($l_line_id) use ($line_id) {
+                return $l_line_id !== $line_id;
+            }
+        );
+        $this->globals->set(COUNTABLE_LINES, array_values($countableLines));
+
         $this->notify->all(
             "countSpaces",
-            clienttranslate('${player_name} finds ${spaceCount} space(s) ${line_type} ${line_id}'),
+            clienttranslate('${player_name} finds ${spaceCount} space(s) in ${line_type} ${line_id}'),
             [
                 "player_id" => $player_id,
                 "player_name" => $this->getPlayerNameById($player_id),
@@ -117,9 +131,12 @@ class Game extends \Table
      * @return array
      * @see ./states.inc.php
      */
-    public function argPlayerTurn(): array
+    public function arg_playerTurn(): array
     {
-        return [];
+        $countableLines = $this->globals->get(COUNTABLE_LINES);
+        return [
+            "countableLines" => $countableLines,
+        ];
     }
 
     public function st_betweenPlayers(): void
@@ -299,6 +316,8 @@ class Game extends \Table
 
         $algarismsCounts = array_fill(0, 10, 0);
         $this->setupCode($algarismsCounts);
+
+        $this->globals->set(COUNTABLE_LINES, array_keys($this->LINES));
 
         $this->activeNextPlayer();
     }

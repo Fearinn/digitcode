@@ -44,30 +44,42 @@ define([
       }
 
       if (stateName === "playerTurn") {
+        const { countableLines } = args.args;
+
         this.statusBar.addActionButton(_("Count spaces"), () => {
           this.setClientState("client_countSpaces", {
             descriptionmyturn: _(
               "${you} must pick the column or row to count the spaces from"
             ),
             client_args: {
-              countableLines: args.countableLines,
+              countableLines,
             },
           });
         });
       }
 
       if (stateName === "client_countSpaces") {
-        const countableLines = args.client_args.countableLines;
-        this.setSelectableLabels();
+        const { countableLines } = args.client_args;
+        console.log(countableLines, "TEST");
+
+        this.statusBar.addActionButton(
+          _("Cancel"),
+          () => {
+            this.restoreServerGameState();
+          },
+          {
+            color: "alert",
+          }
+        );
+        this.setSelectableLabels(countableLines);
       }
     },
 
     onLeavingState: function (stateName) {
       console.log("Leaving state: " + stateName);
 
-      switch (stateName) {
-        case "dummy":
-          break;
+      if (stateName === "client_countSpaces") {
+        this.setSelectableLabels(null, true);
       }
     },
 
@@ -97,6 +109,14 @@ define([
     setSelectableLabels: function (selectableLabels, unselect = false) {
       const labelElements = document.querySelectorAll("[data-label]");
       labelElements.forEach((labelElement) => {
+        if (unselect) {
+          labelElement.classList.remove("dgt_label-selectable");
+          labelElement.classList.remove("dgt_label-unselectable");
+          labelElement.classList.remove("dgt_label-selected");
+          labelElement.onclick = undefined;
+          return;
+        }
+
         const label_id = labelElement.dataset.label;
         const isSelectable = selectableLabels.includes(label_id);
         const classSufix = isSelectable ? "selectable" : "unselectable";
