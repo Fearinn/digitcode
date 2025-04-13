@@ -9,3 +9,16 @@
     color: red;
   }
 }
+
+.dgt_space {
+  &-confirmed {
+    &-filled {
+      background-color: red;
+    }
+
+    &-empty {
+      background-color: cyan;
+      filter: blur(6px);
+    }
+  }
+}

@@ -34,15 +34,28 @@ define([
 
       for (const line_id in gamedatas.countedLines) {
         const spaceCount = gamedatas.countedLines[line_id];
-        const lineMarker = document.querySelector(`[data-lineMarker=${line_id}`);
+        const lineMarker = document.querySelector(
+          `[data-lineMarker=${line_id}`
+        );
         lineMarker.classList.add("dgt_lineMarker-confirmed");
         lineMarker.textContent = spaceCount;
       }
 
       for (const digit_id in gamedatas.checkedDigits) {
         const parity = gamedatas.checkedDigits[digit_id];
-        const parityMarker = document.getElementById(`dgt_parityMarker-${parity}-${digit_id}`);
+        const parityMarker = document.getElementById(
+          `dgt_parityMarker-${parity}-${digit_id}`
+        );
         parityMarker.classList.add("dgt_parityMarker-confirmed");
+      }
+
+      for (const space_id in gamedatas.checkedSpaces) {
+        const spaceFilled = gamedatas.checkedSpaces[space_id];
+
+        const filledOrEmpty = spaceFilled ? "filled" : "empty";
+        const spaceElement = document.getElementById(`dgt_space-${space_id}`);
+        spaceElement.classList.add(`dgt_space-confirmed-${filledOrEmpty}`);
+        this.addTooltip(spaceElement.id, _(filledOrEmpty), "");
       }
     },
 
@@ -69,7 +82,7 @@ define([
       }
 
       if (stateName === "playerTurn") {
-        const { countableLines, checkableDigits } = args.args;
+        const { countableLines, checkableDigits, checkableSpaces } = args.args;
 
         this.statusBar.addActionButton(_("Count spaces"), () => {
           this.setClientState("client_countSpaces", {
@@ -92,6 +105,17 @@ define([
             },
           });
         });
+
+        this.statusBar.addActionButton(_("Check space"), () => {
+          this.setClientState("client_checkSpace", {
+            descriptionmyturn: _(
+              "${you} must pick a space to check if it's filled"
+            ),
+            client_args: {
+              checkableSpaces,
+            },
+          });
+        });
       }
 
       if (stateName === "client_countSpaces") {
@@ -107,6 +131,11 @@ define([
           this.actCheckParity(label_id);
         });
       }
+
+      if (stateName === "client_checkSpace") {
+        const { checkableSpaces } = args.client_args;
+        this.setSelectableSpaces(checkableSpaces);
+      }
     },
 
     onLeavingState: function (stateName) {
@@ -118,6 +147,10 @@ define([
 
       if (stateName === "client_checkParity") {
         this.setSelectableLabels(null, null, true);
+      }
+
+      if (stateName === "client_checkSpace") {
+        this.setSelectableSpaces(null, true);
       }
     },
 
@@ -161,8 +194,10 @@ define([
 
         const label_id = labelElement.dataset.label;
         const isSelectable = selectableLabels.includes(label_id);
-        const classSufix = isSelectable ? "selectable" : "unselectable";
-        labelElement.classList.add(`dgt_label-${classSufix}`);
+        const selectableOrUnselectable = isSelectable
+          ? "selectable"
+          : "unselectable";
+        labelElement.classList.add(`dgt_label-${selectableOrUnselectable}`);
 
         if (isSelectable) {
           const selectedClass = "dgt_label-selected";
@@ -189,6 +224,50 @@ define([
       });
     },
 
+    setSelectableSpaces: function (selectableSpaces, unselect = false) {
+      const spaceElements = document.querySelectorAll("[data-space]");
+      spaceElements.forEach((spaceElement) => {
+        if (unselect) {
+          spaceElement.classList.remove("dgt_space-selectable");
+          spaceElement.classList.remove("dgt_space-unselectable");
+          spaceElement.classList.remove("dgt_space-selected");
+          spaceElement.onclick = undefined;
+          return;
+        }
+
+        const space_id = spaceElement.dataset.space;
+
+        const isSelectable = selectableSpaces.includes(space_id);
+        const selectableOrUnselectable = isSelectable
+          ? "selectable"
+          : "unselectable";
+        spaceElement.classList.add(`dgt_space-${selectableOrUnselectable}`);
+
+        if (isSelectable) {
+          const selectedClass = "dgt_space-selected";
+          spaceElement.onclick = () => {
+            const isSelected = !spaceElement.classList.contains(selectedClass);
+
+            this.toggleConfirmationBtn(isSelected, () => {
+              this.actCheckSpace(space_id);
+            });
+
+            if (isSelected) {
+              spaceElements.forEach((loopElement) => {
+                if (loopElement.id == spaceElement.id) {
+                  return;
+                }
+
+                loopElement.classList.remove(selectedClass);
+              });
+            }
+
+            spaceElement.classList.toggle(selectedClass);
+          };
+        }
+      });
+    },
+
     ///////////////////////////////////////////////////
     //// Player's actions
 
@@ -205,6 +284,10 @@ define([
       this.performAction("actCheckParity", { digit_id });
     },
 
+    actCheckSpace: function (space_id) {
+      this.performAction("actCheckSpace", { space_id });
+    },
+
     ///////////////////////////////////////////////////
     //// Reaction to cometD notifications
 
@@ -215,8 +298,9 @@ define([
 
     notif_countSpaces: function (args) {
       const { line_id, spaceCount } = args;
-      document.querySelector(`[data-lineMarker=${line_id}`).textContent =
-        spaceCount;
+      const lineMarker = document.querySelector(`[data-lineMarker=${line_id}`);
+      lineMarker.textContent = spaceCount;
+      lineMarker.classList.add("dgt_lineMarker-confirmed");
     },
 
     notif_checkParity: function (args) {
@@ -224,6 +308,16 @@ define([
       document
         .getElementById(`dgt_parityMarker-${parity}-${digit_id}`)
         .classList.add("dgt_parityMarker-confirmed");
+    },
+
+    notif_checkSpace: function (args) {
+      const { space_id, spaceFilled } = args;
+
+      const filledOrEmpty = spaceFilled ? "filled" : "empty";
+
+      const spaceElement = document.getElementById(`dgt_space-${space_id}`);
+      spaceElement.classList.add(`dgt_space-confirmed-${filledOrEmpty}`);
+      this.addTooltip(spaceElement.id, _(filledOrEmpty), "");
     },
   });
 });

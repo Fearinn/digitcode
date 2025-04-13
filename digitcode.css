@@ -220,12 +220,32 @@
   z-index: 3;
 }
 
+.dgt_space-selectable {
+  background-color: greenyellow;
+  cursor: pointer;
+}
+.dgt_space-unselectable {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.dgt_space-selected {
+  background-color: green;
+}
+
 .dgt_parityMarker-confirmed {
   color: red;
 }
 
 .dgt_lineMarker-confirmed {
   color: red;
+}
+
+.dgt_space-confirmed-filled {
+  background-color: red;
+}
+.dgt_space-confirmed-empty {
+  background-color: cyan;
+  filter: blur(6px);
 }
 
 :root {

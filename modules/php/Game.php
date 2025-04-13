@@ -20,10 +20,14 @@ declare(strict_types=1);
 
 namespace Bga\Games\DigitCode;
 
+use Bga\GameFramework\Actions\Types\StringParam;
+
 const COUNTABLE_LINES = "countableLines";
 const COUNTED_LINES = "countedLines";
 const CHECKABLE_DIGITS = "checkableDigits";
 const CHECKED_DIGITS = "checkDigits";
+const CHECKABLE_SPACES = "checkableSpaces";
+const CHECKED_SPACES = "checkedSpaces";
 
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
 
@@ -198,6 +202,68 @@ class Game extends \Table
         $this->gamestate->nextState("nextPlayer");
     }
 
+    public function actCheckSpace(?int $clientVersion, #[StringParam(alphanum: true)] string $space_id): void
+    {
+        $this->checkVersion($clientVersion);
+
+        $player_id = (int) $this->getActivePlayerId();
+
+        $checkableSpaces = $this->globals->get(CHECKABLE_SPACES);
+
+        if (!in_array($space_id, $checkableSpaces)) {
+            throw new \BgaVisibleSystemException("Invalid space");
+        }
+
+        $checkableSpaces = array_filter(
+            $checkableSpaces,
+            function ($l_space_id) use ($space_id) {
+                return $l_space_id !== $space_id;
+            }
+        );
+        $this->globals->set(CHECKABLE_SPACES, array_values($checkableSpaces));
+
+        $this->notify->all(
+            "message",
+            clienttranslate('${player_name} checks the space ${space_label}'),
+            [
+                "player_id" => $player_id,
+                "player_name" => $this->getActivePlayerName(),
+                "space_label" => $space_id,
+                "space_id" => $space_id,
+            ]
+        );
+
+        $digit_id = substr($space_id, 0, 1);
+        $digit = (array) $this->DIGITS[$digit_id];
+        $digitPosition = (int) $digit["position"];
+
+        $space = (array) $this->SPACES[$space_id];
+        $x = (int) $space["x"];
+        $y = (int) $space["y"];
+
+        $algarism = $this->globals->get("digit-{$digitPosition}");
+        $algarismSpaces = $this->ALGARISMS[$algarism];
+        $spaceFilled = !!$algarismSpaces[$y][$x];
+
+        $checkedSpaces = $this->globals->get(CHECKED_SPACES);
+        $checkedSpaces[$space_id] = $spaceFilled;
+        $this->globals->set(CHECKED_SPACES, $checkedSpaces);
+
+        $this->notify->all(
+            "checkSpace",
+            clienttranslate('Space ${space_label} is ${filled_or_empty}'),
+            [
+                "space_label" => $space_id,
+                "filled_or_empty" => $spaceFilled ? clienttranslate("filled") : clienttranslate("empty"),
+                "i18n" => ["filled_or_empty"],
+                "space_id" => $space_id,
+                "spaceFilled" => $spaceFilled,
+            ]
+        );
+
+        $this->gamestate->nextState("nextPlayer");
+    }
+
     /**
      * Game state arguments and actions
      *
@@ -209,10 +275,12 @@ class Game extends \Table
     {
         $countableLines = $this->globals->get(COUNTABLE_LINES);
         $checkableDigits = $this->globals->get(CHECKABLE_DIGITS);
+        $checkableSpaces = $this->globals->get(CHECKABLE_SPACES);
 
         return [
             "countableLines" => $countableLines,
             "checkableDigits" => $checkableDigits,
+            "checkableSpaces" => $checkableSpaces,
         ];
     }
 
@@ -229,7 +297,7 @@ class Game extends \Table
 
     public function checkVersion(?int $clientVersion): void
     {
-        if ($clientVersion !== (int) $this->gamestate->table_globals[300]) {
+        if ($clientVersion && $clientVersion !== (int) $this->gamestate->table_globals[300]) {
             throw new \BgaUserException(clienttranslate("A new version is available. Please reload (F5) the page"));
         }
     }
@@ -355,6 +423,7 @@ class Game extends \Table
         $result["code"] = $this->getCode();
         $result["countedLines"] = $this->globals->get(COUNTED_LINES, []);
         $result["checkedDigits"] = $this->globals->get(CHECKED_DIGITS, []);
+        $result["checkedSpaces"] = $this->globals->get(CHECKED_SPACES, []);
 
         return $result;
     }
@@ -405,8 +474,12 @@ class Game extends \Table
 
         $this->globals->set(COUNTABLE_LINES, array_keys($this->LINES));
         $this->globals->set(COUNTED_LINES, []);
+
         $this->globals->set(CHECKABLE_DIGITS, array_keys($this->DIGITS));
         $this->globals->set(CHECKED_DIGITS, []);
+
+        $this->globals->set(CHECKABLE_SPACES, array_keys($this->SPACES));
+        $this->globals->set(CHECKED_SPACES, []);
 
         $this->activeNextPlayer();
     }
@@ -459,5 +532,10 @@ class Game extends \Table
     public function debug_countSpaces(string $line_id): void
     {
         $this->actCountSpaces(null, $line_id);
+    }
+
+    public function debug_checkSpace(string $space_id): void
+    {
+        $this->actCheckSpace(null, $space_id);
     }
 }
