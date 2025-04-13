@@ -21,7 +21,9 @@ declare(strict_types=1);
 namespace Bga\Games\DigitCode;
 
 const COUNTABLE_LINES = "countableLines";
+const COUNTED_LINES = "countedLines";
 const CHECKABLE_DIGITS = "checkableDigits";
+const CHECKED_DIGITS = "checkDigits";
 
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
 
@@ -109,28 +111,35 @@ class Game extends \Table
         );
         $this->globals->set(COUNTABLE_LINES, array_values($countableLines));
 
+        $countedLines = $this->globals->get(COUNTED_LINES);
+        $countedLines[$line_id] = $spaceCount;
+        $this->globals->set(COUNTED_LINES, $countedLines);
+
         $type_label = $lineType === "row" ? clienttranslate("row") : clienttranslate("column");
 
         $this->notify->all(
             "message",
-            clienttranslate('${player_name} counts the spaces of ${type_label} ${line_id}'),
+            clienttranslate('${player_name} counts the spaces of ${row_or_column} ${line_label}'),
             [
                 "player_id" => $player_id,
                 "player_name" => $this->getPlayerNameById($player_id),
-                "type_label" => $type_label,
-                "i18n" => ["type_label"],
+                "line_label" => $line_id,
+                "row_or_column" => $type_label,
+                "i18n" => ["row_or_column"],
+                "line_id" => $line_id,
             ]
         );
 
         $this->notify->all(
             "countSpaces",
-            clienttranslate('${type_label} ${line_id} has ${spaceCount} filled spaces'),
+            clienttranslate('${row_or_column} ${line_label} has ${spaceCount} filled spaces'),
             [
                 "spaceCount" => $spaceCount,
                 "lineType" => $lineType,
-                "type_label" => $type_label,
+                "row_or_column" => $type_label,
+                "line_label" => $line_id,
+                "i18n" => ["row_or_column"],
                 "line_id" => $line_id,
-                "i18n" => ["type_label"],
             ]
         );
 
@@ -159,24 +168,30 @@ class Game extends \Table
 
         $parity = $algarism % 2 === 0 ? "even" : "odd";
 
+        $checkedDigits = $this->globals->get(CHECKED_DIGITS);
+        $checkedDigits[$digit_id] = $parity;
+        $this->globals->set(CHECKED_DIGITS, $checkedDigits);
+
         $this->notify->all(
             "message",
-            clienttranslate('${player_name} asks the parity of ${digit_id}'),
+            clienttranslate('${player_name} asks the parity of ${digit_label}'),
             [
                 "player_id" => $player_id,
                 "player_name" => $this->getPlayerNameById($player_id),
+                "digit_label" => $digit_id,
                 "digit_id" => $digit_id,
             ]
         );
 
         $this->notify->all(
             "checkParity",
-            clienttranslate('${digit_id} is ${parity_label}'),
+            clienttranslate('${digit_label} is ${parity_label}'),
             [
                 "parity_label" => $parity === "even" ? _("even") : _("odd"),
+                "digit_label" => $digit_id,
+                "i18n" => ["parity_label"],
                 "parity" => $parity,
                 "digit_id" => $digit_id,
-                "i18n" => ["parity_label"],
             ]
         );
 
@@ -338,6 +353,8 @@ class Game extends \Table
             "SELECT `player_id` `id`, `player_score` `score` FROM `player`"
         );
         $result["code"] = $this->getCode();
+        $result["countedLines"] = $this->globals->get(COUNTED_LINES, []);
+        $result["checkedDigits"] = $this->globals->get(CHECKED_DIGITS, []);
 
         return $result;
     }
@@ -387,7 +404,9 @@ class Game extends \Table
         $this->setupCode($algarismsCounts);
 
         $this->globals->set(COUNTABLE_LINES, array_keys($this->LINES));
+        $this->globals->set(COUNTED_LINES, []);
         $this->globals->set(CHECKABLE_DIGITS, array_keys($this->DIGITS));
+        $this->globals->set(CHECKED_DIGITS, []);
 
         $this->activeNextPlayer();
     }

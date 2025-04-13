@@ -435,22 +435,27 @@
           <div
             id="dgt_rowMarker-J"
             class="dgt_rowMarker dgt_rowLabel dgt_label"
+            data-lineMarker="J"
           ></div>
           <div
             id="dgt_rowMarker-K"
             class="dgt_rowMarker dgt_rowLabel dgt_label"
+            data-lineMarker="K"
           ></div>
           <div
             id="dgt_rowMarker-L"
             class="dgt_rowMarker dgt_rowLabel dgt_label"
+            data-lineMarker="L"
           ></div>
           <div
             id="dgt_rowMarker-M"
             class="dgt_rowMarker dgt_rowLabel dgt_label"
+            data-lineMarker="M"
           ></div>
           <div
             id="dgt_rowMarker-N"
             class="dgt_rowMarker dgt_rowLabel dgt_label"
+            data-lineMarker="N"
           ></div>
         </div>
       </div>
@@ -831,22 +836,27 @@
           <div
             id="dgt_rowMarker-O"
             class="dgt_rowMarker dgt_rowLabel dgt_label"
+            data-lineMarker="O"
           ></div>
           <div
             id="dgt_rowMarker-P"
             class="dgt_rowMarker dgt_rowLabel dgt_label"
+            data-lineMarker="P"
           ></div>
           <div
             id="dgt_rowMarker-Q"
             class="dgt_rowMarker dgt_rowLabel dgt_label"
+            data-lineMarker="Q"
           ></div>
           <div
             id="dgt_rowMarker-R"
             class="dgt_rowMarker dgt_rowLabel dgt_label"
+            data-lineMarker="R"
           ></div>
           <div
             id="dgt_rowMarker-S"
             class="dgt_rowMarker dgt_rowLabel dgt_label"
+            data-lineMarker="S"
           ></div>
         </div>
       </div>
@@ -856,42 +866,51 @@
         <div
           id="dgt_columnMarker-A"
           class="dgt_columnMarker dgt_columnLabel dgt_label"
+          data-lineMarker="A"
         ></div>
         <div
           id="dgt_columnMarker-B"
           class="dgt_columnMarker dgt_columnLabel dgt_label"
+          data-lineMarker="B"
         ></div>
         <div
           id="dgt_columnMarker-C"
           class="dgt_columnMarker dgt_columnLabel dgt_label"
+          data-lineMarker="C"
         ></div>
       </div>
       <div class="dgt_columnGroup">
         <div
           id="dgt_columnMarker-D"
           class="dgt_columnMarker dgt_columnLabel dgt_label"
+          data-lineMarker="D"
         ></div>
         <div
           id="dgt_columnMarker-E"
           class="dgt_columnMarker dgt_columnLabel dgt_label"
+          data-lineMarker="E"
         ></div>
         <div
           id="dgt_columnMarker-F"
           class="dgt_columnMarker dgt_columnLabel dgt_label"
+          data-lineMarker="F"
         ></div>
       </div>
       <div class="dgt_columnGroup">
         <div
           id="dgt_columnMarker-G"
           class="dgt_columnMarker dgt_columnLabel dgt_label"
+          data-lineMarker="G"
         ></div>
         <div
           id="dgt_columnMarker-H"
           class="dgt_columnMarker dgt_columnLabel dgt_label"
+          data-lineMarker="H"
         ></div>
         <div
           id="dgt_columnMarker-I"
           class="dgt_columnMarker dgt_columnLabel dgt_label"
+          data-lineMarker="I"
         ></div>
       </div>
     </div>

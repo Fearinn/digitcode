@@ -31,6 +31,19 @@ define([
 
       console.log(gamedatas.code, "CODE");
       console.log("Ending game setup");
+
+      for (const line_id in gamedatas.countedLines) {
+        const spaceCount = gamedatas.countedLines[line_id];
+        const lineMarker = document.querySelector(`[data-lineMarker=${line_id}`);
+        lineMarker.classList.add("dgt_lineMarker-confirmed");
+        lineMarker.textContent = spaceCount;
+      }
+
+      for (const digit_id in gamedatas.checkedDigits) {
+        const parity = gamedatas.checkedDigits[digit_id];
+        const parityMarker = document.getElementById(`dgt_parityMarker-${parity}-${digit_id}`);
+        parityMarker.classList.add("dgt_parityMarker-confirmed");
+      }
     },
 
     ///////////////////////////////////////////////////
@@ -201,8 +214,8 @@ define([
     },
 
     notif_countSpaces: function (args) {
-      const { line_id, lineType, spaceCount } = args;
-      document.getElementById(`dgt_${lineType}Marker-${line_id}`).textContent =
+      const { line_id, spaceCount } = args;
+      document.querySelector(`[data-lineMarker=${line_id}`).textContent =
         spaceCount;
     },
 

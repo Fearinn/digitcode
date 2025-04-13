@@ -2,6 +2,7 @@
   &-selectable {
     border-color: green;
     border-style: dashed;
+    border-width: 2px !important;
     cursor: pointer;
     z-index: 2;
   }
@@ -12,7 +13,6 @@
   }
 
   &-selected {
-    border-width: 2px !important;
     border-style: solid;
     transform: scale(1.1);
     z-index: 3;

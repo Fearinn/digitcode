@@ -206,6 +206,7 @@
 .dgt_label-selectable {
   border-color: green;
   border-style: dashed;
+  border-width: 2px !important;
   cursor: pointer;
   z-index: 2;
 }
@@ -214,13 +215,16 @@
   opacity: 0.5;
 }
 .dgt_label-selected {
-  border-width: 2px !important;
   border-style: solid;
   transform: scale(1.1);
   z-index: 3;
 }
 
 .dgt_parityMarker-confirmed {
+  color: red;
+}
+
+.dgt_lineMarker-confirmed {
   color: red;
 }
 
