@@ -180,7 +180,7 @@ define([
     //// Player's actions
 
     performAction: function (action, args = {}, config = {}) {
-      args.clientVersion = this.gamedatas.clientVersion;
+      args.clientVersion = this.gamedatas.GAME_VERSION;
       this.bgaPerformAction(action, args, config);
     },
 

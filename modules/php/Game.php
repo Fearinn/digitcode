@@ -58,6 +58,8 @@ class Game extends \Table
 
     public function actCountSpaces(?int $clientVersion, string $line_id)
     {
+        $this->checkVersion($clientVersion);
+
         $player_id = $this->getActivePlayerId();
 
         $line = (array) $this->LINES[$line_id];
@@ -137,6 +139,8 @@ class Game extends \Table
 
     public function actCheckParity(?int $clientVersion, string $digit_id): void
     {
+        $this->checkVersion($clientVersion);
+
         $player_id = (int) $this->getActivePlayerId();
 
         $digit = (array) $this->DIGITS[$digit_id];
@@ -180,9 +184,8 @@ class Game extends \Table
     }
 
     /**
-     * Game state arguments, example content.
+     * Game state arguments and actions
      *
-     * This method returns some additional information that is very specific to the `playerTurn` game state.
      *
      * @return array
      * @see ./states.inc.php
@@ -208,6 +211,13 @@ class Game extends \Table
     }
 
     // Utility functions
+
+    public function checkVersion(?int $clientVersion): void
+    {
+        if ($clientVersion !== (int) $this->gamestate->table_globals[300]) {
+            throw new \BgaUserException(clienttranslate("A new version is available. Please reload (F5) the page"));
+        }
+    }
 
     public function setupCode(array &$algarismsCounts, int $position = 1): void
     {
@@ -278,7 +288,6 @@ class Game extends \Table
      *
      * The action method of state `nextPlayer` is called everytime the current game state is set to `nextPlayer`.
      */
-    public function stNextPlayer(): void {}
 
     /**
      * Migrate database.
@@ -324,6 +333,7 @@ class Game extends \Table
 
         $current_player_id = (int) $this->getCurrentPlayerId();
 
+        $result["GAME_VERSION"] = (int) $this->gamestate->table_globals[300];
         $result["players"] = $this->getCollectionFromDb(
             "SELECT `player_id` `id`, `player_score` `score` FROM `player`"
         );
