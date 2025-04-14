@@ -275,7 +275,16 @@ class Game extends \Table
 
         $player_id = $this->getActivePlayerId();
 
+        $digit_ids = [$digit1_id, $digit2_id];
+        sort($digit_ids);
+        $comparison_id = implode("", $digit_ids);
+
         $comparableDigits = $this->globals->get(COMPARABLE_DIGITS);
+
+        if (!in_array($comparison_id, $comparableDigits)) {
+            throw new \BgaVisibleSystemException("Invalid comparison");
+        };
+
         $comparableDigits = array_filter(
             $comparableDigits,
             function ($comparison_id) use ($digit1_id, $digit2_id) {
@@ -305,10 +314,8 @@ class Game extends \Table
         arsort($algarisms);
 
         $largerDigit_id = key($algarisms);
-
-        $digit_ids = [$digit1_id, $digit2_id];
-        sort($digit_ids);
-        $comparison_id = implode("", $digit_ids);
+        next($algarisms);
+        $smallerDigit_id = key($algarisms);
 
         $comparedDigits = $this->globals->get(COMPARED_DIGITS);
         $comparedDigits[$comparison_id] = $largerDigit_id;
@@ -316,10 +323,12 @@ class Game extends \Table
 
         $this->notify->all(
             "compareDigits",
-            clienttranslate('${digit_label} is larger'),
+            clienttranslate('${digit_label} is larger than ${smallerDigit_label}'),
             [
                 "digit_label" => $largerDigit_id,
+                "smallerDigit_label" => $smallerDigit_id,
                 "digit_id" => $largerDigit_id,
+                "smallerDigit_id" => $smallerDigit_id
             ]
         );
 

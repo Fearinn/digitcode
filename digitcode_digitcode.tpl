@@ -19,14 +19,15 @@
         data-comparison="TU"
       >
         <i
-          id="dgt_comparisonIcon-T"
+          id="dgt_comparisonIcon-T_U"
           class="fa6 fa6-solid fa6-greater-than"
-          data-comparisonIcon="T"
+          data-comparisonIcon="T>U"
+          ,
         ></i>
         <i
-          id="dgt_comparisonIcon-U"
+          id="dgt_comparisonIcon-U_T"
           class="fa6 fa6-solid fa6-less-than"
-          data-comparisonIcon="U"
+          data-comparisonIcon="U>T"
         ></i>
       </div>
       <div
@@ -35,14 +36,14 @@
         data-comparison="UV"
       >
         <i
-          id="dgt_comparisonIcon-U"
+          id="dgt_comparisonIcon-U_V"
           class="fa6 fa6-solid fa6-greater-than"
-          data-comparisonIcon="U"
+          data-comparisonIcon="U>V"
         ></i>
         <i
-          id="dgt_comparisonIcon-V"
+          id="dgt_comparisonIcon-V_U"
           class="fa6 fa6-solid fa6-less-than"
-          data-comparisonIcon="V"
+          data-comparisonIcon="V>U"
         ></i>
       </div>
     </div>
@@ -53,30 +54,30 @@
         data-comparison="TW"
       >
         <i
-          id="dgt_comparisonIcon-T"
+          id="dgt_comparisonIcon-T_W"
           class="fa6 fa6-solid fa6-greater-than"
-          data-comparisonIcon="T"
+          data-comparisonIcon="T>W"
         ></i>
         <i
-          id="dgt_comparisonIcon-W"
+          id="dgt_comparisonIcon-W_T"
           class="fa6 fa6-solid fa6-less-than"
-          data-comparisonIcon="W"
+          data-comparisonIcon="W>T"
         ></i>
       </div>
       <div
-        id="dgt_comparisonMarker-UX"
+        id="dgt_comparisonMarker-U_X"
         class="dgt_comparisonMarker"
         data-comparison="UX"
       >
         <i
-          id="dgt_comparisonIcon-U"
+          id="dgt_comparisonIcon-X_U"
           class="fa6 fa6-solid fa6-greater-than"
-          data-comparisonIcon="U"
+          data-comparisonIcon="U>X"
         ></i>
         <i
-          id="dgt_comparisonIcon-X"
+          id="dgt_comparisonIcon-X>U"
           class="fa6 fa6-solid fa6-less-than"
-          data-comparisonIcon="X"
+          data-comparisonIcon="X>U"
         ></i>
       </div>
       <div
@@ -85,48 +86,48 @@
         data-comparison="VY"
       >
         <i
-          id="dgt_comparisonIcon-V"
+          id="dgt_comparisonIcon-V_Y"
           class="fa6 fa6-solid fa6-greater-than"
-          data-comparisonIcon="V"
+          data-comparisonIcon="V>Y"
         ></i>
         <i
-          id="dgt_comparisonIcon-Y"
+          id="dgt_comparisonIcon-Y_V"
           class="fa6 fa6-solid fa6-less-than"
-          data-comparisonIcon="Y"
+          data-comparisonIcon="Y>V"
         ></i>
       </div>
     </div>
     <div class="dgt_comparisonMarkers-bottom dgt_comparisonMarkers">
-      <div
-        id="dgt_comparisonMarker-XY"
-        class="dgt_comparisonMarker"
-        data-comparison="XY"
-      >
-        <i
-          id="dgt_comparisonIcon-X"
-          class="fa6 fa6-solid fa6-greater-than"
-          data-comparisonIcon="X"
-        ></i>
-        <i
-          id="dgt_comparisonIcon-Y"
-          class="fa6 fa6-solid fa6-less-than"
-          data-comparisonIcon="Y"
-        ></i>
-      </div>
       <div
         id="dgt_comparisonMarker-WX"
         class="dgt_comparisonMarker"
         data-comparison="WX"
       >
         <i
-          id="dgt_comparisonIcon-W"
+          id="dgt_comparisonIcon-W_X"
           class="fa6 fa6-solid fa6-greater-than"
-          data-comparisonIcon="W"
+          data-comparisonIcon="W>X"
         ></i>
         <i
-          id="dgt_comparisonIcon-X"
+          id="dgt_comparisonIcon-X_W"
           class="fa6 fa6-solid fa6-less-than"
-          data-comparisonIcon="X"
+          data-comparisonIcon="X>W"
+        ></i>
+      </div>
+      <div
+        id="dgt_comparisonMarker-XY"
+        class="dgt_comparisonMarker"
+        data-comparison="XY"
+      >
+        <i
+          id="dgt_comparisonIcon-X_Y"
+          class="fa6 fa6-solid fa6-greater-than"
+          data-comparisonIcon="X>Y"
+        ></i>
+        <i
+          id="dgt_comparisonIcon-Y_X"
+          class="fa6 fa6-solid fa6-less-than"
+          data-comparisonIcon="Y>X"
         ></i>
       </div>
     </div>

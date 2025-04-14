@@ -60,12 +60,19 @@ define([
 
       for (const comparison_id in gamedatas.comparedDigits) {
         const digit_id = gamedatas.comparedDigits[comparison_id];
+        const smallerDigit_id = comparison_id.split("").filter((l_digit_id) => {
+          return digit_id != l_digit_id;
+        })[0];
 
         const comparisonIcon = document.querySelector(
-          `[data-comparisonIcon="${digit_id}"]`
+          `[data-comparisonIcon="${digit_id}>${smallerDigit_id}"]`
         );
         comparisonIcon.classList.add(`dgt_comparisonIcon-confirmed`);
-        this.addTooltip(comparisonIcon.id, _("larger"), "");
+        this.addTooltip(
+          comparisonIcon.id,
+          this.format_string(_("${digit_id} is larger"), { digit_id }),
+          ""
+        );
       }
     },
 
@@ -99,7 +106,7 @@ define([
           comparableDigits,
         } = args.args;
 
-        this.statusBar.addActionButton(_("Count spaces"), () => {
+        this.statusBar.addActionButton(_("(Row / column) count spaces"), () => {
           this.setClientState("client_countSpaces", {
             descriptionmyturn: _(
               "${you} must pick the column or row to count the spaces from"
@@ -110,7 +117,7 @@ define([
           });
         });
 
-        this.statusBar.addActionButton(_("Check parity"), () => {
+        this.statusBar.addActionButton(_("(Number) even or odd?"), () => {
           this.setClientState("client_checkParity", {
             descriptionmyturn: _(
               "${you} must pick a number to check its parity"
@@ -121,7 +128,7 @@ define([
           });
         });
 
-        this.statusBar.addActionButton(_("Check space"), () => {
+        this.statusBar.addActionButton(_("(Space) empty or filled?"), () => {
           this.setClientState("client_checkSpace", {
             descriptionmyturn: _(
               "${you} must pick a space to check if it's filled"
@@ -132,7 +139,7 @@ define([
           });
         });
 
-        this.statusBar.addActionButton(_("Compare digits"), () => {
+        this.statusBar.addActionButton(_("Compare numbers"), () => {
           this.setClientState("client_compareDigits", {
             descriptionmyturn: _(
               "${you} must pick two adjacent numbers to compare"
@@ -311,14 +318,15 @@ define([
       comparisonElements.forEach((comparisonElement) => {
         if (unselect) {
           comparisonElement.classList.remove("dgt_comparisonMarker-selectable");
-          comparisonElement.classList.remove("dgt_comparisonMarker-unselectable");
+          comparisonElement.classList.remove(
+            "dgt_comparisonMarker-unselectable"
+          );
           comparisonElement.classList.remove("dgt_comparisonMarker-selected");
           comparisonElement.onclick = undefined;
           return;
         }
 
         const comparison_id = comparisonElement.dataset.comparison;
-        console.log(comparisonElement, "COMPARISON");
 
         const isSelectable = selectableComparisons.includes(comparison_id);
         const selectableOrUnselectable = isSelectable
@@ -412,13 +420,17 @@ define([
     },
 
     notif_compareDigits: function (args) {
-      const { digit_id } = args;
+      const { digit_id, smallerDigit_id } = args;
       const comparisonIcon = document.querySelector(
-        `[data-comparisonIcon="${digit_id}"]`
+        `[data-comparisonIcon="${digit_id}>${smallerDigit_id}"]`
       );
 
       comparisonIcon.classList.add(`dgt_comparisonIcon-confirmed`);
-      this.addTooltip(comparisonIcon.id, _("larger"), "");
+      this.addTooltip(
+        comparisonIcon.id,
+        this.format_string(_("${digit_id} is larger"), { digit_id }),
+        ""
+      );
     },
   });
 });
