@@ -32,6 +32,22 @@ define([
       console.log(gamedatas.code, "CODE");
       console.log("Ending game setup");
 
+      // document.querySelectorAll("[data-lineMarker]").forEach((labelElement) => {
+      //   labelElement.onclick = () => {
+      //     labelElement.classList.toggle("dgt_lineMarker-draft");
+      //   }
+      // });
+
+      document.querySelectorAll("[data-space]").forEach((spaceElement) => {
+        spaceElement.addEventListener("click", () => {
+          if (this.getStateName().includes("client_")) {
+            return;
+          }
+
+          spaceElement.classList.toggle("dgt_space-draft");
+        });
+      });
+
       for (const line_id in gamedatas.countedLines) {
         const spaceCount = gamedatas.countedLines[line_id];
         const lineMarker = document.querySelector(
@@ -211,6 +227,10 @@ define([
 
     ///////////////////////////////////////////////////
     //// Utility methods
+
+    getStateName: function () {
+      return this.gamedatas.gamestate.name;
+    },
 
     toggleConfirmationBtn: function (add = false, callback = () => {}) {
       document.getElementById("dgt_confirmationBtn")?.remove();

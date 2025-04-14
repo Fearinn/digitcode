@@ -37,6 +37,7 @@
   flex-direction: column;
   justify-content: center;
   height: 100%;
+  z-index: 1;
 
   &-left {
     left: calc(var(--spaceWidth) / 2);
@@ -48,6 +49,7 @@
 
   &-middle {
     justify-content: space-between;
+    z-index: 0;
   }
 }
 
@@ -76,6 +78,7 @@
   height: 98%;
   width: 90%;
   clip-path: var(--spaceShape); 
+  cursor: pointer;
 
   &-middle {
     height: 90%;
