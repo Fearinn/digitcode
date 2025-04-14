@@ -57,6 +57,16 @@ define([
         spaceElement.classList.add(`dgt_space-confirmed-${filledOrEmpty}`);
         this.addTooltip(spaceElement.id, _(filledOrEmpty), "");
       }
+
+      for (const comparison_id in gamedatas.comparedDigits) {
+        const digit_id = gamedatas.comparedDigits[comparison_id];
+
+        const comparisonIcon = document.querySelector(
+          `[data-comparisonIcon="${digit_id}"]`
+        );
+        comparisonIcon.classList.add(`dgt_comparisonIcon-confirmed`);
+        this.addTooltip(comparisonIcon.id, _("larger"), "");
+      }
     },
 
     ///////////////////////////////////////////////////
@@ -82,7 +92,12 @@ define([
       }
 
       if (stateName === "playerTurn") {
-        const { countableLines, checkableDigits, checkableSpaces } = args.args;
+        const {
+          countableLines,
+          checkableDigits,
+          checkableSpaces,
+          comparableDigits,
+        } = args.args;
 
         this.statusBar.addActionButton(_("Count spaces"), () => {
           this.setClientState("client_countSpaces", {
@@ -98,7 +113,7 @@ define([
         this.statusBar.addActionButton(_("Check parity"), () => {
           this.setClientState("client_checkParity", {
             descriptionmyturn: _(
-              "${you} must pick a digit to check its parity"
+              "${you} must pick a number to check its parity"
             ),
             client_args: {
               checkableDigits,
@@ -113,6 +128,17 @@ define([
             ),
             client_args: {
               checkableSpaces,
+            },
+          });
+        });
+
+        this.statusBar.addActionButton(_("Compare digits"), () => {
+          this.setClientState("client_compareDigits", {
+            descriptionmyturn: _(
+              "${you} must pick two adjacent numbers to compare"
+            ),
+            client_args: {
+              comparableDigits,
             },
           });
         });
@@ -136,6 +162,11 @@ define([
         const { checkableSpaces } = args.client_args;
         this.setSelectableSpaces(checkableSpaces);
       }
+
+      if (stateName === "client_compareDigits") {
+        const { comparableDigits } = args.client_args;
+        this.setSelectableComparisons(comparableDigits);
+      }
     },
 
     onLeavingState: function (stateName) {
@@ -151,6 +182,10 @@ define([
 
       if (stateName === "client_checkSpace") {
         this.setSelectableSpaces(null, true);
+      }
+
+      if (stateName === "client_compareDigits") {
+        this.setSelectableComparisons(null, true);
       }
     },
 
@@ -268,6 +303,57 @@ define([
       });
     },
 
+    setSelectableComparisons: function (
+      selectableComparisons,
+      unselect = false
+    ) {
+      const comparisonElements = document.querySelectorAll("[data-comparison]");
+      comparisonElements.forEach((comparisonElement) => {
+        if (unselect) {
+          comparisonElement.classList.remove("dgt_comparisonMarker-selectable");
+          comparisonElement.classList.remove("dgt_comparisonMarker-unselectable");
+          comparisonElement.classList.remove("dgt_comparisonMarker-selected");
+          comparisonElement.onclick = undefined;
+          return;
+        }
+
+        const comparison_id = comparisonElement.dataset.comparison;
+        console.log(comparisonElement, "COMPARISON");
+
+        const isSelectable = selectableComparisons.includes(comparison_id);
+        const selectableOrUnselectable = isSelectable
+          ? "selectable"
+          : "unselectable";
+        comparisonElement.classList.add(
+          `dgt_comparisonMarker-${selectableOrUnselectable}`
+        );
+
+        if (isSelectable) {
+          const selectedClass = "dgt_comparisonMarker-selected";
+          comparisonElement.onclick = () => {
+            const isSelected =
+              !comparisonElement.classList.contains(selectedClass);
+
+            this.toggleConfirmationBtn(isSelected, () => {
+              this.actCompareDigits(comparison_id);
+            });
+
+            if (isSelected) {
+              comparisonElements.forEach((loopElement) => {
+                if (loopElement.id == comparisonElement.id) {
+                  return;
+                }
+
+                loopElement.classList.remove(selectedClass);
+              });
+            }
+
+            comparisonElement.classList.toggle(selectedClass);
+          };
+        }
+      });
+    },
+
     ///////////////////////////////////////////////////
     //// Player's actions
 
@@ -286,6 +372,11 @@ define([
 
     actCheckSpace: function (space_id) {
       this.performAction("actCheckSpace", { space_id });
+    },
+
+    actCompareDigits: function (comparison_id) {
+      const [digit1_id, digit2_id] = comparison_id.split("");
+      this.performAction("actCompareDigits", { digit1_id, digit2_id });
     },
 
     ///////////////////////////////////////////////////
@@ -318,6 +409,16 @@ define([
       const spaceElement = document.getElementById(`dgt_space-${space_id}`);
       spaceElement.classList.add(`dgt_space-confirmed-${filledOrEmpty}`);
       this.addTooltip(spaceElement.id, _(filledOrEmpty), "");
+    },
+
+    notif_compareDigits: function (args) {
+      const { digit_id } = args;
+      const comparisonIcon = document.querySelector(
+        `[data-comparisonIcon="${digit_id}"]`
+      );
+
+      comparisonIcon.classList.add(`dgt_comparisonIcon-confirmed`);
+      this.addTooltip(comparisonIcon.id, _("larger"), "");
     },
   });
 });

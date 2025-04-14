@@ -28,6 +28,8 @@ const CHECKABLE_DIGITS = "checkableDigits";
 const CHECKED_DIGITS = "checkDigits";
 const CHECKABLE_SPACES = "checkableSpaces";
 const CHECKED_SPACES = "checkedSpaces";
+const COMPARABLE_DIGITS = "comparableDigits";
+const COMPARED_DIGITS = "comparedDigits";
 
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
 
@@ -251,13 +253,73 @@ class Game extends \Table
 
         $this->notify->all(
             "checkSpace",
-            clienttranslate('Space ${space_label} is ${filled_or_empty}'),
+            clienttranslate('${space_label} is ${filled_or_empty}'),
             [
                 "space_label" => $space_id,
                 "filled_or_empty" => $spaceFilled ? clienttranslate("filled") : clienttranslate("empty"),
                 "i18n" => ["filled_or_empty"],
                 "space_id" => $space_id,
                 "spaceFilled" => $spaceFilled,
+            ]
+        );
+
+        $this->gamestate->nextState("nextPlayer");
+    }
+
+    public function actCompareDigits(
+        ?int $checkVersion,
+        #[StringParam(enum: ["T", "U", "V", "W", "X", "Y"])] string $digit1_id,
+        #[StringParam(enum: ["T", "U", "V", "W", "X", "Y"])] string $digit2_id
+    ): void {
+        $this->checkVersion($checkVersion);
+
+        $player_id = $this->getActivePlayerId();
+
+        $comparableDigits = $this->globals->get(COMPARABLE_DIGITS);
+        $comparableDigits = array_filter(
+            $comparableDigits,
+            function ($comparison_id) use ($digit1_id, $digit2_id) {
+                return !(str_contains($comparison_id, $digit1_id) && str_contains($comparison_id, $digit2_id));
+            }
+        );
+        $this->globals->set(COMPARABLE_DIGITS, array_values($comparableDigits));
+
+        $this->notify->all(
+            "message",
+            clienttranslate('${player_name} compares ${digit1_label} and ${digit2_label}'),
+            [
+                "player_id" => $player_id,
+                "player_name" => $this->getPlayerNameById($player_id),
+                "digit1_label" => $digit1_id,
+                "digit2_label" => $digit2_id,
+            ]
+        );
+
+        $position1 = (int) $this->DIGITS[$digit1_id]["position"];
+        $position2 = (int) $this->DIGITS[$digit2_id]["position"];
+
+        $algarism1 = $this->globals->get("digit-{$position1}");
+        $algarism2 = $this->globals->get("digit-{$position2}");
+
+        $algarisms = [$digit1_id => $algarism1, $digit2_id => $algarism2];
+        arsort($algarisms);
+
+        $largerDigit_id = key($algarisms);
+
+        $digit_ids = [$digit1_id, $digit2_id];
+        sort($digit_ids);
+        $comparison_id = implode("", $digit_ids);
+
+        $comparedDigits = $this->globals->get(COMPARED_DIGITS);
+        $comparedDigits[$comparison_id] = $largerDigit_id;
+        $this->globals->set(COMPARED_DIGITS, $comparedDigits);
+
+        $this->notify->all(
+            "compareDigits",
+            clienttranslate('${digit_label} is larger'),
+            [
+                "digit_label" => $largerDigit_id,
+                "digit_id" => $largerDigit_id,
             ]
         );
 
@@ -276,11 +338,13 @@ class Game extends \Table
         $countableLines = $this->globals->get(COUNTABLE_LINES);
         $checkableDigits = $this->globals->get(CHECKABLE_DIGITS);
         $checkableSpaces = $this->globals->get(CHECKABLE_SPACES);
+        $comparableDigits = $this->globals->get(COMPARABLE_DIGITS);
 
         return [
             "countableLines" => $countableLines,
             "checkableDigits" => $checkableDigits,
             "checkableSpaces" => $checkableSpaces,
+            "comparableDigits" => $comparableDigits,
         ];
     }
 
@@ -424,6 +488,7 @@ class Game extends \Table
         $result["countedLines"] = $this->globals->get(COUNTED_LINES, []);
         $result["checkedDigits"] = $this->globals->get(CHECKED_DIGITS, []);
         $result["checkedSpaces"] = $this->globals->get(CHECKED_SPACES, []);
+        $result["comparedDigits"] = $this->globals->get(COMPARED_DIGITS, []);
 
         return $result;
     }
@@ -481,6 +546,9 @@ class Game extends \Table
         $this->globals->set(CHECKABLE_SPACES, array_keys($this->SPACES));
         $this->globals->set(CHECKED_SPACES, []);
 
+        $this->globals->set(COMPARABLE_DIGITS, $this->COMPARISONS);
+        $this->globals->set(COMPARED_DIGITS, []);
+
         $this->activeNextPlayer();
     }
 
@@ -537,5 +605,10 @@ class Game extends \Table
     public function debug_checkSpace(string $space_id): void
     {
         $this->actCheckSpace(null, $space_id);
+    }
+
+    public function debug_compareDigits(string $digit1_id, string $digit2_id): void
+    {
+        $this->actCompareDigits(null, $digit1_id, $digit2_id);
     }
 }

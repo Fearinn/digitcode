@@ -34,3 +34,19 @@
     background-color: green;
   }
 }
+
+.dgt_comparisonMarker {
+  &-selectable {
+    outline:  2px dashed green;
+    cursor: pointer;
+  }
+
+  &-unselectable {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &-selected {
+    outline-style: solid;
+  }
+}

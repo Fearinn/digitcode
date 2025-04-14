@@ -12,38 +12,122 @@
 
 <div id="dgt_gameArea" class="dgt_gameArea">
   <div id="dgt_solutionSheet" class="dgt_solutionSheet whiteblock">
-    <div class="dgt_comparisonMarkers-left dgt_comparisonMarkers">
-      <div id="dgt_comparisonMarker-TU" class="dgt_comparisonMarker">
-        <i class="fa6 fa6-solid fa6-greater-than"></i>
-        <i class="fa6 fa6-solid fa6-less-than"></i>
+    <div class="dgt_comparisonMarkers-top dgt_comparisonMarkers">
+      <div
+        id="dgt_comparisonMarker-TU"
+        class="dgt_comparisonMarker"
+        data-comparison="TU"
+      >
+        <i
+          id="dgt_comparisonIcon-T"
+          class="fa6 fa6-solid fa6-greater-than"
+          data-comparisonIcon="T"
+        ></i>
+        <i
+          id="dgt_comparisonIcon-U"
+          class="fa6 fa6-solid fa6-less-than"
+          data-comparisonIcon="U"
+        ></i>
       </div>
-      <div id="dgt_comparisonMarker-WX" class="dgt_comparisonMarker">
-        <i class="fa6 fa6-solid fa6-greater-than"></i>
-        <i class="fa6 fa6-solid fa6-less-than"></i>
+      <div
+        id="dgt_comparisonMarker-UV"
+        class="dgt_comparisonMarker"
+        data-comparison="UV"
+      >
+        <i
+          id="dgt_comparisonIcon-U"
+          class="fa6 fa6-solid fa6-greater-than"
+          data-comparisonIcon="U"
+        ></i>
+        <i
+          id="dgt_comparisonIcon-V"
+          class="fa6 fa6-solid fa6-less-than"
+          data-comparisonIcon="V"
+        ></i>
       </div>
     </div>
     <div class="dgt_comparisonMarkers-middle dgt_comparisonMarkers">
-      <div id="dgt_comparisonMarker-TW" class="dgt_comparisonMarker">
-        <i class="fa6 fa6-solid fa6-greater-than"></i>
-        <i class="fa6 fa6-solid fa6-less-than"></i>
+      <div
+        id="dgt_comparisonMarker-TW"
+        class="dgt_comparisonMarker"
+        data-comparison="TW"
+      >
+        <i
+          id="dgt_comparisonIcon-T"
+          class="fa6 fa6-solid fa6-greater-than"
+          data-comparisonIcon="T"
+        ></i>
+        <i
+          id="dgt_comparisonIcon-W"
+          class="fa6 fa6-solid fa6-less-than"
+          data-comparisonIcon="W"
+        ></i>
       </div>
-      <div id="dgt_comparisonMarker-UX" class="dgt_comparisonMarker">
-        <i class="fa6 fa6-solid fa6-greater-than"></i>
-        <i class="fa6 fa6-solid fa6-less-than"></i>
+      <div
+        id="dgt_comparisonMarker-UX"
+        class="dgt_comparisonMarker"
+        data-comparison="UX"
+      >
+        <i
+          id="dgt_comparisonIcon-U"
+          class="fa6 fa6-solid fa6-greater-than"
+          data-comparisonIcon="U"
+        ></i>
+        <i
+          id="dgt_comparisonIcon-X"
+          class="fa6 fa6-solid fa6-less-than"
+          data-comparisonIcon="X"
+        ></i>
       </div>
-      <div id="dgt_comparisonMarker-VY" class="dgt_comparisonMarker">
-        <i class="fa6 fa6-solid fa6-greater-than"></i>
-        <i class="fa6 fa6-solid fa6-less-than"></i>
+      <div
+        id="dgt_comparisonMarker-VY"
+        class="dgt_comparisonMarker"
+        data-comparison="VY"
+      >
+        <i
+          id="dgt_comparisonIcon-V"
+          class="fa6 fa6-solid fa6-greater-than"
+          data-comparisonIcon="V"
+        ></i>
+        <i
+          id="dgt_comparisonIcon-Y"
+          class="fa6 fa6-solid fa6-less-than"
+          data-comparisonIcon="Y"
+        ></i>
       </div>
     </div>
-    <div class="dgt_comparisonMarkers-right dgt_comparisonMarkers">
-      <div id="dgt_comparisonMarker-UV" class="dgt_comparisonMarker">
-        <i class="fa6 fa6-solid fa6-greater-than"></i>
-        <i class="fa6 fa6-solid fa6-less-than"></i>
+    <div class="dgt_comparisonMarkers-bottom dgt_comparisonMarkers">
+      <div
+        id="dgt_comparisonMarker-XY"
+        class="dgt_comparisonMarker"
+        data-comparison="XY"
+      >
+        <i
+          id="dgt_comparisonIcon-X"
+          class="fa6 fa6-solid fa6-greater-than"
+          data-comparisonIcon="X"
+        ></i>
+        <i
+          id="dgt_comparisonIcon-Y"
+          class="fa6 fa6-solid fa6-less-than"
+          data-comparisonIcon="Y"
+        ></i>
       </div>
-      <div id="dgt_comparisonMarker-XY" class="dgt_comparisonMarker">
-        <i class="fa6 fa6-solid fa6-greater-than"></i>
-        <i class="fa6 fa6-solid fa6-less-than"></i>
+      <div
+        id="dgt_comparisonMarker-WX"
+        class="dgt_comparisonMarker"
+        data-comparison="WX"
+      >
+        <i
+          id="dgt_comparisonIcon-W"
+          class="fa6 fa6-solid fa6-greater-than"
+          data-comparisonIcon="W"
+        ></i>
+        <i
+          id="dgt_comparisonIcon-X"
+          class="fa6 fa6-solid fa6-less-than"
+          data-comparisonIcon="X"
+        ></i>
       </div>
     </div>
     <div class="dgt_columnLabels">

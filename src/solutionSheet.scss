@@ -11,9 +11,8 @@
   left: calc(var(--digitsGap) * 2.25);
   display: flex;
   gap: calc(var(--digitsGap) * 1.75);
-  z-index: -1;
 
-  &-left {
+  &-top {
     top: calc(var(--digitsGap) * 1.5);
   }
 
@@ -27,12 +26,13 @@
     }
   }
 
-  &-right {
+  &-bottom {
     bottom: calc(var(--digitsGap) * 1.5);
   }
 }
 
 .dgt_comparisonMarker {
+  color: gray;
   height: 24px;
   width: 35px;
 }

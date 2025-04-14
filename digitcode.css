@@ -11,9 +11,8 @@
   left: calc(var(--digitsGap) * 2.25);
   display: flex;
   gap: calc(var(--digitsGap) * 1.75);
-  z-index: -1;
 }
-.dgt_comparisonMarkers-left {
+.dgt_comparisonMarkers-top {
   top: calc(var(--digitsGap) * 1.5);
 }
 .dgt_comparisonMarkers-middle {
@@ -24,11 +23,12 @@
 .dgt_comparisonMarkers-middle .dgt_comparisonMarker {
   transform: rotate(90deg);
 }
-.dgt_comparisonMarkers-right {
+.dgt_comparisonMarkers-bottom {
   bottom: calc(var(--digitsGap) * 1.5);
 }
 
 .dgt_comparisonMarker {
+  color: gray;
   height: 24px;
   width: 35px;
 }
@@ -232,6 +232,18 @@
   background-color: green;
 }
 
+.dgt_comparisonMarker-selectable {
+  outline: 2px dashed green;
+  cursor: pointer;
+}
+.dgt_comparisonMarker-unselectable {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.dgt_comparisonMarker-selected {
+  outline-style: solid;
+}
+
 .dgt_parityMarker-confirmed {
   color: red;
 }
@@ -246,6 +258,10 @@
 .dgt_space-confirmed-empty {
   background-color: cyan;
   filter: blur(6px);
+}
+
+.dgt_comparisonIcon-confirmed {
+  color: red;
 }
 
 :root {

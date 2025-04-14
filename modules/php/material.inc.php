@@ -372,3 +372,13 @@ $this->SPACES = [
                 "y" => 3,
         ],
 ];
+
+$this->COMPARISONS = [
+        "TU",
+        "TW",
+        "UV",
+        "UX",
+        "VY",
+        "WX",
+        "XY",
+];
