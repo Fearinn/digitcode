@@ -106,49 +106,60 @@ define([
           comparableDigits,
         } = args.args;
 
-        this.statusBar.addActionButton(_("(Row / column) count spaces"), () => {
-          this.setClientState("client_countSpaces", {
-            descriptionmyturn: _(
-              "${you} must pick the column or row to count the spaces from"
-            ),
-            client_args: {
-              countableLines,
-            },
-          });
-        });
+        if (countableLines.length > 0) {
+          this.statusBar.addActionButton(
+            _("(Row / column) count spaces"),
+            () => {
+              this.setClientState("client_countSpaces", {
+                descriptionmyturn: _(
+                  "${you} must pick the column or row to count the spaces from"
+                ),
+                client_args: {
+                  countableLines,
+                },
+              });
+            }
+          );
+        }
 
-        this.statusBar.addActionButton(_("(Number) even or odd?"), () => {
-          this.setClientState("client_checkParity", {
-            descriptionmyturn: _(
-              "${you} must pick a number to check its parity"
-            ),
-            client_args: {
-              checkableDigits,
-            },
+        if (checkableDigits.length > 0) {
+          this.statusBar.addActionButton(_("(Number) even or odd?"), () => {
+            this.setClientState("client_checkParity", {
+              descriptionmyturn: _(
+                "${you} must pick a number to check its parity"
+              ),
+              client_args: {
+                checkableDigits,
+              },
+            });
           });
-        });
+        }
 
-        this.statusBar.addActionButton(_("(Space) empty or filled?"), () => {
-          this.setClientState("client_checkSpace", {
-            descriptionmyturn: _(
-              "${you} must pick a space to check if it's filled"
-            ),
-            client_args: {
-              checkableSpaces,
-            },
+        if (checkableSpaces.length > 0) {
+          this.statusBar.addActionButton(_("(Space) empty or filled?"), () => {
+            this.setClientState("client_checkSpace", {
+              descriptionmyturn: _(
+                "${you} must pick a space to check if it's filled"
+              ),
+              client_args: {
+                checkableSpaces,
+              },
+            });
           });
-        });
+        }
 
-        this.statusBar.addActionButton(_("Compare numbers"), () => {
-          this.setClientState("client_compareDigits", {
-            descriptionmyturn: _(
-              "${you} must pick two adjacent numbers to compare"
-            ),
-            client_args: {
-              comparableDigits,
-            },
+        if (comparableDigits.length > 0) {
+          this.statusBar.addActionButton(_("Compare numbers"), () => {
+            this.setClientState("client_compareDigits", {
+              descriptionmyturn: _(
+                "${you} must pick two adjacent numbers to compare"
+              ),
+              client_args: {
+                comparableDigits,
+              },
+            });
           });
-        });
+        }
       }
 
       if (stateName === "client_countSpaces") {
