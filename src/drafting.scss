@@ -22,6 +22,13 @@
   }
 }
 
-[data-lineMarker] {
+.dgt_lineMarker {
   cursor: pointer;
+}
+
+.dgt_optionMarker {
+  cursor: pointer;
+  &-draft {
+    text-decoration: line-through black 2px;
+  }
 }

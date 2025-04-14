@@ -227,8 +227,15 @@
   color: black;
 }
 
-[data-lineMarker] {
+.dgt_lineMarker {
   cursor: pointer;
+}
+
+.dgt_optionMarker {
+  cursor: pointer;
+}
+.dgt_optionMarker-draft {
+  text-decoration: line-through black 2px;
 }
 
 .dgt_label-selectable {

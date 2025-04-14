@@ -118,6 +118,16 @@ define([
         });
       });
 
+      document.querySelectorAll("[data-optionMarker]").forEach((optionMarker) => {
+        optionMarker.addEventListener("click", () => {
+          if (this.getStateName().includes("client_")) {
+            return;
+          }
+
+          optionMarker.classList.toggle("dgt_optionMarker-draft");
+        });
+      });
+
       for (const line_id in gamedatas.countedLines) {
         const spaceCount = gamedatas.countedLines[line_id];
         const lineMarker = document.querySelector(
