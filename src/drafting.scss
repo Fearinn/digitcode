@@ -1,5 +1,15 @@
 .dgt_space {
-    &-draft {
-        background-color: black;
-    }
+  cursor: pointer;
+  
+  &-draft {
+    background-color: black;
+  }
+}
+
+.dgt_comparisonIcon {
+  cursor: pointer;
+
+  &-draft {
+    color: black;
+  }
 }

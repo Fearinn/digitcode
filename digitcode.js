@@ -48,6 +48,18 @@ define([
         });
       });
 
+      document
+        .querySelectorAll("[data-comparisonIcon]")
+        .forEach((comparisonIcon) => {
+          comparisonIcon.addEventListener("click", () => {
+            if (this.getStateName().includes("client_")) {
+              return;
+            }
+
+            comparisonIcon.classList.toggle("dgt_comparisonIcon-draft");
+          });
+        });
+
       for (const line_id in gamedatas.countedLines) {
         const spaceCount = gamedatas.countedLines[line_id];
         const lineMarker = document.querySelector(

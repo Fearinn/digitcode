@@ -157,7 +157,6 @@
   height: 98%;
   width: 90%;
   clip-path: var(--spaceShape);
-  cursor: pointer;
 }
 .dgt_space-middle {
   height: 90%;
@@ -206,8 +205,18 @@
   color: gray;
 }
 
+.dgt_space {
+  cursor: pointer;
+}
 .dgt_space-draft {
   background-color: black;
+}
+
+.dgt_comparisonIcon {
+  cursor: pointer;
+}
+.dgt_comparisonIcon-draft {
+  color: black;
 }
 
 .dgt_label-selectable {

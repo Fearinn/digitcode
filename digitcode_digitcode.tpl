@@ -20,13 +20,13 @@
       >
         <i
           id="dgt_comparisonIcon-T_U"
-          class="fa6 fa6-solid fa6-greater-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-greater-than"
           data-comparisonIcon="T>U"
           ,
         ></i>
         <i
           id="dgt_comparisonIcon-U_T"
-          class="fa6 fa6-solid fa6-less-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-less-than"
           data-comparisonIcon="U>T"
         ></i>
       </div>
@@ -37,12 +37,12 @@
       >
         <i
           id="dgt_comparisonIcon-U_V"
-          class="fa6 fa6-solid fa6-greater-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-greater-than"
           data-comparisonIcon="U>V"
         ></i>
         <i
           id="dgt_comparisonIcon-V_U"
-          class="fa6 fa6-solid fa6-less-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-less-than"
           data-comparisonIcon="V>U"
         ></i>
       </div>
@@ -55,12 +55,12 @@
       >
         <i
           id="dgt_comparisonIcon-T_W"
-          class="fa6 fa6-solid fa6-greater-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-greater-than"
           data-comparisonIcon="T>W"
         ></i>
         <i
           id="dgt_comparisonIcon-W_T"
-          class="fa6 fa6-solid fa6-less-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-less-than"
           data-comparisonIcon="W>T"
         ></i>
       </div>
@@ -71,12 +71,12 @@
       >
         <i
           id="dgt_comparisonIcon-X_U"
-          class="fa6 fa6-solid fa6-greater-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-greater-than"
           data-comparisonIcon="U>X"
         ></i>
         <i
           id="dgt_comparisonIcon-X>U"
-          class="fa6 fa6-solid fa6-less-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-less-than"
           data-comparisonIcon="X>U"
         ></i>
       </div>
@@ -87,12 +87,12 @@
       >
         <i
           id="dgt_comparisonIcon-V_Y"
-          class="fa6 fa6-solid fa6-greater-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-greater-than"
           data-comparisonIcon="V>Y"
         ></i>
         <i
           id="dgt_comparisonIcon-Y_V"
-          class="fa6 fa6-solid fa6-less-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-less-than"
           data-comparisonIcon="Y>V"
         ></i>
       </div>
@@ -105,12 +105,12 @@
       >
         <i
           id="dgt_comparisonIcon-W_X"
-          class="fa6 fa6-solid fa6-greater-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-greater-than"
           data-comparisonIcon="W>X"
         ></i>
         <i
           id="dgt_comparisonIcon-X_W"
-          class="fa6 fa6-solid fa6-less-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-less-than"
           data-comparisonIcon="X>W"
         ></i>
       </div>
@@ -121,12 +121,12 @@
       >
         <i
           id="dgt_comparisonIcon-X_Y"
-          class="fa6 fa6-solid fa6-greater-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-greater-than"
           data-comparisonIcon="X>Y"
         ></i>
         <i
           id="dgt_comparisonIcon-Y_X"
-          class="fa6 fa6-solid fa6-less-than"
+          class="dgt_comparisonIcon fa6 fa6-solid fa6-less-than"
           data-comparisonIcon="Y>X"
         ></i>
       </div>
