@@ -57,8 +57,66 @@ define([
             }
 
             comparisonIcon.classList.toggle("dgt_comparisonIcon-draft");
+
+            siblingIcon =
+              comparisonIcon.nextElementSibling ||
+              comparisonIcon.previousElementSibling;
+
+            if (comparisonIcon.classList.contains("dgt_comparisonIcon-draft")) {
+              siblingIcon.classList.remove("dgt_comparisonIcon-draft");
+            }
           });
         });
+
+      document
+        .querySelectorAll("[data-parityMarker]")
+        .forEach((parityMarker) => {
+          parityMarker.addEventListener("click", () => {
+            if (this.getStateName().includes("client_")) {
+              return;
+            }
+
+            parityMarker.classList.toggle("dgt_parityMarker-draft");
+
+            const siblingMarker =
+              parityMarker.nextElementSibling ||
+              parityMarker.previousElementSibling;
+
+            if (parityMarker.classList.contains("dgt_parityMarker-draft")) {
+              siblingMarker.classList.remove("dgt_parityMarker-draft");
+            }
+          });
+        });
+
+      document.querySelectorAll("[data-lineMarker]").forEach((lineMarker) => {
+        lineMarker.addEventListener("click", () => {
+          if (
+            this.getStateName().includes("client_") ||
+            lineMarker.classList.contains("dgt_lineMarker-confirmed")
+          ) {
+            return;
+          }
+
+          let spaceCount = Number(lineMarker.textContent) + 1;
+
+          lineType = lineMarker.dataset.linetype;
+          let max = lineType === "row" ? 3 : 4;
+
+          if (
+            ["B", "E", "H", "K", "M", "P", "R"].includes(
+              lineMarker.dataset.linemarker
+            )
+          ) {
+            max = 6;
+          }
+
+          if (spaceCount > max) {
+            spaceCount = 0;
+          }
+
+          lineMarker.textContent = spaceCount;
+        });
+      });
 
       for (const line_id in gamedatas.countedLines) {
         const spaceCount = gamedatas.countedLines[line_id];

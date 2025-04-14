@@ -1,6 +1,6 @@
 .dgt_space {
   cursor: pointer;
-  
+
   &-draft {
     background-color: black;
   }
@@ -12,4 +12,16 @@
   &-draft {
     color: black;
   }
+}
+
+.dgt_parityMarker {
+  cursor: pointer;
+
+  &-draft {
+    color: black;
+  }
+}
+
+[data-lineMarker] {
+  cursor: pointer;
 }

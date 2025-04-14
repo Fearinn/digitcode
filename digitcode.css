@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+  user-select: none;
 }
 
 .dgt_comparisonMarkers {
@@ -217,6 +218,17 @@
 }
 .dgt_comparisonIcon-draft {
   color: black;
+}
+
+.dgt_parityMarker {
+  cursor: pointer;
+}
+.dgt_parityMarker-draft {
+  color: black;
+}
+
+[data-lineMarker] {
+  cursor: pointer;
 }
 
 .dgt_label-selectable {

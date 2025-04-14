@@ -198,6 +198,8 @@
               <div
                 id="dgt_parityMarker-even-T"
                 class="dgt_parityMarker-even dgt_parityMarker"
+                data-parityMarker="T"
+                data-parity="even"
               >
                 <i class="fa fa-circle" aria-hidden="true"></i>
                 <i class="fa fa-circle" aria-hidden="true"></i>
@@ -205,6 +207,8 @@
               <div
                 id="dgt_parityMarker-odd-T"
                 class="dgt_parityMarker-odd dgt_parityMarker"
+                data-parity="odd"
+                data-parityMarker="T"
               >
                 <i class="fa fa-circle" aria-hidden="true"></i>
               </div>
@@ -291,6 +295,8 @@
               <div
                 id="dgt_parityMarker-even-U"
                 class="dgt_parityMarker-even dgt_parityMarker"
+                data-parityMarker="U"
+                data-parity="even"
               >
                 <i class="fa fa-circle" aria-hidden="true"></i>
                 <i class="fa fa-circle" aria-hidden="true"></i>
@@ -298,6 +304,8 @@
               <div
                 id="dgt_parityMarker-odd-U"
                 class="dgt_parityMarker-odd dgt_parityMarker"
+                data-parity="odd"
+                data-parityMarker="U"
               >
                 <i
                   class="fa fa-circle"
@@ -388,6 +396,8 @@
               <div
                 id="dgt_parityMarker-even-V"
                 class="dgt_parityMarker-even dgt_parityMarker"
+                data-parityMarker="V"
+                data-parity="even"
               >
                 <i class="fa fa-circle" aria-hidden="true"></i>
                 <i class="fa fa-circle" aria-hidden="true"></i>
@@ -395,6 +405,8 @@
               <div
                 id="dgt_parityMarker-odd-V"
                 class="dgt_parityMarker-odd dgt_parityMarker"
+                data-parity="odd"
+                data-parityMarker="V"
               >
                 <i
                   class="fa fa-circle"
@@ -477,28 +489,33 @@
         <div class="dgt_rowMarkers dgt_rowLabels">
           <div
             id="dgt_rowMarker-J"
-            class="dgt_rowMarker dgt_rowLabel dgt_label"
+            class="dgt_rowMarker dgt_rowLabel dgt_lineMarker dgt_label"
             data-lineMarker="J"
+            data-lineType="row"
           ></div>
           <div
             id="dgt_rowMarker-K"
-            class="dgt_rowMarker dgt_rowLabel dgt_label"
+            class="dgt_rowMarker dgt_rowLabel dgt_lineMarker dgt_label"
             data-lineMarker="K"
+            data-lineType="row"
           ></div>
           <div
             id="dgt_rowMarker-L"
-            class="dgt_rowMarker dgt_rowLabel dgt_label"
+            class="dgt_rowMarker dgt_rowLabel dgt_lineMarker dgt_label"
             data-lineMarker="L"
+            data-lineType="row"
           ></div>
           <div
             id="dgt_rowMarker-M"
-            class="dgt_rowMarker dgt_rowLabel dgt_label"
+            class="dgt_rowMarker dgt_rowLabel dgt_lineMarker dgt_label"
             data-lineMarker="M"
+            data-lineType="row"
           ></div>
           <div
             id="dgt_rowMarker-N"
-            class="dgt_rowMarker dgt_rowLabel dgt_label"
+            class="dgt_rowMarker dgt_rowLabel dgt_lineMarker dgt_label"
             data-lineMarker="N"
+            data-lineType="row"
           ></div>
         </div>
       </div>
@@ -553,6 +570,8 @@
               <div
                 id="dgt_parityMarker-even-W"
                 class="dgt_parityMarker-even dgt_parityMarker"
+                data-parityMarker="W"
+                data-parity="even"
               >
                 <i class="fa fa-circle" aria-hidden="true"></i>
                 <i class="fa fa-circle" aria-hidden="true"></i>
@@ -560,6 +579,8 @@
               <div
                 id="dgt_parityMarker-odd-W"
                 class="dgt_parityMarker-odd dgt_parityMarker"
+                data-parity="odd"
+                data-parityMarker="W"
               >
                 <i
                   class="fa fa-circle"
@@ -650,6 +671,8 @@
               <div
                 id="dgt_parityMarker-even-X"
                 class="dgt_parityMarker-even dgt_parityMarker"
+                data-parityMarker="X"
+                data-parity="even"
               >
                 <i class="fa fa-circle" aria-hidden="true"></i>
                 <i class="fa fa-circle" aria-hidden="true"></i>
@@ -657,6 +680,8 @@
               <div
                 id="dgt_parityMarker-odd-X"
                 class="dgt_parityMarker-odd dgt_parityMarker"
+                data-parity="odd"
+                data-parityMarker="X"
               >
                 <i
                   class="fa fa-circle"
@@ -747,6 +772,8 @@
               <div
                 id="dgt_parityMarker-even-Y"
                 class="dgt_parityMarker-even dgt_parityMarker"
+                data-parityMarker="Y"
+                data-parity="even"
               >
                 <i class="fa fa-circle" aria-hidden="true"></i>
                 <i class="fa fa-circle" aria-hidden="true"></i>
@@ -754,6 +781,8 @@
               <div
                 id="dgt_parityMarker-odd-Y"
                 class="dgt_parityMarker-odd dgt_parityMarker"
+                data-parity="odd"
+                data-parityMarker="Y"
               >
                 <i
                   class="fa fa-circle"
@@ -836,28 +865,33 @@
         <div class="dgt_rowMarkers dgt_rowLabels">
           <div
             id="dgt_rowMarker-O"
-            class="dgt_rowMarker dgt_rowLabel dgt_label"
+            class="dgt_rowMarker dgt_rowLabel dgt_lineMarker dgt_label"
             data-lineMarker="O"
+            data-lineType="row"
           ></div>
           <div
             id="dgt_rowMarker-P"
-            class="dgt_rowMarker dgt_rowLabel dgt_label"
+            class="dgt_rowMarker dgt_rowLabel dgt_lineMarker dgt_label"
             data-lineMarker="P"
+            data-lineType="row"
           ></div>
           <div
             id="dgt_rowMarker-Q"
-            class="dgt_rowMarker dgt_rowLabel dgt_label"
+            class="dgt_rowMarker dgt_rowLabel dgt_lineMarker dgt_label"
             data-lineMarker="Q"
+            data-lineType="row"
           ></div>
           <div
             id="dgt_rowMarker-R"
-            class="dgt_rowMarker dgt_rowLabel dgt_label"
+            class="dgt_rowMarker dgt_rowLabel dgt_lineMarker dgt_label"
             data-lineMarker="R"
+            data-lineType="row"
           ></div>
           <div
             id="dgt_rowMarker-S"
-            class="dgt_rowMarker dgt_rowLabel dgt_label"
+            class="dgt_rowMarker dgt_rowLabel dgt_lineMarker dgt_label"
             data-lineMarker="S"
+            data-lineType="row"
           ></div>
         </div>
       </div>
@@ -866,52 +900,61 @@
       <div class="dgt_columnGroup">
         <div
           id="dgt_columnMarker-A"
-          class="dgt_columnMarker dgt_columnLabel dgt_label"
+          class="dgt_columnMarker dgt_columnLabel dgt_lineMarker dgt_label"
           data-lineMarker="A"
+          data-lineType="column"
         ></div>
         <div
           id="dgt_columnMarker-B"
-          class="dgt_columnMarker dgt_columnLabel dgt_label"
+          class="dgt_columnMarker dgt_columnLabel dgt_lineMarker dgt_label"
           data-lineMarker="B"
+          data-lineType="column"
         ></div>
         <div
           id="dgt_columnMarker-C"
-          class="dgt_columnMarker dgt_columnLabel dgt_label"
+          class="dgt_columnMarker dgt_columnLabel dgt_lineMarker dgt_label"
           data-lineMarker="C"
+          data-lineType="column"
         ></div>
       </div>
       <div class="dgt_columnGroup">
         <div
           id="dgt_columnMarker-D"
-          class="dgt_columnMarker dgt_columnLabel dgt_label"
+          class="dgt_columnMarker dgt_columnLabel dgt_lineMarker dgt_label"
           data-lineMarker="D"
+          data-lineType="column"
         ></div>
         <div
           id="dgt_columnMarker-E"
-          class="dgt_columnMarker dgt_columnLabel dgt_label"
+          class="dgt_columnMarker dgt_columnLabel dgt_lineMarker dgt_label"
           data-lineMarker="E"
+          data-lineType="column"
         ></div>
         <div
           id="dgt_columnMarker-F"
-          class="dgt_columnMarker dgt_columnLabel dgt_label"
+          class="dgt_columnMarker dgt_columnLabel dgt_lineMarker dgt_label"
           data-lineMarker="F"
+          data-lineType="column"
         ></div>
       </div>
       <div class="dgt_columnGroup">
         <div
           id="dgt_columnMarker-G"
-          class="dgt_columnMarker dgt_columnLabel dgt_label"
+          class="dgt_columnMarker dgt_columnLabel dgt_lineMarker dgt_label"
           data-lineMarker="G"
+          data-lineType="column"
         ></div>
         <div
           id="dgt_columnMarker-H"
-          class="dgt_columnMarker dgt_columnLabel dgt_label"
+          class="dgt_columnMarker dgt_columnLabel dgt_lineMarker dgt_label"
           data-lineMarker="H"
+          data-lineType="column"
         ></div>
         <div
           id="dgt_columnMarker-I"
-          class="dgt_columnMarker dgt_columnLabel dgt_label"
+          class="dgt_columnMarker dgt_columnLabel dgt_lineMarker dgt_label"
           data-lineMarker="I"
+          data-lineType="column"
         ></div>
       </div>
     </div>
