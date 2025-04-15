@@ -1,7 +1,7 @@
 .dgt_space {
   cursor: pointer;
 
-  &-draft {
+  &:where(.dgt_draft) {
     background-color: black;
   }
 }
@@ -9,7 +9,7 @@
 .dgt_comparisonIcon {
   cursor: pointer;
 
-  &-draft {
+  &:where(.dgt_draft) {
     color: black;
   }
 }
@@ -17,7 +17,7 @@
 .dgt_parityMarker {
   cursor: pointer;
 
-  &-draft {
+  &:where(.dgt_draft) {
     color: black;
   }
 }
@@ -28,7 +28,7 @@
 
 .dgt_optionMarker {
   cursor: pointer;
-  &-draft {
+  &:where(.dgt_draft) {
     text-decoration: line-through black 2px;
   }
 }

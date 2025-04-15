@@ -27,16 +27,20 @@ define([
     },
 
     setup: function (gamedatas) {
-      this.setupNotifications();
-
-      console.log(gamedatas.code, "CODE");
-      console.log("Ending game setup");
-
+      this.dgt = {
+        managers: {},
+      };
       // document.querySelectorAll("[data-lineMarker]").forEach((labelElement) => {
       //   labelElement.onclick = () => {
       //     labelElement.classList.toggle("dgt_lineMarker-draft");
       //   }
       // });
+
+      gamedatas.draft.forEach((draftElement_id) => {
+        const draftElement = document.getElementById(draftElement_id);
+        draftElement.classList.add("dgt_draft");
+        draftElement.dataset.draft = "true";
+      });
 
       document.querySelectorAll("[data-space]").forEach((spaceElement) => {
         spaceElement.addEventListener("click", () => {
@@ -44,7 +48,10 @@ define([
             return;
           }
 
-          spaceElement.classList.toggle("dgt_space-draft");
+          const draftClass = "dgt_draft";
+          spaceElement.classList.toggle(draftClass);
+          spaceElement.dataset.draft =
+            spaceElement.classList.contains(draftClass);
         });
       });
 
@@ -56,18 +63,21 @@ define([
               return;
             }
 
-            comparisonIcon.classList.toggle("dgt_comparisonIcon-draft");
+            const draftClass = "dgt_draft";
+            comparisonIcon.classList.toggle(draftClass);
+            comparisonIcon.dataset.draft =
+              comparisonIcon.classList.contains(draftClass);
 
             siblingIcon =
               comparisonIcon.nextElementSibling ||
               comparisonIcon.previousElementSibling;
 
-            if (comparisonIcon.classList.contains("dgt_comparisonIcon-draft")) {
-              siblingIcon.classList.remove("dgt_comparisonIcon-draft");
+            if (comparisonIcon.classList.contains(draftClass)) {
+              siblingIcon.classList.remove(draftClass);
+              siblingIcon.dataset.draft = "false";
             }
           });
         });
-
       document
         .querySelectorAll("[data-parityMarker]")
         .forEach((parityMarker) => {
@@ -76,14 +86,18 @@ define([
               return;
             }
 
-            parityMarker.classList.toggle("dgt_parityMarker-draft");
+            const draftClass = "dgt_draft";
+            parityMarker.classList.toggle(draftClass);
+            parityMarker.dataset.draft =
+              parityMarker.classList.contains(draftClass);
 
             const siblingMarker =
               parityMarker.nextElementSibling ||
               parityMarker.previousElementSibling;
 
-            if (parityMarker.classList.contains("dgt_parityMarker-draft")) {
-              siblingMarker.classList.remove("dgt_parityMarker-draft");
+            if (parityMarker.classList.contains(draftClass)) {
+              siblingMarker.classList.remove(draftClass);
+              siblingMarker.dataset.draft = "false";
             }
           });
         });
@@ -114,19 +128,26 @@ define([
             spaceCount = 0;
           }
 
+          const draftClass = "dgt_draft";
+          lineMarker.dataset.draft = lineMarker.classList.contains(draftClass);
           lineMarker.textContent = spaceCount;
         });
       });
 
-      document.querySelectorAll("[data-optionMarker]").forEach((optionMarker) => {
-        optionMarker.addEventListener("click", () => {
-          if (this.getStateName().includes("client_")) {
-            return;
-          }
+      document
+        .querySelectorAll("[data-optionMarker]")
+        .forEach((optionMarker) => {
+          optionMarker.addEventListener("click", () => {
+            if (this.getStateName().includes("client_")) {
+              return;
+            }
 
-          optionMarker.classList.toggle("dgt_optionMarker-draft");
+            const draftClass = "dgt_draft";
+            optionMarker.classList.toggle(draftClass);
+            optionMarker.dataset.draft =
+              optionMarker.classList.contains(draftClass);
+          });
         });
-      });
 
       for (const line_id in gamedatas.countedLines) {
         const spaceCount = gamedatas.countedLines[line_id];
@@ -137,7 +158,7 @@ define([
         lineMarker.textContent = spaceCount;
       }
 
-      for (const digit_id in gamedatas.checkedDigits) {
+      for (const digit_id in gamedatas.chekedDigits) {
         const parity = gamedatas.checkedDigits[digit_id];
         const parityMarker = document.getElementById(
           `dgt_parityMarker-${parity}-${digit_id}`
@@ -170,6 +191,32 @@ define([
           ""
         );
       }
+
+      this.statusBar.addActionButton(
+        `<i class="fa fa-solid fa-floppy-o"></i>`,
+        () => {
+          const draftElements = [];
+          document.querySelectorAll("[data-draft]").forEach((draftElement) => {
+            if (draftElement.dataset.draft !== "true") {
+              return;
+            }
+            draftElements.push(draftElement.id);
+          });
+
+          this.actSaveDraft(draftElements);
+        },
+        {
+          title: _("Save draft"),
+          color: "secondary",
+          classes: ["dgt_sheetButton"],
+          destination: document.getElementById("dgt_solutionSheet"),
+        }
+      );
+
+      this.setupNotifications();
+
+      console.log(gamedatas.code, "CODE");
+      console.log("Ending game setup");
     },
 
     ///////////////////////////////////////////////////
@@ -496,6 +543,16 @@ define([
     actCompareDigits: function (comparison_id) {
       const [digit1_id, digit2_id] = comparison_id.split("");
       this.performAction("actCompareDigits", { digit1_id, digit2_id });
+    },
+
+    actSaveDraft: function (draft) {
+      this.performAction(
+        "actSaveDraft",
+        { draft: JSON.stringify(draft) },
+        {
+          checkAction: false,
+        }
+      );
     },
 
     ///////////////////////////////////////////////////

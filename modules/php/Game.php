@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 namespace Bga\Games\DigitCode;
 
+use Bga\GameFramework\Actions\CheckAction;
+use Bga\GameFramework\Actions\Types\JsonParam;
 use Bga\GameFramework\Actions\Types\StringParam;
 
 const COUNTABLE_LINES = "countableLines";
@@ -30,6 +32,7 @@ const CHECKABLE_SPACES = "checkableSpaces";
 const CHECKED_SPACES = "checkedSpaces";
 const COMPARABLE_DIGITS = "comparableDigits";
 const COMPARED_DIGITS = "comparedDigits";
+const DRAFT = "draft";
 
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
 
@@ -335,6 +338,29 @@ class Game extends \Table
         $this->gamestate->nextState("nextPlayer");
     }
 
+    #[CheckAction(false)]
+    public function actSaveDraft(?int $clientVersion, #[JsonParam(alphanum: true)] array $draft): void
+    {
+        $this->checkVersion($clientVersion);
+
+        $player_id = (int) $this->getCurrentPlayerId();
+        $players = $this->loadPlayersBasicInfos();
+
+        if (!array_key_exists($player_id, $players)) {
+            throw new \BgaVisibleSystemException("Only players may perform this action");
+        }
+
+        $playersDraft = (array) $this->globals->get(DRAFT);
+        $playersDraft[$player_id] = $draft;
+        $this->globals->set(DRAFT, $playersDraft);
+
+        $this->notify->player(
+            $player_id,
+            "saveDraft",
+            ""
+        );
+    }
+
     /**
      * Game state arguments and actions
      *
@@ -498,6 +524,7 @@ class Game extends \Table
         $result["checkedDigits"] = $this->globals->get(CHECKED_DIGITS, []);
         $result["checkedSpaces"] = $this->globals->get(CHECKED_SPACES, []);
         $result["comparedDigits"] = $this->globals->get(COMPARED_DIGITS, []);
+        $result["draft"] = $this->globals->get(DRAFT)[$current_player_id];
 
         return $result;
     }
@@ -557,6 +584,12 @@ class Game extends \Table
 
         $this->globals->set(COMPARABLE_DIGITS, $this->COMPARISONS);
         $this->globals->set(COMPARED_DIGITS, []);
+
+        $draft = [];
+        foreach ($players as $player_id => $player) {
+            $draft[$player_id] = [];
+        }
+        $this->globals->set(DRAFT, $draft);
 
         $this->activeNextPlayer();
     }

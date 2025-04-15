@@ -85,6 +85,13 @@
   display: flex;
 }
 
+.dgt_sheetButton {
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+  right: 1%;
+}
+
 .dgt_digits {
   display: flex;
   gap: var(--digitsGap);
@@ -209,21 +216,21 @@
 .dgt_space {
   cursor: pointer;
 }
-.dgt_space-draft {
+.dgt_space:where(.dgt_draft) {
   background-color: black;
 }
 
 .dgt_comparisonIcon {
   cursor: pointer;
 }
-.dgt_comparisonIcon-draft {
+.dgt_comparisonIcon:where(.dgt_draft) {
   color: black;
 }
 
 .dgt_parityMarker {
   cursor: pointer;
 }
-.dgt_parityMarker-draft {
+.dgt_parityMarker:where(.dgt_draft) {
   color: black;
 }
 
@@ -234,7 +241,7 @@
 .dgt_optionMarker {
   cursor: pointer;
 }
-.dgt_optionMarker-draft {
+.dgt_optionMarker:where(.dgt_draft) {
   text-decoration: line-through black 2px;
 }
 
