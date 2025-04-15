@@ -361,6 +361,29 @@ class Game extends \Table
         );
     }
 
+    #[CheckAction(false)]
+    public function actDeleteDraft(?int $clientVersion): void
+    {
+        $this->checkVersion($clientVersion);
+
+        $player_id = (int) $this->getCurrentPlayerId();
+        $players = $this->loadPlayersBasicInfos();
+
+        if (!array_key_exists($player_id, $players)) {
+            throw new \BgaVisibleSystemException("Only players may perform this action");
+        }
+
+        $playersDraft = (array) $this->globals->get(DRAFT);
+        $playersDraft[$player_id] = [];
+        $this->globals->set(DRAFT, $playersDraft);
+
+        $this->notify->player(
+            $player_id,
+            "deleteDraft",
+            ""
+        );
+    }
+
     /**
      * Game state arguments and actions
      *

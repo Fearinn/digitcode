@@ -208,7 +208,36 @@ define([
         {
           title: _("Save draft"),
           color: "secondary",
-          classes: ["dgt_sheetButton"],
+          classes: ["dgt_draftButton-save", "dgt_draftButton"],
+          destination: document.getElementById("dgt_solutionSheet"),
+        }
+      );
+
+      this.statusBar.addActionButton(
+        `<i class="fa fa-solid fa-trash"></i>`,
+        () => {
+          this.confirmationDialog(
+            _("Do you really want to delete your draft?"),
+            () => {
+              document
+                .querySelectorAll("[data-draft]")
+                .forEach((draftElement) => {
+                  if (draftElement.dataset.draft !== "true") {
+                    return;
+                  }
+
+                  draftElement.classList.remove("dgt_draft");
+                  draftElement.dataset.draft = "false";
+                });
+
+              this.actDeleteDraft();
+            }
+          );
+        },
+        {
+          title: _("Delete draft"),
+          color: "alert",
+          classes: ["dgt_draftButton-delete", "dgt_draftButton"],
           destination: document.getElementById("dgt_solutionSheet"),
         }
       );
@@ -555,6 +584,10 @@ define([
       );
     },
 
+    actDeleteDraft: function () {
+      this.performAction("actDeleteDraft", {}, { checkAction: false });
+    },
+
     ///////////////////////////////////////////////////
     //// Reaction to cometD notifications
 
@@ -599,6 +632,10 @@ define([
         this.format_string(_("${digit_id} is larger"), { digit_id }),
         ""
       );
+    },
+
+    notif_saveDraft: function (args) {
+      this.showMessage(_("Draft succesfully saved"), "info");
     },
   });
 });

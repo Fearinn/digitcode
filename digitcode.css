@@ -85,11 +85,16 @@
   display: flex;
 }
 
-.dgt_sheetButton {
+.dgt_draftButton {
   font-size: 20px;
   position: absolute;
   top: 0;
+}
+.dgt_draftButton-save {
   right: 1%;
+}
+.dgt_draftButton-delete {
+  left: 1%;
 }
 
 .dgt_digits {
