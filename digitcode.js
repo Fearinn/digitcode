@@ -208,7 +208,7 @@ define([
         {
           title: _("Save draft"),
           color: "secondary",
-          classes: ["dgt_draftButton-save", "dgt_draftButton"],
+          classes: ["dgt_draftBtn-save", "dgt_draftBtn"],
           destination: document.getElementById("dgt_solutionSheet"),
         }
       );
@@ -237,7 +237,7 @@ define([
         {
           title: _("Delete draft"),
           color: "alert",
-          classes: ["dgt_draftButton-delete", "dgt_draftButton"],
+          classes: ["dgt_draftBtn-delete", "dgt_draftBtn"],
           destination: document.getElementById("dgt_solutionSheet"),
         }
       );
@@ -260,7 +260,7 @@ define([
 
       if (stateName.includes("client_")) {
         this.statusBar.addActionButton(
-          _("Cancel"),
+          _("cancel"),
           () => {
             this.restoreServerGameState();
           },
@@ -280,7 +280,7 @@ define([
 
         if (countableLines.length > 0) {
           this.statusBar.addActionButton(
-            _("(Row / column) count spaces"),
+            _("count spaces of row/column"),
             () => {
               this.setClientState("client_countSpaces", {
                 descriptionmyturn: _(
@@ -295,7 +295,7 @@ define([
         }
 
         if (checkableDigits.length > 0) {
-          this.statusBar.addActionButton(_("(Number) even or odd?"), () => {
+          this.statusBar.addActionButton(_("(number) even or odd?"), () => {
             this.setClientState("client_checkParity", {
               descriptionmyturn: _(
                 "${you} must pick a number to check its parity"
@@ -308,7 +308,7 @@ define([
         }
 
         if (checkableSpaces.length > 0) {
-          this.statusBar.addActionButton(_("(Space) empty or filled?"), () => {
+          this.statusBar.addActionButton(_("(space) empty or filled?"), () => {
             this.setClientState("client_checkSpace", {
               descriptionmyturn: _(
                 "${you} must pick a space to check if it's filled"
@@ -321,7 +321,7 @@ define([
         }
 
         if (comparableDigits.length > 0) {
-          this.statusBar.addActionButton(_("Compare numbers"), () => {
+          this.statusBar.addActionButton(_("compare numbers"), () => {
             this.setClientState("client_compareDigits", {
               descriptionmyturn: _(
                 "${you} must pick two adjacent numbers to compare"
@@ -332,6 +332,58 @@ define([
             });
           });
         }
+
+        this.statusBar.addActionButton(
+          _("submit solution"),
+          () => {
+            this.dgt.managers.dialog = new ebg.popindialog();
+            this.dgt.managers.dialog.create("dgt_dialog");
+            this.dgt.managers.dialog.setTitle(_("Submit a solution"));
+
+            const dialogContent = document.createElement("div");
+            dialogContent.id = "dgt_dialogContent";
+            dialogContent.classList.add("dgt_dialogContent");
+
+            ["T", "U", "V", "W", "X", "Y"].forEach((digit_id) => {
+              dialogContent.insertAdjacentHTML(
+                "beforeend",
+                `<input aria-label="${digit_id}" id="dgt_input-${digit_id}" data-input="${digit_id}" value="0" type="number" min="0" max="9" placeholder="${digit_id}"></input>`
+              );
+            });
+
+            document
+              .getElementById("dgt_gameArea")
+              .insertAdjacentElement("afterend", dialogContent);
+
+            this.dgt.managers.dialog.setContent(dialogContent.outerHTML);
+
+            dialogContent.remove();
+            this.dgt.managers.dialog.show();
+
+            this.statusBar.addActionButton(
+              _("confirm"),
+              () => {
+                let solution = "";
+                document
+                  .querySelectorAll("[data-input]")
+                  .forEach((inputElement) => {
+                    const algarism = inputElement.value;
+                    solution = `${solution}${algarism}`;
+                  });
+                
+                this.dgt.managers.dialog.destroy();
+                this.actSubmitSolution(solution);
+              },
+              {
+                id: "dgt_confirmSolutionBtn",
+                destination: document.getElementById("dgt_dialogContent"),
+              }
+            );
+          },
+          {
+            classes: ["dgt_submitSolutionBtn"],
+          }
+        );
       }
 
       if (stateName === "client_countSpaces") {
@@ -396,7 +448,7 @@ define([
       }
 
       this.statusBar.addActionButton(
-        _("Confirm selection"),
+        _("confirm selection"),
         () => {
           callback();
         },
@@ -553,7 +605,7 @@ define([
     //// Player's actions
 
     performAction: function (action, args = {}, config = {}) {
-      args.clientVersion = this.gamedatas.GAME_VERSION;
+      args.CLIENT_VERSION = this.gamedatas.GAME_VERSION;
       this.bgaPerformAction(action, args, config);
     },
 
@@ -586,6 +638,10 @@ define([
 
     actDeleteDraft: function () {
       this.performAction("actDeleteDraft", {}, { checkAction: false });
+    },
+
+    actSubmitSolution: function (solution) {
+      this.performAction("actSubmitSolution", { solution });
     },
 
     ///////////////////////////////////////////////////

@@ -26,8 +26,8 @@ $machinestates = [
 
     2 => [
         "name" => "playerTurn",
-        "description" => clienttranslate('${player_name} must ask a question or submit an answer'),
-        "descriptionmyturn" => clienttranslate('${you} must ask a question or submit an answer'),
+        "description" => clienttranslate('${player_name} must ask a question or submit a solution'),
+        "descriptionmyturn" => clienttranslate('${you} must ask a question or submit a solution'),
         "type" => "activeplayer",
         "args" => "arg_playerTurn",
         "possibleactions" => [
@@ -35,8 +35,9 @@ $machinestates = [
             "actCheckParity",
             "actCompareDigits",
             "actCheckSpace",
+            "actSubmitSolution",
         ],
-        "transitions" => ["nextPlayer" => 3],
+        "transitions" => ["nextPlayer" => 3, "gameEnd" => 99],
     ],
 
     3 => [
@@ -45,7 +46,7 @@ $machinestates = [
         "type" => "game",
         "action" => "st_betweenPlayers",
         "updateGameProgression" => true,
-        "transitions" => ["endGame" => 99, "nextPlayer" => 2]
+        "transitions" => ["gameEnd" => 99, "nextPlayer" => 2]
     ],
 
     // Final state.

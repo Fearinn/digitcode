@@ -85,16 +85,16 @@
   display: flex;
 }
 
-.dgt_draftButton {
+.dgt_draftBtn {
   font-size: 20px;
   position: absolute;
   top: 0;
 }
-.dgt_draftButton-save {
+.dgt_draftBtn-save {
   right: 1%;
 }
-.dgt_draftButton-delete {
-  left: 1%;
+.dgt_draftBtn-delete {
+  left: 0;
 }
 
 .dgt_digits {
@@ -329,4 +329,11 @@
 }
 .dgt_gameArea * {
   box-sizing: border-box;
+}
+
+.dgt_submitSolutionBtn {
+  background: green;
+}
+.dgt_submitSolutionBtn:hover {
+  background: green !important;
 }

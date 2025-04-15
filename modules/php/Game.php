@@ -67,9 +67,9 @@ class Game extends \Table
      * @throws BgaUserException
      */
 
-    public function actCountSpaces(?int $clientVersion, string $line_id)
+    public function actCountSpaces(?int $CLIENT_VERSION, string $line_id)
     {
-        $this->checkVersion($clientVersion);
+        $this->checkVersion($CLIENT_VERSION);
 
         $player_id = $this->getActivePlayerId();
 
@@ -155,9 +155,9 @@ class Game extends \Table
         $this->gamestate->nextState("nextPlayer");
     }
 
-    public function actCheckParity(?int $clientVersion, string $digit_id): void
+    public function actCheckParity(?int $CLIENT_VERSION, string $digit_id): void
     {
-        $this->checkVersion($clientVersion);
+        $this->checkVersion($CLIENT_VERSION);
 
         $player_id = (int) $this->getActivePlayerId();
 
@@ -207,9 +207,9 @@ class Game extends \Table
         $this->gamestate->nextState("nextPlayer");
     }
 
-    public function actCheckSpace(?int $clientVersion, #[StringParam(alphanum: true)] string $space_id): void
+    public function actCheckSpace(?int $CLIENT_VERSION, #[StringParam(alphanum: true)] string $space_id): void
     {
-        $this->checkVersion($clientVersion);
+        $this->checkVersion($CLIENT_VERSION);
 
         $player_id = (int) $this->getActivePlayerId();
 
@@ -339,9 +339,9 @@ class Game extends \Table
     }
 
     #[CheckAction(false)]
-    public function actSaveDraft(?int $clientVersion, #[JsonParam(alphanum: true)] array $draft): void
+    public function actSaveDraft(?int $CLIENT_VERSION, #[JsonParam(alphanum: true)] array $draft): void
     {
-        $this->checkVersion($clientVersion);
+        $this->checkVersion($CLIENT_VERSION);
 
         $player_id = (int) $this->getCurrentPlayerId();
         $players = $this->loadPlayersBasicInfos();
@@ -362,9 +362,9 @@ class Game extends \Table
     }
 
     #[CheckAction(false)]
-    public function actDeleteDraft(?int $clientVersion): void
+    public function actDeleteDraft(?int $CLIENT_VERSION): void
     {
-        $this->checkVersion($clientVersion);
+        $this->checkVersion($CLIENT_VERSION);
 
         $player_id = (int) $this->getCurrentPlayerId();
         $players = $this->loadPlayersBasicInfos();
@@ -382,6 +382,57 @@ class Game extends \Table
             "deleteDraft",
             ""
         );
+    }
+
+    public function actSubmitSolution(?int $CLIENT_VERSION, string $solution): void
+    {
+        $this->checkVersion($CLIENT_VERSION);
+
+        $algarisms = str_split($solution);
+
+        if (count($algarisms) !== 6) {
+            throw new \BgaUserException(clienttranslate("You must submit a valid solution"));
+        }
+
+        $player_id = (int) $this->getActivePlayerId();
+
+        $code = $this->getCode();
+        $isCorrect = $code === $solution;
+
+        if ($isCorrect) {
+            $this->notify->all(
+                "message",
+                clienttranslate('${player_name} cracks the code!'),
+                [
+                    "player_id" => $player_id,
+                    "player_name" => $this->getPlayerNameById($player_id),
+                ]
+            );
+
+            $this->notify->all(
+                "revealCode",
+                clienttranslate('The code was ${code_label}'),
+                [
+                    "code_label" => $code,
+                    "code" => $code,
+                ],
+            );
+
+            $this->DbQuery("UPDATE player SET player_score=1 WHERE player_id={$player_id}");
+            $this->gamestate->nextState("gameEnd");
+            return;
+        }
+
+        $this->notify->all(
+            "message",
+            clienttranslate('${player_name} submits an incorrect solution and loses one chance'),
+            [
+                "player_id" => $player_id,
+                "player_name" => $this->getPlayerNameById($player_id),
+            ]
+        );
+
+        $this->gamestate->nextState("nextPlayer");
     }
 
     /**
@@ -417,9 +468,9 @@ class Game extends \Table
 
     // Utility functions
 
-    public function checkVersion(?int $clientVersion): void
+    public function checkVersion(?int $CLIENT_VERSION): void
     {
-        if ($clientVersion && $clientVersion !== (int) $this->gamestate->table_globals[300]) {
+        if ($CLIENT_VERSION && $CLIENT_VERSION !== (int) $this->gamestate->table_globals[300]) {
             throw new \BgaUserException(clienttranslate("A new version is available. Please reload (F5) the page"));
         }
     }
@@ -460,7 +511,7 @@ class Game extends \Table
         $this->setupCode($algarismsCounts, $position);
     }
 
-    public function getCode(): int
+    public function getCode(): string
     {
         $code = "";
         for ($position = 1; $position <= 6; $position++) {
@@ -468,7 +519,7 @@ class Game extends \Table
             $code .= "$digit";
         }
 
-        return (int) $code;
+        return $code;
     }
 
     /**
@@ -675,5 +726,10 @@ class Game extends \Table
     public function debug_compareDigits(string $digit1_id, string $digit2_id): void
     {
         $this->actCompareDigits(null, $digit1_id, $digit2_id);
+    }
+
+    public function debug_submitSolution(string $solution): void
+    {
+        $this->actSubmitSolution(null, $solution);
     }
 }

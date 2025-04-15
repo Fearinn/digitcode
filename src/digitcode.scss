@@ -24,3 +24,11 @@
     box-sizing: border-box;
   }
 }
+
+.dgt_submitSolutionBtn {
+  background: green;
+
+  &:hover {
+    background: green !important;
+  }
+}

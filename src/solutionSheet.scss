@@ -96,16 +96,16 @@
   display: flex;
 }
 
-.dgt_draftButton {
+.dgt_draftBtn {
   font-size: 20px;
   position: absolute;
   top: 0;
 
   &-save {
-  right: 1%;
+    right: 1%;
   }
 
   &-delete {
-    left: 1%;
+    left: 0;
   }
 }
