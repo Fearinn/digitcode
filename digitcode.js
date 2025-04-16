@@ -374,7 +374,10 @@ define([
               };
 
               inputElement.onkeydown = (event) => {
-                if (!event.key.match("[0-9]") && event.key !== "Backspace") {
+                if (
+                  !event.key.match("[0-9]") &&
+                  !["Backspace", "Tab"].includes(event.key)
+                ) {
                   event.preventDefault();
                 }
               };
@@ -399,7 +402,7 @@ define([
                   return;
                 }
 
-                this.dgt.managers.dialog.destroy();
+                // this.dgt.managers.dialog.destroy();
                 this.actSubmitSolution(solution);
               },
               {

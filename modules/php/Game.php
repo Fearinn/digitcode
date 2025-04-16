@@ -384,15 +384,11 @@ class Game extends \Table
         );
     }
 
-    public function actSubmitSolution(?int $CLIENT_VERSION, string $solution): void
+    public function actSubmitSolution(?int $CLIENT_VERSION, #[StringParam(alphanum: true)] $solution): void
     {
         $this->checkVersion($CLIENT_VERSION);
 
-        $algarisms = str_split($solution);
-
-        if (count($algarisms) !== 6) {
-            throw new \BgaUserException(clienttranslate("You must submit a valid solution"));
-        }
+        $this->validateSolution($solution);
 
         $player_id = (int) $this->getActivePlayerId();
 
@@ -520,6 +516,46 @@ class Game extends \Table
         }
 
         return $code;
+    }
+
+    public function validateSolution($solution): void
+    {
+        $algarisms = str_split($solution);
+
+        if (count($algarisms) !== 6) {
+            throw new \BgaUserException(clienttranslate("You must submit a valid solution"));
+        }
+
+        $equalAdjacent = false;
+
+        $algarismsCounts = array_fill(0, 10, 0);
+
+        foreach ($algarisms as $position => $algarism) {
+            foreach ([1, 3] as $shift) {
+                if (($position === 0 || $position === 3) && $shift === 1) {
+                    continue;
+                }
+
+                $adjacent_position = $position - $shift;
+
+                if (!isset($algarisms[$adjacent_position])) {
+                    continue;
+                }
+
+                if ((int) $algarism === (int) $algarisms[$adjacent_position]) {
+                    $equalAdjacent = true;
+                    break;
+                }
+            }
+
+            $limitReached = $algarismsCounts[$algarism] === 2;
+
+            if ($limitReached || $equalAdjacent) {
+                throw new \BgaUserException("You must submit a valid solution");
+            }
+
+            $algarismsCounts[$algarism]++;
+        }
     }
 
     /**
