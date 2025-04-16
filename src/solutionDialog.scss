@@ -1,0 +1,16 @@
+.dgt_dialogContent {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 4px;
+
+  button {
+    margin: 8px 0 0 0;
+  }
+}
+
+.dgt_input {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}

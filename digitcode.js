@@ -347,7 +347,7 @@ define([
             ["T", "U", "V", "W", "X", "Y"].forEach((digit_id) => {
               dialogContent.insertAdjacentHTML(
                 "beforeend",
-                `<input aria-label="${digit_id}" id="dgt_input-${digit_id}" data-input="${digit_id}" value="0" type="number" min="0" max="9" placeholder="${digit_id}"></input>`
+                `<input aria-label="${digit_id}" id="dgt_input-${digit_id}" class="dgt_input" data-input="${digit_id}" inputmode="numeric" type="number" min="0" max="9" placeholder="${digit_id}"></input>`
               );
             });
 
@@ -360,8 +360,28 @@ define([
             dialogContent.remove();
             this.dgt.managers.dialog.show();
 
+            ["T", "U", "V", "W", "X", "Y"].forEach((digit_id) => {
+              const inputElement = document.getElementById(
+                `dgt_input-${digit_id}`
+              );
+
+              inputElement.oninput = (event) => {
+                const value = inputElement.value;
+
+                if (value.length > 1) {
+                  inputElement.value = value.slice(-1);
+                }
+              };
+
+              inputElement.onkeydown = (event) => {
+                if (!event.key.match("[0-9]") && event.key !== "Backspace") {
+                  event.preventDefault();
+                }
+              };
+            });
+
             this.statusBar.addActionButton(
-              _("confirm"),
+              _("Confirm"),
               () => {
                 let solution = "";
                 document
@@ -370,7 +390,15 @@ define([
                     const algarism = inputElement.value;
                     solution = `${solution}${algarism}`;
                   });
-                
+
+                if (solution.length !== 6) {
+                  this.showMessage(
+                    _("You must submit a valid solution"),
+                    "error"
+                  );
+                  return;
+                }
+
                 this.dgt.managers.dialog.destroy();
                 this.actSubmitSolution(solution);
               },

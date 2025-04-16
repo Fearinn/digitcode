@@ -311,6 +311,22 @@
   color: red;
 }
 
+.dgt_dialogContent {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 4px;
+}
+.dgt_dialogContent button {
+  margin: 8px 0 0 0;
+}
+
+.dgt_input {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
 :root {
   --blockSize: 40px;
   --digitHeight: calc(var(--blockSize) * 5);
