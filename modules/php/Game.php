@@ -418,13 +418,15 @@ class Game extends \Table
         }
 
         $this->notify->all(
-            "message",
+            "incorrectSolution",
             clienttranslate('${player_name} submits an incorrect solution and loses one chance'),
             [
                 "player_id" => $player_id,
                 "player_name" => $this->getPlayerNameById($player_id),
             ]
         );
+
+        $this->DbQuery("UPDATE player SET player_chances=player_chances-1 where player_id=$player_id");
 
         $this->gamestate->nextState("nextPlayer");
     }
@@ -453,9 +455,36 @@ class Game extends \Table
 
     public function st_betweenPlayers(): void
     {
-        $player_id = $this->getActivePlayerId();
+        $player_id = (int) $this->getActivePlayerId();
         $this->giveExtraTime($player_id);
         $this->activeNextPlayer();
+
+        if ($this->isPlayerEliminated($player_id) || $this->isCurrentPlayerZombie()) {
+            $this->gamestate->nextState("nextPlayer");
+            return;
+        }
+
+        $eliminatedPlayersCount = (int) $this->getUniqueValueFromDB("SELECT COUNT(player_eliminated) FROM player WHERE player_eliminated=1");
+        $playerChances = (int) $this->getUniqueValueFromDB("SELECT player_chances FROM player WHERE player_id=$player_id");
+
+        $isLastPlayer = $eliminatedPlayersCount + 1 === $this->nz_getPlayersNumber();
+
+        if ($playerChances === 0) {
+            if ($isLastPlayer) {
+                $code = $this->getCode();
+
+                $this->notify->all(
+                    "revealCode",
+                    clienttranslate('The code was ${code_label}'),
+                    ["code_label" => $code, "code" => $code]
+                );
+
+                $this->gamestate->nextState("gameEnd");
+                return;
+            }
+
+            $this->eliminatePlayer($player_id);
+        }
 
         $this->gamestate->nextState("nextPlayer");
     }
@@ -467,6 +496,16 @@ class Game extends \Table
         if ($CLIENT_VERSION && $CLIENT_VERSION !== (int) $this->gamestate->table_globals[300]) {
             throw new \BgaUserException(clienttranslate("A new version is available. Please reload (F5) the page"));
         }
+    }
+
+    public function isPlayerEliminated(int $player_id): bool
+    {
+        return !!$this->getUniqueValueFromDB("SELECT player_eliminated FROM player WHERE player_id={$player_id}");
+    }
+
+    public function nz_getPlayersNumber(): int
+    {
+        return (int) $this->getUniqueValueFromDB("SELECT COUNT(player_id) FROM player WHERE player_zombie=0");
     }
 
     public function setupCode(array &$algarismsCounts, int $position = 1): void
@@ -623,10 +662,10 @@ class Game extends \Table
 
         $current_player_id = (int) $this->getCurrentPlayerId();
 
-        $result["GAME_VERSION"] = (int) $this->gamestate->table_globals[300];
         $result["players"] = $this->getCollectionFromDb(
-            "SELECT `player_id` `id`, `player_score` `score` FROM `player`"
+            "SELECT `player_id` `id`, `player_score` `score`, `player_chances` `chances` FROM `player`"
         );
+        $result["GAME_VERSION"] = (int) $this->gamestate->table_globals[300];
         $result["code"] = $this->getCode();
         $result["countedLines"] = $this->globals->get(COUNTED_LINES, []);
         $result["checkedDigits"] = $this->globals->get(CHECKED_DIGITS, []);

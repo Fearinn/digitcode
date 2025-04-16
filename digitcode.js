@@ -29,12 +29,32 @@ define([
     setup: function (gamedatas) {
       this.dgt = {
         managers: {},
+        counters: {},
       };
-      // document.querySelectorAll("[data-lineMarker]").forEach((labelElement) => {
-      //   labelElement.onclick = () => {
-      //     labelElement.classList.toggle("dgt_lineMarker-draft");
-      //   }
-      // });
+
+      for (const player_id in gamedatas.players) {
+        const playerPanel = this.getPlayerPanelElement(player_id);
+        const playerChances = gamedatas.players[player_id].chances;
+
+        playerPanel.insertAdjacentHTML(
+          "beforeend",
+          `<div class="dgt_playerChancesContainer">
+            <span id="dgt_playerChances-${player_id}" class="dgt_playerChances">${playerChances}</span>
+            <i id="dgt_playerChances-icon-${player_id}" class="dgt_playerChances-icon fa fa-heart"></i>
+          </div>`
+        );
+
+        this.addTooltip(
+          `dgt_playerChances-icon-${player_id}`,
+          _("Remaining chances"),
+          ""
+        );
+
+        this.dgt.counters[player_id] = { chances: new ebg.counter() };
+        const counter = this.dgt.counters[player_id].chances;
+        counter.create(`dgt_playerChances-${player_id}`);
+        counter.setValue(playerChances);
+      }
 
       gamedatas.draft.forEach((draftElement_id) => {
         const draftElement = document.getElementById(draftElement_id);
@@ -723,6 +743,11 @@ define([
 
     notif_saveDraft: function (args) {
       this.showMessage(_("Draft succesfully saved"), "info");
+    },
+
+    notif_incorrectSolution: function (args) {
+      const player_id = args.player_id;
+      this.dgt.counters[player_id].chances.incValue(-1);
     },
   });
 });
