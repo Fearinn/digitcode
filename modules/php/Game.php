@@ -344,9 +344,8 @@ class Game extends \Table
         $this->checkVersion($CLIENT_VERSION);
 
         $player_id = (int) $this->getCurrentPlayerId();
-        $players = $this->loadPlayersBasicInfos();
 
-        if (!array_key_exists($player_id, $players)) {
+        if ($this->isSpectator()) {
             throw new \BgaVisibleSystemException("Only players may perform this action");
         }
 
@@ -367,9 +366,8 @@ class Game extends \Table
         $this->checkVersion($CLIENT_VERSION);
 
         $player_id = (int) $this->getCurrentPlayerId();
-        $players = $this->loadPlayersBasicInfos();
 
-        if (!array_key_exists($player_id, $players)) {
+        if ($this->isSpectator()) {
             throw new \BgaVisibleSystemException("Only players may perform this action");
         }
 
