@@ -66,7 +66,7 @@ define([
         }
       }
 
-      gamedatas.draft.forEach((draftElement_id) => {
+      gamedatas.draft?.forEach((draftElement_id) => {
         const draftElement = document.getElementById(draftElement_id);
 
         if (draftElement) {
@@ -227,61 +227,79 @@ define([
         );
       }
 
-      this.statusBar.addActionButton(
-        `<i class="fa fa-solid fa-floppy-o"></i>`,
-        () => {
-          const draftCounts = {};
-          const draftElements = [];
-          document.querySelectorAll("[data-draft]").forEach((draftElement) => {
-            if (draftElement.dataset.draft !== "true") {
+      if (!this.isSpectator) {
+        this.statusBar.addActionButton(
+          `<i class="fa fa-solid fa-floppy-o"></i>`,
+          () => {
+            const draftCounts = {};
+            const draftElements = [];
+            document
+              .querySelectorAll("[data-draft]")
+              .forEach((draftElement) => {
+                if (draftElement.dataset.draft !== "true") {
+                  return;
+                }
+
+                draftElements.push(draftElement.id);
+
+                if (draftElement.dataset.draftvalue) {
+                  draftCounts[draftElement.id] =
+                    draftElement.dataset.draftvalue;
+                }
+              });
+
+            if (
+              draftElements.length === 0 &&
+              Object.keys(draftCounts).length === 0
+            ) {
+              this.showMessage(_("You may not save an empty draft"), "error");
               return;
             }
 
-            draftElements.push(draftElement.id);
+            this.actSaveDraft(draftElements, draftCounts);
+          },
+          {
+            title: _("Save draft"),
+            color: "secondary",
+            classes: ["dgt_draftBtn-save", "dgt_draftBtn"],
+            destination: document.getElementById("dgt_solutionSheet"),
+          }
+        );
 
-            if (draftElement.dataset.draftvalue) {
-              draftCounts[draftElement.id] = draftElement.dataset.draftvalue;
-            }
-          });
+        this.statusBar.addActionButton(
+          `<i class="fa fa-solid fa-trash"></i>`,
+          () => {
+            this.confirmationDialog(
+              _("Do you really want to delete your draft?"),
+              () => {
+                document
+                  .querySelectorAll("[data-draft]")
+                  .forEach((draftElement) => {
+                    if (draftElement.dataset.draft !== "true") {
+                      return;
+                    }
 
-          this.actSaveDraft(draftElements, draftCounts);
-        },
-        {
-          title: _("Save draft"),
-          color: "secondary",
-          classes: ["dgt_draftBtn-save", "dgt_draftBtn"],
-          destination: document.getElementById("dgt_solutionSheet"),
-        }
-      );
+                    draftElement.classList.remove("dgt_draft");
+                    draftElement.dataset.draft = "false";
 
-      this.statusBar.addActionButton(
-        `<i class="fa fa-solid fa-trash"></i>`,
-        () => {
-          this.confirmationDialog(
-            _("Do you really want to delete your draft?"),
-            () => {
-              document
-                .querySelectorAll("[data-draft]")
-                .forEach((draftElement) => {
-                  if (draftElement.dataset.draft !== "true") {
-                    return;
-                  }
+                    if (draftElement.dataset.draftvalue) {
+                      draftElement.removeAttribute("data-draftvalue");
+                      draftElement.textContent = "";
+                    }
+                  });
 
-                  draftElement.classList.remove("dgt_draft");
-                  draftElement.dataset.draft = "false";
-                });
-
-              this.actDeleteDraft();
-            }
-          );
-        },
-        {
-          title: _("Delete draft"),
-          color: "alert",
-          classes: ["dgt_draftBtn-delete", "dgt_draftBtn"],
-          destination: document.getElementById("dgt_solutionSheet"),
-        }
-      );
+                this.actDeleteDraft();
+              }
+            );
+          },
+          {
+            title: _("Delete draft"),
+            color: "alert",
+            classes: ["dgt_draftBtn-delete", "dgt_draftBtn"],
+            destination: document.getElementById("dgt_solutionSheet"),
+          }
+        );
+      }
 
       this.setupNotifications();
 
@@ -763,7 +781,7 @@ define([
     },
 
     notif_saveDraft: function (args) {
-      this.showMessage(_("Draft succesfully saved"), "info");
+      this.showMessage(_("Draft saved"), "info");
     },
 
     notif_incorrectSolution: function (args) {

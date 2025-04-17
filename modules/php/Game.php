@@ -360,13 +360,13 @@ class Game extends \Table
             throw new \BgaVisibleSystemException("Only players may perform this action");
         }
 
-        $playersDraft = (array) $this->globals->get(DRAFT);
-        $playersDraft[$player_id] = $draft;
-        $this->globals->set(DRAFT, $playersDraft);
+        $g_draft = (array) $this->globals->get(DRAFT);
+        $g_draft[$player_id] = $draft;
+        $this->globals->set(DRAFT, $g_draft);
 
-        $playersDraftCounts = (array) $this->globals->get(DRAFT_COUNTS);
-        $playersDraftCounts[$player_id] = $draftCounts;
-        $this->globals->set(DRAFT_COUNTS, $playersDraftCounts);
+        $g_draftCounts = (array) $this->globals->get(DRAFT_COUNTS);
+        $g_draftCounts[$player_id] = $draftCounts;
+        $this->globals->set(DRAFT_COUNTS, $g_draftCounts);
 
         $this->notify->player(
             $player_id,
@@ -386,9 +386,13 @@ class Game extends \Table
             throw new \BgaVisibleSystemException("Only players may perform this action");
         }
 
-        $playersDraft = (array) $this->globals->get(DRAFT);
-        $playersDraft[$player_id] = [];
-        $this->globals->set(DRAFT, $playersDraft);
+        $g_draft = (array) $this->globals->get(DRAFT);
+        $g_draft[$player_id] = [];
+        $this->globals->set(DRAFT, $g_draft);
+
+        $g_draftCounts = (array) $this->globals->get(DRAFT_COUNTS);
+        $g_draftCounts[$player_id] = [];
+        $this->globals->set(DRAFT_COUNTS, $g_draftCounts);
 
         $this->notify->player(
             $player_id,
