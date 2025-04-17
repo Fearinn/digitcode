@@ -415,9 +415,7 @@ define([
               };
 
               inputElement.onkeydown = (event) => {
-                if (
-                  ["-", "+", "-", ".", "e", ","].includes(event.key)
-                ) {
+                if (["-", "+", "-", ".", "e", ","].includes(event.key)) {
                   event.preventDefault();
                 }
               };
@@ -771,6 +769,30 @@ define([
     notif_incorrectSolution: function (args) {
       const player_id = args.player_id;
       this.dgt.counters[player_id].chances.incValue(-1);
+    },
+
+    // FORMAT LOGS
+
+    format_string_recursive(log, args) {
+      try {
+        if (log && args && !args.processed) {
+          args.processed = true;
+
+          for (arg_key in args) {
+            if (arg_key.includes("_label")) {
+              const arg = args["i18n"]?.includes(arg_key)
+                ? _(args[arg_key])
+                : args[arg_key];
+
+              args[arg_key] = `<span class="dgt_logHighlight">${arg}</span>`;
+            }
+          }
+        }
+      } catch (e) {
+        console.error(log, args, "Exception thrown", e.stack);
+      }
+
+      return this.inherited(arguments);
     },
   });
 });
