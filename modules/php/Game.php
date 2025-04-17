@@ -132,16 +132,16 @@ class Game extends \Table
         $countedLines[$line_id] = $spaceCount;
         $this->globals->set(COUNTED_LINES, $countedLines);
 
-        $type_label = $lineType === "row" ? clienttranslate("row") : clienttranslate("column");
+        $row_or_column = $lineType === "row" ? clienttranslate("row") : clienttranslate("column");
 
         $this->notify->all(
             "message",
-            clienttranslate('${player_name} counts the spaces of ${row_or_column} ${line_label}'),
+            clienttranslate('${player_name}: how many spaces are filled in ${row_or_column} ${line_label}'),
             [
                 "player_id" => $player_id,
                 "player_name" => $this->getPlayerNameById($player_id),
                 "line_label" => $line_id,
-                "row_or_column" => $type_label,
+                "row_or_column" => $row_or_column,
                 "i18n" => ["row_or_column"],
                 "line_id" => $line_id,
             ]
@@ -149,11 +149,11 @@ class Game extends \Table
 
         $this->notify->all(
             "countSpaces",
-            clienttranslate('${row_or_column} ${line_label} has ${spaceCount} filled spaces'),
+            clienttranslate('${line_label} has ${spaceCount} filled spaces'),
             [
                 "spaceCount" => $spaceCount,
                 "lineType" => $lineType,
-                "row_or_column" => $type_label,
+                "row_or_column" => $row_or_column,
                 "line_label" => $line_id,
                 "i18n" => ["row_or_column"],
                 "line_id" => $line_id,
@@ -191,7 +191,7 @@ class Game extends \Table
 
         $this->notify->all(
             "message",
-            clienttranslate('${player_name} asks the parity of ${digit_label}'),
+            clienttranslate('${player_name}: is ${digit_label} even or odd?'),
             [
                 "player_id" => $player_id,
                 "player_name" => $this->getPlayerNameById($player_id),
@@ -237,7 +237,7 @@ class Game extends \Table
 
         $this->notify->all(
             "message",
-            clienttranslate('${player_name} checks the space ${space_label}'),
+            clienttranslate('${player_name}: is ${space_label} filled?'),
             [
                 "player_id" => $player_id,
                 "player_name" => $this->getActivePlayerName(),
@@ -306,7 +306,7 @@ class Game extends \Table
 
         $this->notify->all(
             "message",
-            clienttranslate('${player_name} compares ${digit1_label} and ${digit2_label}'),
+            clienttranslate('${player_name}: between ${digit1_label} and ${digit2_label}, which one is larger?'),
             [
                 "player_id" => $player_id,
                 "player_name" => $this->getPlayerNameById($player_id),
@@ -334,7 +334,7 @@ class Game extends \Table
 
         $this->notify->all(
             "compareDigits",
-            clienttranslate('${digit_label} is larger than ${smallerDigit_label}'),
+            clienttranslate('The number at ${digit_label} is larger than ${smallerDigit_label}'),
             [
                 "digit_label" => $largerDigit_id,
                 "smallerDigit_label" => $smallerDigit_id,
@@ -504,7 +504,10 @@ class Game extends \Table
                 $this->notify->all(
                     "revealCode",
                     clienttranslate('The code was ${code_label}'),
-                    ["code_label" => $code, "code" => $code]
+                    [
+                        "code_label" => $code,
+                        "code" => $code
+                    ]
                 );
 
                 $this->gamestate->nextState("gameEnd");
