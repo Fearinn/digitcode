@@ -30,6 +30,7 @@ $machinestates = [
         "descriptionmyturn" => clienttranslate('${you} must ask a question or submit a solution'),
         "type" => "activeplayer",
         "args" => "arg_playerTurn",
+        "action" => "st_playerTurn",
         "possibleactions" => [
             "actCountSpaces",
             "actCheckParity",

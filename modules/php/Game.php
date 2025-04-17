@@ -68,6 +68,13 @@ class Game extends \Table
      * @throws BgaUserException
      */
 
+    public function checkVersion(?int $CLIENT_VERSION): void
+    {
+        if ($CLIENT_VERSION && $CLIENT_VERSION !== (int) $this->gamestate->table_globals[300]) {
+            throw new \BgaUserException(clienttranslate("A new version is available. Please reload (F5) the page"));
+        }
+    }
+
     public function actCountSpaces(?int $CLIENT_VERSION, string $line_id)
     {
         $this->checkVersion($CLIENT_VERSION);
@@ -461,6 +468,15 @@ class Game extends \Table
         ];
     }
 
+    public function st_playerTurn(): void
+    {
+        $player_id = $this->getActivePlayerId();
+
+        if ($this->isPlayerEliminated($player_id)) {
+            $this->gamestate->nextState("nextPlayer");
+        }
+    }
+
     public function st_betweenPlayers(): void
     {
         $player_id = (int) $this->getActivePlayerId();
@@ -498,13 +514,6 @@ class Game extends \Table
     }
 
     // Utility functions
-
-    public function checkVersion(?int $CLIENT_VERSION): void
-    {
-        if ($CLIENT_VERSION && $CLIENT_VERSION !== (int) $this->gamestate->table_globals[300]) {
-            throw new \BgaUserException(clienttranslate("A new version is available. Please reload (F5) the page"));
-        }
-    }
 
     public function isPlayerEliminated(int $player_id): bool
     {
