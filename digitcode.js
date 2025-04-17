@@ -56,10 +56,23 @@ define([
         counter.setValue(playerChances);
       }
 
+      for (const lineMarker_id in gamedatas.draftCounts) {
+        const lineMarker = document.getElementById(lineMarker_id);
+
+        if (lineMarker) {
+          const spaceCount = gamedatas.draftCounts[lineMarker_id];
+          lineMarker.textContent = spaceCount;
+          lineMarker.dataset.draftvalue = spaceCount;
+        }
+      }
+
       gamedatas.draft.forEach((draftElement_id) => {
         const draftElement = document.getElementById(draftElement_id);
-        draftElement.classList.add("dgt_draft");
-        draftElement.dataset.draft = "true";
+
+        if (draftElement) {
+          draftElement.classList.add("dgt_draft");
+          draftElement.dataset.draft = "true";
+        }
       });
 
       document.querySelectorAll("[data-space]").forEach((spaceElement) => {
@@ -149,7 +162,9 @@ define([
           }
 
           const draftClass = "dgt_draft";
+          lineMarker.classList.add(draftClass);
           lineMarker.dataset.draft = lineMarker.classList.contains(draftClass);
+          lineMarker.dataset.draftvalue = spaceCount;
           lineMarker.textContent = spaceCount;
         });
       });
@@ -215,15 +230,21 @@ define([
       this.statusBar.addActionButton(
         `<i class="fa fa-solid fa-floppy-o"></i>`,
         () => {
+          const draftCounts = {};
           const draftElements = [];
           document.querySelectorAll("[data-draft]").forEach((draftElement) => {
             if (draftElement.dataset.draft !== "true") {
               return;
             }
+
             draftElements.push(draftElement.id);
+
+            if (draftElement.dataset.draftvalue) {
+              draftCounts[draftElement.id] = draftElement.dataset.draftvalue;
+            }
           });
 
-          this.actSaveDraft(draftElements);
+          this.actSaveDraft(draftElements, draftCounts);
         },
         {
           title: _("Save draft"),
@@ -677,10 +698,13 @@ define([
       this.performAction("actCompareDigits", { digit1_id, digit2_id });
     },
 
-    actSaveDraft: function (draft) {
+    actSaveDraft: function (draft, draftCounts) {
       this.performAction(
         "actSaveDraft",
-        { draft: JSON.stringify(draft) },
+        {
+          draft: JSON.stringify(draft),
+          draftCounts: JSON.stringify(draftCounts),
+        },
         {
           checkAction: false,
         }
