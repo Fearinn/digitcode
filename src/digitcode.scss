@@ -1,3 +1,4 @@
+@use "libs/bga-zoom";
 @use "panels";
 @use "solutionSheet";
 @use "digits";
@@ -21,6 +22,7 @@
   align-items: center;
   justify-content: center;
   padding: 4px 8px;
+  margin: auto;
 
   * {
     box-sizing: border-box;

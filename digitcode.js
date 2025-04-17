@@ -20,6 +20,7 @@ define([
   "dojo/_base/declare",
   "ebg/core/gamegui",
   "ebg/counter",
+  `${g_gamethemeurl}modules/js/bga-zoom.js`,
 ], function (dojo, declare) {
   return declare("bgagame.digitcode", ebg.core.gamegui, {
     constructor: function () {
@@ -31,6 +32,16 @@ define([
         managers: {},
         counters: {},
       };
+
+      this.dgt.managers.zoom = new ZoomManager({
+        element: document.getElementById("dgt_gameArea"),
+        localStorageZoomKey: "dgt-zoom",
+        zoomControls: {
+          color: "white",
+        },
+        zoomLevels: [0.3, 0.4, 0.5, 0.75, 1, 1.25, 1.5],
+        smooth: true,
+      });
 
       for (const player_id in gamedatas.players) {
         const playerPanel = this.getPlayerPanelElement(player_id);
@@ -688,7 +699,9 @@ define([
               () => {
                 this.actCompareDigits(comparison_id);
               },
-              `${comparison_id.slice(0, 1)} &gt; &lt; ${comparison_id.slice(-1)}`
+              `${comparison_id.slice(0, 1)} &gt; &lt; ${comparison_id.slice(
+                -1
+              )}`
             );
 
             if (isSelected) {
