@@ -34,6 +34,7 @@ const COMPARABLE_DIGITS = "comparableDigits";
 const COMPARED_DIGITS = "comparedDigits";
 const DRAFT = "draft";
 const DRAFT_COUNTS = "draftCounts";
+const QUESTION_LOG = "questionLog";
 
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
 

@@ -296,13 +296,14 @@
 }
 
 .dgt_parityMarker-confirmed {
-  color: darkred;
+  color: red;
   cursor: not-allowed;
 }
 
 .dgt_lineMarker-confirmed {
-  color: darkred;
-  cursor: not-allowed;
+  font-size: 24px;
+  color: red;
+  -webkit-text-stroke: 1px darkred;
   pointer-events: none;
 }
 
@@ -318,7 +319,7 @@
 }
 
 .dgt_comparisonIcon-confirmed {
-  color: darkred;
+  color: red;
   cursor: not-allowed;
 }
 
