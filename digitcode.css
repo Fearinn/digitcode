@@ -226,7 +226,7 @@
   cursor: pointer;
 }
 .dgt_space:where(.dgt_draft) {
-  background-color: black;
+  background: repeating-linear-gradient(-45deg, black, gray 8px);
 }
 
 .dgt_comparisonIcon {
@@ -272,7 +272,7 @@
 }
 
 .dgt_space-selectable {
-  background-color: greenyellow;
+  background: repeating-linear-gradient(45deg, green, darkgreen 8px);
   cursor: pointer;
 }
 .dgt_space-unselectable {
@@ -280,7 +280,7 @@
   opacity: 0.5;
 }
 .dgt_space-selected {
-  background-color: green;
+  background: repeating-linear-gradient(-45deg, green, greenyellow 8px);
 }
 
 .dgt_comparisonMarker-selectable {
@@ -296,23 +296,30 @@
 }
 
 .dgt_parityMarker-confirmed {
-  color: red;
+  color: darkred;
+  cursor: not-allowed;
 }
 
 .dgt_lineMarker-confirmed {
-  color: red;
+  color: darkred;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
+.dgt_space-confirmed {
+  cursor: not-allowed;
+}
 .dgt_space-confirmed-filled {
-  background-color: red;
+  cursor: not-allowed;
+  background: repeating-linear-gradient(90deg, darkred, red 8px);
 }
 .dgt_space-confirmed-empty {
-  background-color: cyan;
-  filter: blur(6px);
+  background: repeating-linear-gradient(180deg, white, gray 4px);
 }
 
 .dgt_comparisonIcon-confirmed {
-  color: red;
+  color: darkred;
+  cursor: not-allowed;
 }
 
 .dgt_dialogContent {

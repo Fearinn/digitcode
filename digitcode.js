@@ -206,6 +206,7 @@ define([
 
         const filledOrEmpty = spaceFilled ? "filled" : "empty";
         const spaceElement = document.getElementById(`dgt_space-${space_id}`);
+        spaceElement.classList.add("dgt_space-confirmed");
         spaceElement.classList.add(`dgt_space-confirmed-${filledOrEmpty}`);
         this.addTooltip(spaceElement.id, _(filledOrEmpty), "");
       }
@@ -762,6 +763,7 @@ define([
       const filledOrEmpty = spaceFilled ? "filled" : "empty";
 
       const spaceElement = document.getElementById(`dgt_space-${space_id}`);
+      spaceElement.classList.add("dgt_space-confirmed");
       spaceElement.classList.add(`dgt_space-confirmed-${filledOrEmpty}`);
       this.addTooltip(spaceElement.id, _(filledOrEmpty), "");
     },

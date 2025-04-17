@@ -21,7 +21,7 @@
 
 .dgt_space {
   &-selectable {
-    background-color: greenyellow;
+    background: repeating-linear-gradient(45deg, green, darkgreen 8px);
     cursor: pointer;
   }
 
@@ -31,7 +31,7 @@
   }
 
   &-selected {
-    background-color: green;
+    background: repeating-linear-gradient(-45deg, green, greenyellow 8px);
   }
 }
 
