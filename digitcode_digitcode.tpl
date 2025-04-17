@@ -65,17 +65,17 @@
         ></i>
       </div>
       <div
-        id="dgt_comparisonMarker-U_X"
+        id="dgt_comparisonMarker-UX"
         class="dgt_comparisonMarker"
         data-comparison="UX"
       >
         <i
-          id="dgt_comparisonIcon-X_U"
+          id="dgt_comparisonIcon-U_X"
           class="dgt_comparisonIcon fa6 fa6-solid fa6-greater-than"
           data-comparisonIcon="U>X"
         ></i>
         <i
-          id="dgt_comparisonIcon-X>U"
+          id="dgt_comparisonIcon-X_U"
           class="dgt_comparisonIcon fa6 fa6-solid fa6-less-than"
           data-comparisonIcon="X>U"
         ></i>

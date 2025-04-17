@@ -125,7 +125,7 @@ $this->LINES = [
                 "sequence" => 1,
                 "digits" => ["T", "U", "V"],
         ],
-        "P" => [
+        "K" => [
                 "type" => "row",
                 "position" => 1,
                 "sequence" => 1,

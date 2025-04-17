@@ -75,7 +75,7 @@ class Game extends \Table
         }
     }
 
-    public function actCountSpaces(?int $CLIENT_VERSION, string $line_id)
+    public function actCountSpaces(?int $CLIENT_VERSION, #[StringParam(alphanum: true)] $line_id): void
     {
         $this->checkVersion($CLIENT_VERSION);
 
@@ -163,7 +163,7 @@ class Game extends \Table
         $this->gamestate->nextState("nextPlayer");
     }
 
-    public function actCheckParity(?int $CLIENT_VERSION, string $digit_id): void
+    public function actCheckParity(?int $CLIENT_VERSION, #[StringParam(alphanum: true)] $digit_id): void
     {
         $this->checkVersion($CLIENT_VERSION);
 
@@ -451,7 +451,7 @@ class Game extends \Table
     }
 
     /**
-     * Game state arguments and actions
+     * Game state arguments
      *
      *
      * @return array

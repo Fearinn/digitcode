@@ -528,7 +528,11 @@ define([
       return this.gamedatas.gamestate.name;
     },
 
-    toggleConfirmationBtn: function (add = false, callback = () => {}) {
+    toggleConfirmationBtn: function (
+      add = false,
+      callback = () => {},
+      selection = _("selection")
+    ) {
       document.getElementById("dgt_confirmationBtn")?.remove();
 
       if (!add) {
@@ -536,7 +540,9 @@ define([
       }
 
       this.statusBar.addActionButton(
-        _("confirm selection"),
+        this.format_string_recursive(_("confirm ${selection}"), {
+          selection,
+        }),
         () => {
           callback();
         },
@@ -573,9 +579,13 @@ define([
           labelElement.onclick = () => {
             const isSelected = !labelElement.classList.contains(selectedClass);
 
-            this.toggleConfirmationBtn(isSelected, () => {
-              callback(label_id);
-            });
+            this.toggleConfirmationBtn(
+              isSelected,
+              () => {
+                callback(label_id);
+              },
+              label_id
+            );
 
             if (isSelected) {
               labelElements.forEach((loopElement) => {
@@ -617,9 +627,13 @@ define([
           spaceElement.onclick = () => {
             const isSelected = !spaceElement.classList.contains(selectedClass);
 
-            this.toggleConfirmationBtn(isSelected, () => {
-              this.actCheckSpace(space_id);
-            });
+            this.toggleConfirmationBtn(
+              isSelected,
+              () => {
+                this.actCheckSpace(space_id);
+              },
+              space_id
+            );
 
             if (isSelected) {
               spaceElements.forEach((loopElement) => {
@@ -669,9 +683,13 @@ define([
             const isSelected =
               !comparisonElement.classList.contains(selectedClass);
 
-            this.toggleConfirmationBtn(isSelected, () => {
-              this.actCompareDigits(comparison_id);
-            });
+            this.toggleConfirmationBtn(
+              isSelected,
+              () => {
+                this.actCompareDigits(comparison_id);
+              },
+              `${comparison_id.slice(0, 1)} &gt; &lt; ${comparison_id.slice(-1)}`
+            );
 
             if (isSelected) {
               comparisonElements.forEach((loopElement) => {
@@ -715,6 +733,7 @@ define([
     },
 
     actSaveDraft: function (draft, draftCounts) {
+      console.log(draft, "draft");
       this.performAction(
         "actSaveDraft",
         {
