@@ -95,17 +95,3 @@
 .dgt_sequence {
   display: flex;
 }
-
-.dgt_draftBtn {
-  font-size: 20px;
-  position: absolute;
-  top: 0;
-
-  &-save {
-    right: 1%;
-  }
-
-  &-delete {
-    left: 0;
-  }
-}

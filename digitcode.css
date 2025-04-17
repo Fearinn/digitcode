@@ -89,18 +89,6 @@
   display: flex;
 }
 
-.dgt_draftBtn {
-  font-size: 20px;
-  position: absolute;
-  top: 0;
-}
-.dgt_draftBtn-save {
-  right: 1%;
-}
-.dgt_draftBtn-delete {
-  left: 0;
-}
-
 .dgt_digits {
   display: flex;
   gap: var(--digitsGap);
@@ -222,6 +210,18 @@
   color: gray;
 }
 
+.dgt_draftBtn {
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+}
+.dgt_draftBtn-save {
+  right: 1%;
+}
+.dgt_draftBtn-delete {
+  left: 0;
+}
+
 .dgt_space {
   cursor: pointer;
 }
@@ -251,7 +251,7 @@
   cursor: pointer;
 }
 .dgt_optionMarker:where(.dgt_draft) {
-  text-decoration: line-through black 2px;
+  text-decoration: 2px black line-through;
 }
 
 .dgt_label-selectable {
