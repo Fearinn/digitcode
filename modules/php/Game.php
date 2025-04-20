@@ -137,7 +137,7 @@ class Game extends \Table
 
         $this->notify->all(
             "message",
-            clienttranslate('${player_name}: how many spaces are filled in ${row_or_column} ${line_label}'),
+            clienttranslate('${player_name}: how many spaces are filled in ${row_or_column} ${line_label}?'),
             [
                 "player_id" => $player_id,
                 "player_name" => $this->getPlayerNameById($player_id),

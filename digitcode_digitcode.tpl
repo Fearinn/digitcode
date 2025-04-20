@@ -10,6 +10,9 @@
 -------
 -->
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
 <div id="dgt_gameArea" class="dgt_gameArea">
   <div id="dgt_solutionSheet" class="dgt_solutionSheet whiteblock">
     <div class="dgt_comparisonMarkers-top dgt_comparisonMarkers">

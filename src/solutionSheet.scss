@@ -11,16 +11,16 @@
   position: absolute;
   left: calc(var(--digitsGap) * 2.25);
   display: flex;
-  gap: calc(var(--digitsGap) * 1.75);
+  gap: calc(var(--digitsGap) * 1.7);
 
   &-top {
-    top: calc(var(--digitsGap) * 1.5);
+    top: calc(var(--digitsGap) * 1.4);
   }
 
   &-middle {
     top: calc(var(--digitsGap) * 2.5);
     left: calc(var(--digitsGap) + calc(var(--spaceWidth) / 2));
-    gap: calc(var(--digitsGap) * 1.25 + var(--blockSize) * 1.4);
+    gap: calc(var(--digitsGap) * 1.25 + var(--blockSize) * 1.25);
 
     .dgt_comparisonMarker {
       transform: rotate(90deg);
@@ -28,14 +28,14 @@
   }
 
   &-bottom {
-    bottom: calc(var(--digitsGap) * 1.5);
+    bottom: calc(var(--digitsGap) * 1.4);
   }
 }
 
 .dgt_comparisonMarker {
   color: gray;
   height: 24px;
-  width: 35px;
+  width: 40px;
 }
 
 .dgt_columnLabels {
@@ -54,6 +54,7 @@
 }
 
 .dgt_label {
+  font-size: 24px;
   font-weight: bold;
   display: flex;
   align-items: center;

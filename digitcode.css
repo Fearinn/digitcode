@@ -77,27 +77,27 @@
   position: absolute;
   left: calc(var(--digitsGap) * 2.25);
   display: flex;
-  gap: calc(var(--digitsGap) * 1.75);
+  gap: calc(var(--digitsGap) * 1.7);
 }
 .dgt_comparisonMarkers-top {
-  top: calc(var(--digitsGap) * 1.5);
+  top: calc(var(--digitsGap) * 1.4);
 }
 .dgt_comparisonMarkers-middle {
   top: calc(var(--digitsGap) * 2.5);
   left: calc(var(--digitsGap) + var(--spaceWidth) / 2);
-  gap: calc(var(--digitsGap) * 1.25 + var(--blockSize) * 1.4);
+  gap: calc(var(--digitsGap) * 1.25 + var(--blockSize) * 1.25);
 }
 .dgt_comparisonMarkers-middle .dgt_comparisonMarker {
   transform: rotate(90deg);
 }
 .dgt_comparisonMarkers-bottom {
-  bottom: calc(var(--digitsGap) * 1.5);
+  bottom: calc(var(--digitsGap) * 1.4);
 }
 
 .dgt_comparisonMarker {
   color: gray;
   height: 24px;
-  width: 35px;
+  width: 40px;
 }
 
 .dgt_columnLabels {
@@ -115,6 +115,7 @@
 }
 
 .dgt_label {
+  font-size: 24px;
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -242,6 +243,7 @@
   align-items: center;
   justify-content: center;
   gap: calc(var(--blockSize) * 1.75);
+  width: 0;
   z-index: 1;
 }
 
@@ -307,6 +309,7 @@
 
 .dgt_lineMarker {
   cursor: pointer;
+  font-size: 20px;
 }
 
 .dgt_optionMarker {
@@ -396,6 +399,7 @@
 }
 
 .dgt_input {
+  font-family: "Alata", sans-serif;
   text-align: center;
   font-size: 24px;
   font-weight: bold;
@@ -411,6 +415,7 @@
 }
 
 .dgt_gameArea {
+  font-family: "Alata", sans-serif;
   position: relative;
   display: flex;
   align-items: center;
