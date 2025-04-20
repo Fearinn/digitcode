@@ -26,8 +26,8 @@ use Bga\GameFramework\Actions\Types\StringParam;
 
 const COUNTABLE_LINES = "countableLines";
 const COUNTED_LINES = "countedLines";
-const CHECKABLE_DIGITS = "checkableDigits";
-const CHECKED_DIGITS = "checkDigits";
+const CHECKABLE_PARITIES = "checkableParities";
+const CHECKED_PARITIES = "checkedParities";
 const CHECKABLE_SPACES = "checkableSpaces";
 const CHECKED_SPACES = "checkedSpaces";
 const COMPARABLE_DIGITS = "comparableDigits";
@@ -174,21 +174,21 @@ class Game extends \Table
         $digitPosition = (int) $digit["position"];
         $algarism = $this->globals->get("digit-{$digitPosition}");
 
-        $checkableDigits = $this->globals->get(CHECKABLE_DIGITS);
+        $checkableParities = $this->globals->get(CHECKABLE_PARITIES);
 
-        $checkableDigits = array_filter(
-            $checkableDigits,
+        $checkableParities = array_filter(
+            $checkableParities,
             function ($l_digit_id) use ($digit_id) {
                 return $l_digit_id !== $digit_id;
             }
         );
-        $this->globals->set(CHECKABLE_DIGITS, array_values($checkableDigits));
+        $this->globals->set(CHECKABLE_PARITIES, array_values($checkableParities));
 
         $parity = $algarism % 2 === 0 ? "even" : "odd";
 
-        $checkedDigits = $this->globals->get(CHECKED_DIGITS);
-        $checkedDigits[$digit_id] = $parity;
-        $this->globals->set(CHECKED_DIGITS, $checkedDigits);
+        $checkedParities = $this->globals->get(CHECKED_PARITIES);
+        $checkedParities[$digit_id] = $parity;
+        $this->globals->set(CHECKED_PARITIES, $checkedParities);
 
         $this->notify->all(
             "message",
@@ -461,13 +461,13 @@ class Game extends \Table
     public function arg_playerTurn(): array
     {
         $countableLines = $this->globals->get(COUNTABLE_LINES);
-        $checkableDigits = $this->globals->get(CHECKABLE_DIGITS);
+        $checkableParities = $this->globals->get(CHECKABLE_PARITIES);
         $checkableSpaces = $this->globals->get(CHECKABLE_SPACES);
         $comparableDigits = $this->globals->get(COMPARABLE_DIGITS);
 
         return [
             "countableLines" => $countableLines,
-            "checkableDigits" => $checkableDigits,
+            "checkableParities" => $checkableParities,
             "checkableSpaces" => $checkableSpaces,
             "comparableDigits" => $comparableDigits,
         ];
@@ -693,7 +693,7 @@ class Game extends \Table
         $result["GAME_VERSION"] = (int) $this->gamestate->table_globals[300];
         $result["code"] = $this->getCode();
         $result["countedLines"] = $this->globals->get(COUNTED_LINES, []);
-        $result["checkedDigits"] = $this->globals->get(CHECKED_DIGITS, []);
+        $result["checkedParities"] = $this->globals->get(CHECKED_PARITIES, []);
         $result["checkedSpaces"] = $this->globals->get(CHECKED_SPACES, []);
         $result["comparedDigits"] = $this->globals->get(COMPARED_DIGITS, []);
 
@@ -752,8 +752,8 @@ class Game extends \Table
         $this->globals->set(COUNTABLE_LINES, array_keys($this->LINES));
         $this->globals->set(COUNTED_LINES, []);
 
-        $this->globals->set(CHECKABLE_DIGITS, array_keys($this->DIGITS));
-        $this->globals->set(CHECKED_DIGITS, []);
+        $this->globals->set(CHECKABLE_PARITIES, array_keys($this->DIGITS));
+        $this->globals->set(CHECKED_PARITIES, []);
 
         $this->globals->set(CHECKABLE_SPACES, array_keys($this->SPACES));
         $this->globals->set(CHECKED_SPACES, []);

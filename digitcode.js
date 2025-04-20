@@ -204,12 +204,13 @@ define([
         lineMarker.textContent = spaceCount;
       }
 
-      for (const digit_id in gamedatas.chekedDigits) {
-        const parity = gamedatas.checkedDigits[digit_id];
+      for (const digit_id in gamedatas.checkedParities) {
+        const parity = gamedatas.checkedParities[digit_id];
         const parityMarker = document.getElementById(
           `dgt_parityMarker-${parity}-${digit_id}`
         );
         parityMarker.classList.add("dgt_parityMarker-confirmed");
+        this.addTooltip(parityMarker.id, _(parity), "");
       }
 
       for (const space_id in gamedatas.checkedSpaces) {
@@ -344,7 +345,7 @@ define([
       if (stateName === "playerTurn") {
         const {
           countableLines,
-          checkableDigits,
+          checkableParities,
           checkableSpaces,
           comparableDigits,
         } = args.args;
@@ -365,14 +366,14 @@ define([
           );
         }
 
-        if (checkableDigits.length > 0) {
+        if (checkableParities.length > 0) {
           this.statusBar.addActionButton(_("(number) even or odd?"), () => {
             this.setClientState("client_checkParity", {
               descriptionmyturn: _(
                 "${you} must pick a number to check its parity"
               ),
               client_args: {
-                checkableDigits,
+                checkableParities,
               },
             });
           });
@@ -493,8 +494,8 @@ define([
       }
 
       if (stateName === "client_checkParity") {
-        const { checkableDigits } = args.client_args;
-        this.setSelectableLabels(checkableDigits, (label_id) => {
+        const { checkableParities } = args.client_args;
+        this.setSelectableLabels(checkableParities, (label_id) => {
           this.actCheckParity(label_id);
         });
       }
@@ -778,15 +779,19 @@ define([
     notif_countSpaces: function (args) {
       const { line_id, spaceCount } = args;
       const lineMarker = document.querySelector(`[data-lineMarker=${line_id}`);
-      lineMarker.textContent = spaceCount;
       lineMarker.classList.add("dgt_lineMarker-confirmed");
+      lineMarker.textContent = spaceCount;
     },
 
     notif_checkParity: function (args) {
       const { parity, digit_id } = args;
-      document
-        .getElementById(`dgt_parityMarker-${parity}-${digit_id}`)
-        .classList.add("dgt_parityMarker-confirmed");
+
+      const parityMarker = document.getElementById(
+        `dgt_parityMarker-${parity}-${digit_id}`
+      );
+      parityMarker.classList.add("dgt_parityMarker-confirmed");
+
+      this.addTooltip(parityMarker.id, _(parity), "");
     },
 
     notif_checkSpace: function (args) {
