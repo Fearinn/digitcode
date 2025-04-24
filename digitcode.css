@@ -412,10 +412,10 @@
 .dgt_space {
   cursor: pointer;
 }
-.dgt_space:where(.dgt_draft)[data-draftvalue=filled] {
+.dgt_space:where(.dgt_draft):where([data-draftvalue=filled]) {
   background-image: repeating-linear-gradient(-45deg, black, gray 6px);
 }
-.dgt_space:where(.dgt_draft)[data-draftvalue=empty] {
+.dgt_space:where(.dgt_draft):where([data-draftvalue=empty]) {
   background-image: repeating-linear-gradient(180deg, gray, white 6px);
 }
 
