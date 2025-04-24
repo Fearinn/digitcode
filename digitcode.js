@@ -67,13 +67,16 @@ define([
         counter.setValue(playerChances);
       }
 
-      for (const lineMarker_id in gamedatas.draftCounts) {
-        const lineMarker = document.getElementById(lineMarker_id);
+      for (const element_id in gamedatas.draftValues) {
+        const element = document.getElementById(element_id);
 
-        if (lineMarker) {
-          const spaceCount = gamedatas.draftCounts[lineMarker_id];
-          lineMarker.textContent = spaceCount;
-          lineMarker.dataset.draftvalue = spaceCount;
+        if (element) {
+          const value = gamedatas.draftValues[element_id];
+          element.dataset.draftvalue = value;
+
+          if (element.dataset.linemarker) {
+            element.textContent = value;
+          }
         }
       }
 
@@ -92,8 +95,22 @@ define([
             return;
           }
 
+          const draftValues = ["", "filled", "empty"];
+
+          const draftValue = spaceElement.dataset.draftvalue;
+          let index = draftValue ? draftValues.indexOf(draftValue) + 1 : 1;
+
           const draftClass = "dgt_draft";
-          spaceElement.classList.toggle(draftClass);
+          spaceElement.classList.add(draftClass);
+
+          spaceElement.dataset.draftvalue = draftValues[index];
+
+          if (index > 2) {
+            index = 0;
+            spaceElement.classList.remove(draftClass);
+            spaceElement.removeAttribute("data-draftvalue");
+          }
+
           spaceElement.dataset.draft =
             spaceElement.classList.contains(draftClass);
         });
@@ -244,7 +261,7 @@ define([
         this.statusBar.addActionButton(
           `<i class="fa fa-solid fa-floppy-o"></i>`,
           () => {
-            const draftCounts = {};
+            const draftValues = {};
             const draftElements = [];
             document
               .querySelectorAll("[data-draft]")
@@ -256,20 +273,20 @@ define([
                 draftElements.push(draftElement.id);
 
                 if (draftElement.dataset.draftvalue) {
-                  draftCounts[draftElement.id] =
+                  draftValues[draftElement.id] =
                     draftElement.dataset.draftvalue;
                 }
               });
 
             if (
               draftElements.length === 0 &&
-              Object.keys(draftCounts).length === 0
+              Object.keys(draftValues).length === 0
             ) {
               this.showMessage(_("You may not save an empty draft"), "error");
               return;
             }
 
-            this.actSaveDraft(draftElements, draftCounts);
+            this.actSaveDraft(draftElements, draftValues);
           },
           {
             title: _("Save draft"),
@@ -746,13 +763,13 @@ define([
       this.performAction("actCompareDigits", { digit1_id, digit2_id });
     },
 
-    actSaveDraft: function (draft, draftCounts) {
+    actSaveDraft: function (draft, draftValues) {
       console.log(draft, "draft");
       this.performAction(
         "actSaveDraft",
         {
           draft: JSON.stringify(draft),
-          draftCounts: JSON.stringify(draftCounts),
+          draftValues: JSON.stringify(draftValues),
         },
         {
           checkAction: false,

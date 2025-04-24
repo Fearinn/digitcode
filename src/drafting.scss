@@ -16,7 +16,13 @@
   cursor: pointer;
 
   &:where(.dgt_draft) {
-    background-image: repeating-linear-gradient(-45deg, black, gray 8px);
+    &[data-draftvalue="filled"] {
+      background-image: repeating-linear-gradient(-45deg, black, gray 6px);
+    }
+
+    &[data-draftvalue="empty"] {
+      background-image: repeating-linear-gradient(180deg, gray, white 6px);
+    }
   }
 }
 

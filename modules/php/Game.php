@@ -33,7 +33,7 @@ const CHECKED_SPACES = "checkedSpaces";
 const COMPARABLE_DIGITS = "comparableDigits";
 const COMPARED_DIGITS = "comparedDigits";
 const DRAFT = "draft";
-const DRAFT_COUNTS = "draftCounts";
+const DRAFT_VALUESS = "draftValues";
 const QUESTION_LOG = "questionLog";
 
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
@@ -351,7 +351,7 @@ class Game extends \Table
     public function actSaveDraft(
         ?int $CLIENT_VERSION,
         #[JsonParam(alphanum: true)] array $draft,
-        #[JsonParam(alphanum: true)] array $draftCounts
+        #[JsonParam(alphanum: true)] array $draftValues
     ): void {
         $this->checkVersion($CLIENT_VERSION);
 
@@ -365,9 +365,9 @@ class Game extends \Table
         $g_draft[$player_id] = $draft;
         $this->globals->set(DRAFT, $g_draft);
 
-        $g_draftCounts = (array) $this->globals->get(DRAFT_COUNTS);
-        $g_draftCounts[$player_id] = $draftCounts;
-        $this->globals->set(DRAFT_COUNTS, $g_draftCounts);
+        $g_draftValues = (array) $this->globals->get(DRAFT_VALUESS);
+        $g_draftValues[$player_id] = $draftValues;
+        $this->globals->set(DRAFT_VALUESS, $g_draftValues);
 
         $this->notify->player(
             $player_id,
@@ -391,9 +391,9 @@ class Game extends \Table
         $g_draft[$player_id] = [];
         $this->globals->set(DRAFT, $g_draft);
 
-        $g_draftCounts = (array) $this->globals->get(DRAFT_COUNTS);
-        $g_draftCounts[$player_id] = [];
-        $this->globals->set(DRAFT_COUNTS, $g_draftCounts);
+        $g_draftValues = (array) $this->globals->get(DRAFT_VALUESS);
+        $g_draftValues[$player_id] = [];
+        $this->globals->set(DRAFT_VALUESS, $g_draftValues);
 
         $this->notify->player(
             $player_id,
@@ -699,7 +699,7 @@ class Game extends \Table
 
         if (!$this->isSpectator()) {
             $result["draft"] = $this->globals->get(DRAFT)[$current_player_id];
-            $result["draftCounts"] = $this->globals->get(DRAFT_COUNTS)[$current_player_id];
+            $result["draftValues"] = $this->globals->get(DRAFT_VALUESS)[$current_player_id];
         }
 
         return $result;
@@ -762,13 +762,13 @@ class Game extends \Table
         $this->globals->set(COMPARED_DIGITS, []);
 
         $draft = [];
-        $draftCounts = [];
+        $draftValues = [];
         foreach ($players as $player_id => $player) {
             $draft[$player_id] = [];
-            $draftCounts[$player_id] = [];
+            $draftValues[$player_id] = [];
         }
         $this->globals->set(DRAFT, $draft);
-        $this->globals->set(DRAFT_COUNTS, $draftCounts);
+        $this->globals->set(DRAFT_VALUESS, $draftValues);
 
         $this->activeNextPlayer();
     }
