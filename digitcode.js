@@ -21,6 +21,7 @@ define([
   "ebg/core/gamegui",
   "ebg/counter",
   `${g_gamethemeurl}modules/js/bga-zoom.js`,
+  `${g_gamethemeurl}modules/js/bga-help.js`,
 ], function (dojo, declare) {
   return declare("bgagame.digitcode", ebg.core.gamegui, {
     constructor: function () {
@@ -41,6 +42,17 @@ define([
         },
         zoomLevels: [0.3, 0.4, 0.5, 0.75, 1, 1.25, 1.5],
         smooth: true,
+      });
+
+      this.dgt.managers.help = new HelpManager(this, {
+        buttons: [
+          new BgaHelpExpandableButton({
+            title: _("Player aid"),
+            foldedHtml: `<span class="dgt_helpFolded">?</span>`,
+            unfoldedHtml: `<div class="dgt_playerAid"></div>`,
+            expandedHeight: "500px",
+          }),
+        ],
       });
 
       for (const player_id in gamedatas.players) {
