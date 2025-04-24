@@ -34,6 +34,10 @@
 
 .dgt_comparisonMarker {
   color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
   height: 24px;
   width: 40px;
 }
