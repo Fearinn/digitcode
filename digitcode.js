@@ -314,22 +314,7 @@ define([
             this.confirmationDialog(
               _("Do you really want to delete your draft?"),
               () => {
-                document
-                  .querySelectorAll("[data-draft]")
-                  .forEach((draftElement) => {
-                    if (draftElement.dataset.draft !== "true") {
-                      return;
-                    }
-
-                    draftElement.classList.remove("dgt_draft");
-                    draftElement.dataset.draft = "false";
-
-                    if (draftElement.dataset.draftvalue) {
-                      draftElement.removeAttribute("data-draftvalue");
-                      draftElement.textContent = "";
-                    }
-                  });
-
+                this.deleteDraft();
                 this.actDeleteDraft();
               }
             );
@@ -342,6 +327,8 @@ define([
           }
         );
       }
+
+      this.revealCode(gamedatas.codeSpaces);
 
       this.setupNotifications();
 
@@ -750,6 +737,39 @@ define([
       });
     },
 
+    deleteDraft: function () {
+      document.querySelectorAll("[data-draft]").forEach((draftElement) => {
+        if (draftElement.dataset.draft !== "true") {
+          return;
+        }
+
+        draftElement.classList.remove("dgt_draft");
+        draftElement.dataset.draft = "false";
+
+        if (draftElement.dataset.draftvalue) {
+          draftElement.removeAttribute("data-draftvalue");
+          draftElement.textContent = "";
+        }
+      });
+    },
+
+    revealCode: function (codeSpaces) {
+      if (!codeSpaces) {
+        return;
+      }
+
+      console.log(codeSpaces);
+
+      this.deleteDraft();
+
+      codeSpaces.forEach((space_id) => {
+        const spaceElement = document.getElementById(`dgt_space-${space_id}`);
+        spaceElement.classList.add("dgt_space-confirmed");
+
+        spaceElement.classList.add("dgt_space-confirmed-revealed");
+      });
+    },
+
     ///////////////////////////////////////////////////
     //// Player's actions
 
@@ -855,6 +875,11 @@ define([
     notif_incorrectSolution: function (args) {
       const player_id = args.player_id;
       this.dgt.counters[player_id].chances.incValue(-1);
+    },
+
+    notif_revealCode: function (args) {
+      const { codeSpaces } = args;
+      this.revealCode(codeSpaces);
     },
 
     // FORMAT LOGS

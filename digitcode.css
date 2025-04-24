@@ -516,6 +516,9 @@
   background-size: 16px;
   background-position: center;
 }
+.dgt_space-confirmed-revealed {
+  background: green !important;
+}
 
 .dgt_comparisonIcon-confirmed {
   color: red;

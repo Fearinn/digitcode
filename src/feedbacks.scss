@@ -36,6 +36,10 @@
       background-size: 16px;
       background-position: center;
     }
+
+    &-revealed {
+      background: green !important;
+    }
   }
 }
 

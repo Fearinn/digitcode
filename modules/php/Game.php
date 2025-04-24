@@ -35,6 +35,7 @@ const COMPARED_DIGITS = "comparedDigits";
 const DRAFT = "draft";
 const DRAFT_VALUESS = "draftValues";
 const QUESTION_COUNT = "questionCount";
+const CODE_REVEALED = "isCodeRevealed";
 
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
 
@@ -431,14 +432,7 @@ class Game extends \Table
                 ]
             );
 
-            $this->notify->all(
-                "revealCode",
-                clienttranslate('The code was ${code_label}'),
-                [
-                    "code_label" => $code,
-                    "code" => $code,
-                ],
-            );
+            $this->revealCode();
 
             $this->DbQuery("UPDATE player SET player_score=1 WHERE player_id={$player_id}");
             $this->gamestate->nextState("gameEnd");
@@ -508,16 +502,7 @@ class Game extends \Table
 
         if ($playerChances === 0) {
             if ($isLastPlayer) {
-                $code = $this->getCode();
-
-                $this->notify->all(
-                    "revealCode",
-                    clienttranslate('The code was ${code_label}'),
-                    [
-                        "code_label" => $code,
-                        "code" => $code
-                    ]
-                );
+                $this->revealCode();
 
                 $this->gamestate->nextState("gameEnd");
                 return;
@@ -628,6 +613,65 @@ class Game extends \Table
         }
     }
 
+    public function findKey(array $array, callable $callable): int | string
+    {
+        foreach ($array as $key => $item) {
+            if ($callable($item, $key)) {
+                return $key;
+            }
+        }
+
+        throw new \BgaVisibleSystemException("Key not found");
+    }
+
+    public function codeSpaces(): array
+    {
+        $codeSpaces = [];
+
+        $code = $this->getCode();
+
+        $algarisms = str_split($code);
+
+        $digit_index = 0;
+        foreach ($algarisms as $algarism) {
+            $digit_index++;
+            $algarismSpaces = $this->ALGARISMS[$algarism];
+            $digit = (string) $this->findKey($this->DIGITS, function ($digit) use ($digit_index) {
+                return $digit_index === $digit["position"];
+            });
+
+            foreach ($algarismSpaces as $y => $row) {
+                foreach ($row as $x => $space) {
+                    if ($space > 0) {
+                        $space_id = (string) $this->findKey($this->SPACES, function ($space) use ($x, $y, $digit) {
+                            return $space["x"] === $x && $space["y"] === $y && $space["digit"] === $digit;
+                        });
+                        $codeSpaces[] = $space_id;
+                    }
+                }
+            }
+        }
+
+        return $codeSpaces;
+    }
+
+    public function revealCode(): void
+    {
+        $code = $this->getCode();
+
+        $this->notify->all(
+            "revealCode",
+            clienttranslate('The code was ${code_label}'),
+            [
+                "code_label" => $code,
+                "code" => $code,
+                "codeSpaces" => $this->codeSpaces(),
+            ],
+        );
+
+        $this->globals->set(CODE_REVEALED, true);
+    }
+
     /**
      * Compute and return the current game progression.
      *
@@ -712,6 +756,10 @@ class Game extends \Table
         if (!$this->isSpectator()) {
             $result["draft"] = $this->globals->get(DRAFT)[$current_player_id];
             $result["draftValues"] = $this->globals->get(DRAFT_VALUESS)[$current_player_id];
+        }
+
+        if ($this->globals->get(CODE_REVEALED)) {
+            $result["codeSpaces"] = $this->codeSpaces();
         }
 
         return $result;
@@ -850,5 +898,10 @@ class Game extends \Table
     public function debug_submitSolution(string $solution): void
     {
         $this->actSubmitSolution(null, $solution);
+    }
+
+    public function debug_revealCode(): void
+    {
+        $this->revealCode();
     }
 }
