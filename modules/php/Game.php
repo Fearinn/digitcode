@@ -34,7 +34,7 @@ const COMPARABLE_DIGITS = "comparableDigits";
 const COMPARED_DIGITS = "comparedDigits";
 const DRAFT = "draft";
 const DRAFT_VALUESS = "draftValues";
-const QUESTION_LOG = "questionLog";
+const QUESTION_COUNT = "questionCount";
 
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
 
@@ -161,6 +161,8 @@ class Game extends \Table
             ]
         );
 
+        $this->globals->inc(QUESTION_COUNT, 1);
+
         $this->gamestate->nextState("nextPlayer");
     }
 
@@ -212,6 +214,8 @@ class Game extends \Table
                 "digit_id" => $digit_id,
             ]
         );
+
+        $this->globals->inc(QUESTION_COUNT, 1);
 
         $this->gamestate->nextState("nextPlayer");
     }
@@ -274,6 +278,8 @@ class Game extends \Table
                 "spaceFilled" => $spaceFilled,
             ]
         );
+
+        $this->globals->inc(QUESTION_COUNT, 1);
 
         $this->gamestate->nextState("nextPlayer");
     }
@@ -343,6 +349,8 @@ class Game extends \Table
                 "smallerDigit_id" => $smallerDigit_id
             ]
         );
+
+        $this->globals->inc(QUESTION_COUNT, 1);
 
         $this->gamestate->nextState("nextPlayer");
     }
@@ -632,9 +640,13 @@ class Game extends \Table
      */
     public function getGameProgression()
     {
-        // TODO: compute and return the game progression
+        $progression = $this->globals->get(QUESTION_COUNT, 0) / 5 * 50;
 
-        return 0;
+        if ($progression > 50) {
+            $progression = 50;
+        }
+
+        return round($progression);
     }
 
     /**
@@ -760,6 +772,8 @@ class Game extends \Table
 
         $this->globals->set(COMPARABLE_DIGITS, $this->COMPARISONS);
         $this->globals->set(COMPARED_DIGITS, []);
+
+        $this->globals->set(QUESTION_COUNT, 0);
 
         $draft = [];
         $draftValues = [];
