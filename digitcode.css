@@ -290,7 +290,7 @@
   cursor: pointer;
 }
 .dgt_space:where(.dgt_draft) {
-  background: repeating-linear-gradient(-45deg, black, gray 8px);
+  background-image: repeating-linear-gradient(-45deg, black, gray 8px);
 }
 
 .dgt_comparisonIcon {
@@ -364,6 +364,9 @@
   color: red;
   cursor: not-allowed;
 }
+.dgt_parityMarker-confirmed:active {
+  pointer-events: none;
+}
 
 .dgt_lineMarker-confirmed {
   font-size: 24px;
@@ -375,17 +378,25 @@
 .dgt_space-confirmed {
   cursor: not-allowed;
 }
+.dgt_space-confirmed:active {
+  pointer-events: none;
+}
 .dgt_space-confirmed-filled {
   cursor: not-allowed;
-  background: repeating-linear-gradient(90deg, darkred, red 8px);
+  background: repeating-linear-gradient(90deg, darkred, red 6px);
 }
 .dgt_space-confirmed-empty {
-  background: repeating-linear-gradient(180deg, white, gray 4px);
+  background-image: url("img/x_icon.png");
+  background-size: 16px;
+  background-position: center;
 }
 
 .dgt_comparisonIcon-confirmed {
   color: red;
   cursor: not-allowed;
+}
+.dgt_comparisonIcon-confirmed:active {
+  pointer-events: none;
 }
 
 .dgt_dialogContent {

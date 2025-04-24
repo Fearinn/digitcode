@@ -316,7 +316,6 @@ define([
 
       this.setupNotifications();
 
-      console.log(gamedatas.code, "CODE");
       console.log("Ending game setup");
     },
 
@@ -419,7 +418,8 @@ define([
             ["T", "U", "V", "W", "X", "Y"].forEach((digit_id) => {
               dialogContent.insertAdjacentHTML(
                 "beforeend",
-                `<input aria-label="${digit_id}" id="dgt_input-${digit_id}" class="dgt_input" data-input="${digit_id}" inputmode="numeric" type="number" min="0" max="9" placeholder="${digit_id}"></input>`
+                `<input aria-label="${digit_id}" id="dgt_input-${digit_id}" class="dgt_input" data-input="${digit_id}" 
+                inputmode="numeric" type="number" min="0" max="9" placeholder="${digit_id}"></input>`
               );
             });
 

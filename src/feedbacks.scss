@@ -2,6 +2,10 @@
   &-confirmed {
     color: red;
     cursor: not-allowed;
+
+    &:active {
+      pointer-events: none;
+    }
   }
 }
 
@@ -18,13 +22,19 @@
   &-confirmed {
     cursor: not-allowed;
 
+    &:active {
+      pointer-events: none;
+    }
+
     &-filled {
       cursor: not-allowed;
-      background: repeating-linear-gradient(90deg, darkred, red 8px);
+      background: repeating-linear-gradient(90deg, darkred, red 6px);
     }
 
     &-empty {
-      background: repeating-linear-gradient(180deg, white,gray 4px);
+      background-image: url("img/x_icon.png");
+      background-size: 16px;
+      background-position: center;
     }
   }
 }
@@ -33,5 +43,9 @@
   &-confirmed {
     color: red;
     cursor: not-allowed;
+
+    &:active {
+      pointer-events: none;
+    }
   }
 }

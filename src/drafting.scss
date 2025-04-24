@@ -16,7 +16,7 @@
   cursor: pointer;
 
   &:where(.dgt_draft) {
-    background: repeating-linear-gradient(-45deg, black, gray 8px);
+    background-image: repeating-linear-gradient(-45deg, black, gray 8px);
   }
 }
 
