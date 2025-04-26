@@ -37,6 +37,14 @@ const DRAFT_VALUESS = "draftValues";
 const QUESTION_COUNT = "questionCount";
 const CODE_REVEALED = "isCodeRevealed";
 
+const STAT_WIN = "win%";
+const STAT_CHANCES = "chancesLost";
+const STAT_QUESTIONS = "questions";
+const STAT_QUESTIONS_COMPARISON = "questionsComparison";
+const STAT_QUESTIONS_LINE = "questionsLine";
+const STAT_QUESTIONS_PARITY = "questionsParity";
+const STAT_QUESTIONS_SPACE = "questionsSpace";
+
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
 
 class Game extends \Table
@@ -163,6 +171,8 @@ class Game extends \Table
         );
 
         $this->globals->inc(QUESTION_COUNT, 1);
+        $this->incStat(1, STAT_QUESTIONS, $player_id);
+        $this->incStat(1, STAT_QUESTIONS_LINE, $player_id);
 
         $this->gamestate->nextState("nextPlayer");
     }
@@ -186,6 +196,10 @@ class Game extends \Table
             }
         );
         $this->globals->set(CHECKABLE_PARITIES, array_values($checkableParities));
+
+        if (!in_array($digit_id, $checkableParities)) {
+            throw new \BgaVisibleSystemException("Invalid digit");
+        }
 
         $parity = $algarism % 2 === 0 ? "even" : "odd";
 
@@ -217,6 +231,8 @@ class Game extends \Table
         );
 
         $this->globals->inc(QUESTION_COUNT, 1);
+        $this->incStat(1, STAT_QUESTIONS, $player_id);
+        $this->incStat(1, STAT_QUESTIONS_PARITY, $player_id);
 
         $this->gamestate->nextState("nextPlayer");
     }
@@ -281,6 +297,8 @@ class Game extends \Table
         );
 
         $this->globals->inc(QUESTION_COUNT, 1);
+        $this->incStat(1, STAT_QUESTIONS, $player_id);
+        $this->incStat(1, STAT_QUESTIONS_SPACE, $player_id);
 
         $this->gamestate->nextState("nextPlayer");
     }
@@ -352,6 +370,8 @@ class Game extends \Table
         );
 
         $this->globals->inc(QUESTION_COUNT, 1);
+        $this->incStat(1, STAT_QUESTIONS, $player_id);
+        $this->incStat(1, STAT_QUESTIONS_COMPARISON, $player_id);
 
         $this->gamestate->nextState("nextPlayer");
     }
@@ -434,6 +454,7 @@ class Game extends \Table
 
             $this->revealCode();
 
+            $this->setStat(100, STAT_WIN, $player_id);
             $this->DbQuery("UPDATE player SET player_score=1 WHERE player_id={$player_id}");
             $this->gamestate->nextState("gameEnd");
             return;
@@ -448,6 +469,7 @@ class Game extends \Table
             ]
         );
 
+        $this->incStat(1, STAT_CHANCES, $player_id);
         $this->DbQuery("UPDATE player SET player_chances=player_chances-1 where player_id=$player_id");
 
         $this->gamestate->nextState("nextPlayer");
@@ -828,6 +850,14 @@ class Game extends \Table
         foreach ($players as $player_id => $player) {
             $draft[$player_id] = [];
             $draftValues[$player_id] = [];
+
+            $this->initStat("player", STAT_QUESTIONS, 0, $player_id);
+            $this->initStat("player", STAT_QUESTIONS_PARITY, 0, $player_id);
+            $this->initStat("player", STAT_QUESTIONS_SPACE, 0, $player_id);
+            $this->initStat("player", STAT_QUESTIONS_LINE, 0, $player_id);
+            $this->initStat("player", STAT_QUESTIONS_COMPARISON, 0, $player_id);
+            $this->initStat("player", STAT_WIN, 0, $player_id);
+            $this->initStat("player", STAT_CHANCES, 0, $player_id);
         }
         $this->globals->set(DRAFT, $draft);
         $this->globals->set(DRAFT_VALUESS, $draftValues);

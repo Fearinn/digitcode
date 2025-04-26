@@ -1,1 +1,39 @@
-{}
+{
+  "player": {
+    "win%": {
+      "id": 10,
+      "name": "Win %",
+      "type": "int"
+    },
+    "questions": {
+      "id": 15,
+      "name": "Questions asked: number even or odd",
+      "type": "int"
+    },
+    "questionsParity": {
+      "id": 11,
+      "name": "Questions asked: number even or odd",
+      "type": "int"
+    },
+    "questionsComparison": {
+      "id": 12,
+      "name": "Question asked: number comparison",
+      "type": "int"
+    },
+    "questionsSpace": {
+      "id": 13,
+      "name": "Question asked: space filled or empty",
+      "type": "int"
+    },
+    "questionsLine": {
+      "id": 14,
+      "name": "Questions asked: space count",
+      "type": "int"
+    },
+    "chancesLost": {
+      "id": 16,
+      "name": "Chances lost",
+      "type": "int"
+    }
+  }
+}
