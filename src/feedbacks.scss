@@ -28,11 +28,11 @@
 
     &-filled {
       cursor: not-allowed;
-      background: repeating-linear-gradient(90deg, darkred, red 6px);
+      background-image: repeating-linear-gradient(90deg, darkred, red 6px);
     }
 
     &-empty {
-      background-image: url("img/x_icon.png");
+      background-image: url("img/x_icon-red.png");
       background-size: 16px;
       background-position: center;
     }

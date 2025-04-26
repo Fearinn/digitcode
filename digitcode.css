@@ -416,7 +416,8 @@
   background-image: repeating-linear-gradient(-45deg, black, gray 6px);
 }
 .dgt_space:where(.dgt_draft):where([data-draftvalue=empty]) {
-  background-image: repeating-linear-gradient(180deg, gray, white 6px);
+  background-image: url("img/x_icon.png");
+  background-size: 9px;
 }
 
 .dgt_comparisonIcon {
@@ -509,10 +510,10 @@
 }
 .dgt_space-confirmed-filled {
   cursor: not-allowed;
-  background: repeating-linear-gradient(90deg, darkred, red 6px);
+  background-image: repeating-linear-gradient(90deg, darkred, red 6px);
 }
 .dgt_space-confirmed-empty {
-  background-image: url("img/x_icon.png");
+  background-image: url("img/x_icon-red.png");
   background-size: 16px;
   background-position: center;
 }

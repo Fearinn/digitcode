@@ -21,7 +21,8 @@
     }
 
     &:where([data-draftvalue="empty"]) {
-      background-image: repeating-linear-gradient(180deg, gray, white 6px);
+      background-image: url("img/x_icon.png");
+      background-size: 9px;
     }
   }
 }
