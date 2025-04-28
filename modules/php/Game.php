@@ -189,6 +189,10 @@ class Game extends \Table
 
         $checkableParities = $this->globals->get(CHECKABLE_PARITIES);
 
+        if (!in_array($digit_id, $checkableParities)) {
+            throw new \BgaVisibleSystemException("Invalid digit");
+        }
+
         $checkableParities = array_filter(
             $checkableParities,
             function ($l_digit_id) use ($digit_id) {
@@ -197,9 +201,6 @@ class Game extends \Table
         );
         $this->globals->set(CHECKABLE_PARITIES, array_values($checkableParities));
 
-        if (!in_array($digit_id, $checkableParities)) {
-            throw new \BgaVisibleSystemException("Invalid digit");
-        }
 
         $parity = $algarism % 2 === 0 ? "even" : "odd";
 
