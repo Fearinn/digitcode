@@ -462,7 +462,7 @@ define([
               };
 
               inputElement.onkeydown = (event) => {
-                if (["-", "+", "-", ".", "e", ","].includes(event.key)) {
+                if (["-", "+", "-", ".", "e", ","].includes(event.key) || event.key.match(/a-Z/g)) {
                   event.preventDefault();
                 }
               };
