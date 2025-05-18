@@ -164,6 +164,7 @@
 }
 
 .dgt_helpFolded {
+  color: black;
   font-family: "Alata", sans-serif;
   font-weight: bold;
   font-size: 34px;
@@ -443,7 +444,9 @@
   cursor: pointer;
 }
 .dgt_optionMarker:where(.dgt_draft) {
-  text-decoration: 2px black line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: black;
+  text-decoration-line: line-through;
 }
 
 .dgt_label-selectable {

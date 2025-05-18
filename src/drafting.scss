@@ -51,6 +51,9 @@
 .dgt_optionMarker {
   cursor: pointer;
   &:where(.dgt_draft) {
-    text-decoration: 2px black line-through;
+    text-decoration-thickness: 2px;
+    text-decoration-color: black;
+    text-decoration-line: line-through;
+    // -webkit-text-decoration-line: line-through;
   }
 }
