@@ -1,8 +1,9 @@
-.dgt_dialogContent {
+.dgt_solutionForm {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   gap: 4px;
+  width: var(--digitWidth);
 
   button {
     margin: 8px 0 0 0;

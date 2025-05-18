@@ -10,10 +10,14 @@
 -------
 -->
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Alata&display=swap"
+  rel="stylesheet"
+/>
 <div id="dgt_gameArea" class="dgt_gameArea">
+  <form id="dgt_solutionForm" class="dgt_solutionForm"></form>
   <div id="dgt_solutionSheet" class="dgt_solutionSheet whiteblock">
     <div class="dgt_comparisonMarkers-top dgt_comparisonMarkers">
       <div
@@ -274,16 +278,76 @@
               </div>
             </div>
             <div class="dgt_optionMarkers">
-              <div id="dgt_optionMarker-T0" class="dgt_optionMarker" data-optionMarker="0">0</div>
-              <div id="dgt_optionMarker-T1" class="dgt_optionMarker" data-optionMarker="1">1</div>
-              <div id="dgt_optionMarker-T2" class="dgt_optionMarker" data-optionMarker="2">2</div>
-              <div id="dgt_optionMarker-T3" class="dgt_optionMarker" data-optionMarker="3">3</div>
-              <div id="dgt_optionMarker-T4" class="dgt_optionMarker" data-optionMarker="4">4</div>
-              <div id="dgt_optionMarker-T5" class="dgt_optionMarker" data-optionMarker="5">5</div>
-              <div id="dgt_optionMarker-T6" class="dgt_optionMarker" data-optionMarker="6">6</div>
-              <div id="dgt_optionMarker-T7" class="dgt_optionMarker" data-optionMarker="7">7</div>
-              <div id="dgt_optionMarker-T8" class="dgt_optionMarker" data-optionMarker="8">8</div>
-              <div id="dgt_optionMarker-T9" class="dgt_optionMarker" data-optionMarker="9">9</div>
+              <div
+                id="dgt_optionMarker-T0"
+                class="dgt_optionMarker"
+                data-optionMarker="0"
+              >
+                0
+              </div>
+              <div
+                id="dgt_optionMarker-T1"
+                class="dgt_optionMarker"
+                data-optionMarker="1"
+              >
+                1
+              </div>
+              <div
+                id="dgt_optionMarker-T2"
+                class="dgt_optionMarker"
+                data-optionMarker="2"
+              >
+                2
+              </div>
+              <div
+                id="dgt_optionMarker-T3"
+                class="dgt_optionMarker"
+                data-optionMarker="3"
+              >
+                3
+              </div>
+              <div
+                id="dgt_optionMarker-T4"
+                class="dgt_optionMarker"
+                data-optionMarker="4"
+              >
+                4
+              </div>
+              <div
+                id="dgt_optionMarker-T5"
+                class="dgt_optionMarker"
+                data-optionMarker="5"
+              >
+                5
+              </div>
+              <div
+                id="dgt_optionMarker-T6"
+                class="dgt_optionMarker"
+                data-optionMarker="6"
+              >
+                6
+              </div>
+              <div
+                id="dgt_optionMarker-T7"
+                class="dgt_optionMarker"
+                data-optionMarker="7"
+              >
+                7
+              </div>
+              <div
+                id="dgt_optionMarker-T8"
+                class="dgt_optionMarker"
+                data-optionMarker="8"
+              >
+                8
+              </div>
+              <div
+                id="dgt_optionMarker-T9"
+                class="dgt_optionMarker"
+                data-optionMarker="9"
+              >
+                9
+              </div>
             </div>
           </div>
           <div id="dgt_digit-U" class="dgt_digit">
@@ -375,16 +439,76 @@
               </div>
             </div>
             <div class="dgt_optionMarkers">
-              <div id="dgt_optionMarker-U0" class="dgt_optionMarker" data-optionMarker="0">0</div>
-              <div id="dgt_optionMarker-U1" class="dgt_optionMarker" data-optionMarker="1">1</div>
-              <div id="dgt_optionMarker-U2" class="dgt_optionMarker" data-optionMarker="2">2</div>
-              <div id="dgt_optionMarker-U3" class="dgt_optionMarker" data-optionMarker="3">3</div>
-              <div id="dgt_optionMarker-U4" class="dgt_optionMarker" data-optionMarker="4">4</div>
-              <div id="dgt_optionMarker-U5" class="dgt_optionMarker" data-optionMarker="5">5</div>
-              <div id="dgt_optionMarker-U6" class="dgt_optionMarker" data-optionMarker="6">6</div>
-              <div id="dgt_optionMarker-U7" class="dgt_optionMarker" data-optionMarker="7">7</div>
-              <div id="dgt_optionMarker-U8" class="dgt_optionMarker" data-optionMarker="8">8</div>
-              <div id="dgt_optionMarker-U9" class="dgt_optionMarker" data-optionMarker="9">9</div>
+              <div
+                id="dgt_optionMarker-U0"
+                class="dgt_optionMarker"
+                data-optionMarker="0"
+              >
+                0
+              </div>
+              <div
+                id="dgt_optionMarker-U1"
+                class="dgt_optionMarker"
+                data-optionMarker="1"
+              >
+                1
+              </div>
+              <div
+                id="dgt_optionMarker-U2"
+                class="dgt_optionMarker"
+                data-optionMarker="2"
+              >
+                2
+              </div>
+              <div
+                id="dgt_optionMarker-U3"
+                class="dgt_optionMarker"
+                data-optionMarker="3"
+              >
+                3
+              </div>
+              <div
+                id="dgt_optionMarker-U4"
+                class="dgt_optionMarker"
+                data-optionMarker="4"
+              >
+                4
+              </div>
+              <div
+                id="dgt_optionMarker-U5"
+                class="dgt_optionMarker"
+                data-optionMarker="5"
+              >
+                5
+              </div>
+              <div
+                id="dgt_optionMarker-U6"
+                class="dgt_optionMarker"
+                data-optionMarker="6"
+              >
+                6
+              </div>
+              <div
+                id="dgt_optionMarker-U7"
+                class="dgt_optionMarker"
+                data-optionMarker="7"
+              >
+                7
+              </div>
+              <div
+                id="dgt_optionMarker-U8"
+                class="dgt_optionMarker"
+                data-optionMarker="8"
+              >
+                8
+              </div>
+              <div
+                id="dgt_optionMarker-U9"
+                class="dgt_optionMarker"
+                data-optionMarker="9"
+              >
+                9
+              </div>
             </div>
           </div>
           <div id="dgt_digit-V" class="dgt_digit">
@@ -476,16 +600,76 @@
               </div>
             </div>
             <div class="dgt_optionMarkers">
-              <div id="dgt_optionMarker-V0" class="dgt_optionMarker" data-optionMarker="0">0</div>
-              <div id="dgt_optionMarker-V1" class="dgt_optionMarker" data-optionMarker="1">1</div>
-              <div id="dgt_optionMarker-V2" class="dgt_optionMarker" data-optionMarker="2">2</div>
-              <div id="dgt_optionMarker-V3" class="dgt_optionMarker" data-optionMarker="3">3</div>
-              <div id="dgt_optionMarker-V4" class="dgt_optionMarker" data-optionMarker="4">4</div>
-              <div id="dgt_optionMarker-V5" class="dgt_optionMarker" data-optionMarker="5">5</div>
-              <div id="dgt_optionMarker-V6" class="dgt_optionMarker" data-optionMarker="6">6</div>
-              <div id="dgt_optionMarker-V7" class="dgt_optionMarker" data-optionMarker="7">7</div>
-              <div id="dgt_optionMarker-V8" class="dgt_optionMarker" data-optionMarker="8">8</div>
-              <div id="dgt_optionMarker-V9" class="dgt_optionMarker" data-optionMarker="9">9</div>
+              <div
+                id="dgt_optionMarker-V0"
+                class="dgt_optionMarker"
+                data-optionMarker="0"
+              >
+                0
+              </div>
+              <div
+                id="dgt_optionMarker-V1"
+                class="dgt_optionMarker"
+                data-optionMarker="1"
+              >
+                1
+              </div>
+              <div
+                id="dgt_optionMarker-V2"
+                class="dgt_optionMarker"
+                data-optionMarker="2"
+              >
+                2
+              </div>
+              <div
+                id="dgt_optionMarker-V3"
+                class="dgt_optionMarker"
+                data-optionMarker="3"
+              >
+                3
+              </div>
+              <div
+                id="dgt_optionMarker-V4"
+                class="dgt_optionMarker"
+                data-optionMarker="4"
+              >
+                4
+              </div>
+              <div
+                id="dgt_optionMarker-V5"
+                class="dgt_optionMarker"
+                data-optionMarker="5"
+              >
+                5
+              </div>
+              <div
+                id="dgt_optionMarker-V6"
+                class="dgt_optionMarker"
+                data-optionMarker="6"
+              >
+                6
+              </div>
+              <div
+                id="dgt_optionMarker-V7"
+                class="dgt_optionMarker"
+                data-optionMarker="7"
+              >
+                7
+              </div>
+              <div
+                id="dgt_optionMarker-V8"
+                class="dgt_optionMarker"
+                data-optionMarker="8"
+              >
+                8
+              </div>
+              <div
+                id="dgt_optionMarker-V9"
+                class="dgt_optionMarker"
+                data-optionMarker="9"
+              >
+                9
+              </div>
             </div>
           </div>
         </div>
@@ -650,16 +834,76 @@
               </div>
             </div>
             <div class="dgt_optionMarkers">
-              <div id="dgt_optionMarker-W0" class="dgt_optionMarker" data-optionMarker="0">0</div>
-              <div id="dgt_optionMarker-W1" class="dgt_optionMarker" data-optionMarker="1">1</div>
-              <div id="dgt_optionMarker-W2" class="dgt_optionMarker" data-optionMarker="2">2</div>
-              <div id="dgt_optionMarker-W3" class="dgt_optionMarker" data-optionMarker="3">3</div>
-              <div id="dgt_optionMarker-W4" class="dgt_optionMarker" data-optionMarker="4">4</div>
-              <div id="dgt_optionMarker-W5" class="dgt_optionMarker" data-optionMarker="5">5</div>
-              <div id="dgt_optionMarker-W6" class="dgt_optionMarker" data-optionMarker="6">6</div>
-              <div id="dgt_optionMarker-W7" class="dgt_optionMarker" data-optionMarker="7">7</div>
-              <div id="dgt_optionMarker-W8" class="dgt_optionMarker" data-optionMarker="8">8</div>
-              <div id="dgt_optionMarker-W9" class="dgt_optionMarker" data-optionMarker="9">9</div>
+              <div
+                id="dgt_optionMarker-W0"
+                class="dgt_optionMarker"
+                data-optionMarker="0"
+              >
+                0
+              </div>
+              <div
+                id="dgt_optionMarker-W1"
+                class="dgt_optionMarker"
+                data-optionMarker="1"
+              >
+                1
+              </div>
+              <div
+                id="dgt_optionMarker-W2"
+                class="dgt_optionMarker"
+                data-optionMarker="2"
+              >
+                2
+              </div>
+              <div
+                id="dgt_optionMarker-W3"
+                class="dgt_optionMarker"
+                data-optionMarker="3"
+              >
+                3
+              </div>
+              <div
+                id="dgt_optionMarker-W4"
+                class="dgt_optionMarker"
+                data-optionMarker="4"
+              >
+                4
+              </div>
+              <div
+                id="dgt_optionMarker-W5"
+                class="dgt_optionMarker"
+                data-optionMarker="5"
+              >
+                5
+              </div>
+              <div
+                id="dgt_optionMarker-W6"
+                class="dgt_optionMarker"
+                data-optionMarker="6"
+              >
+                6
+              </div>
+              <div
+                id="dgt_optionMarker-W7"
+                class="dgt_optionMarker"
+                data-optionMarker="7"
+              >
+                7
+              </div>
+              <div
+                id="dgt_optionMarker-W8"
+                class="dgt_optionMarker"
+                data-optionMarker="8"
+              >
+                8
+              </div>
+              <div
+                id="dgt_optionMarker-W9"
+                class="dgt_optionMarker"
+                data-optionMarker="9"
+              >
+                9
+              </div>
             </div>
           </div>
           <div id="dgt_digit-X" class="dgt_digit">
@@ -751,16 +995,76 @@
               </div>
             </div>
             <div class="dgt_optionMarkers">
-              <div id="dgt_optionMarker-X0" class="dgt_optionMarker" data-optionMarker="0">0</div>
-              <div id="dgt_optionMarker-X1" class="dgt_optionMarker" data-optionMarker="1">1</div>
-              <div id="dgt_optionMarker-X2" class="dgt_optionMarker" data-optionMarker="2">2</div>
-              <div id="dgt_optionMarker-X3" class="dgt_optionMarker" data-optionMarker="3">3</div>
-              <div id="dgt_optionMarker-X4" class="dgt_optionMarker" data-optionMarker="4">4</div>
-              <div id="dgt_optionMarker-X5" class="dgt_optionMarker" data-optionMarker="5">5</div>
-              <div id="dgt_optionMarker-X6" class="dgt_optionMarker" data-optionMarker="6">6</div>
-              <div id="dgt_optionMarker-X7" class="dgt_optionMarker" data-optionMarker="7">7</div>
-              <div id="dgt_optionMarker-X8" class="dgt_optionMarker" data-optionMarker="8">8</div>
-              <div id="dgt_optionMarker-X9" class="dgt_optionMarker" data-optionMarker="9">9</div>
+              <div
+                id="dgt_optionMarker-X0"
+                class="dgt_optionMarker"
+                data-optionMarker="0"
+              >
+                0
+              </div>
+              <div
+                id="dgt_optionMarker-X1"
+                class="dgt_optionMarker"
+                data-optionMarker="1"
+              >
+                1
+              </div>
+              <div
+                id="dgt_optionMarker-X2"
+                class="dgt_optionMarker"
+                data-optionMarker="2"
+              >
+                2
+              </div>
+              <div
+                id="dgt_optionMarker-X3"
+                class="dgt_optionMarker"
+                data-optionMarker="3"
+              >
+                3
+              </div>
+              <div
+                id="dgt_optionMarker-X4"
+                class="dgt_optionMarker"
+                data-optionMarker="4"
+              >
+                4
+              </div>
+              <div
+                id="dgt_optionMarker-X5"
+                class="dgt_optionMarker"
+                data-optionMarker="5"
+              >
+                5
+              </div>
+              <div
+                id="dgt_optionMarker-X6"
+                class="dgt_optionMarker"
+                data-optionMarker="6"
+              >
+                6
+              </div>
+              <div
+                id="dgt_optionMarker-X7"
+                class="dgt_optionMarker"
+                data-optionMarker="7"
+              >
+                7
+              </div>
+              <div
+                id="dgt_optionMarker-X8"
+                class="dgt_optionMarker"
+                data-optionMarker="8"
+              >
+                8
+              </div>
+              <div
+                id="dgt_optionMarker-X9"
+                class="dgt_optionMarker"
+                data-optionMarker="9"
+              >
+                9
+              </div>
             </div>
           </div>
           <div id="dgt_digit-Y" class="dgt_digit">
@@ -852,16 +1156,76 @@
               </div>
             </div>
             <div class="dgt_optionMarkers">
-              <div id="dgt_optionMarker-Y0" class="dgt_optionMarker" data-optionMarker="0">0</div>
-              <div id="dgt_optionMarker-Y1" class="dgt_optionMarker" data-optionMarker="1">1</div>
-              <div id="dgt_optionMarker-Y2" class="dgt_optionMarker" data-optionMarker="2">2</div>
-              <div id="dgt_optionMarker-Y3" class="dgt_optionMarker" data-optionMarker="3">3</div>
-              <div id="dgt_optionMarker-Y4" class="dgt_optionMarker" data-optionMarker="4">4</div>
-              <div id="dgt_optionMarker-Y5" class="dgt_optionMarker" data-optionMarker="5">5</div>
-              <div id="dgt_optionMarker-Y6" class="dgt_optionMarker" data-optionMarker="6">6</div>
-              <div id="dgt_optionMarker-Y7" class="dgt_optionMarker" data-optionMarker="7">7</div>
-              <div id="dgt_optionMarker-Y8" class="dgt_optionMarker" data-optionMarker="8">8</div>
-              <div id="dgt_optionMarker-Y9" class="dgt_optionMarker" data-optionMarker="9">9</div>
+              <div
+                id="dgt_optionMarker-Y0"
+                class="dgt_optionMarker"
+                data-optionMarker="0"
+              >
+                0
+              </div>
+              <div
+                id="dgt_optionMarker-Y1"
+                class="dgt_optionMarker"
+                data-optionMarker="1"
+              >
+                1
+              </div>
+              <div
+                id="dgt_optionMarker-Y2"
+                class="dgt_optionMarker"
+                data-optionMarker="2"
+              >
+                2
+              </div>
+              <div
+                id="dgt_optionMarker-Y3"
+                class="dgt_optionMarker"
+                data-optionMarker="3"
+              >
+                3
+              </div>
+              <div
+                id="dgt_optionMarker-Y4"
+                class="dgt_optionMarker"
+                data-optionMarker="4"
+              >
+                4
+              </div>
+              <div
+                id="dgt_optionMarker-Y5"
+                class="dgt_optionMarker"
+                data-optionMarker="5"
+              >
+                5
+              </div>
+              <div
+                id="dgt_optionMarker-Y6"
+                class="dgt_optionMarker"
+                data-optionMarker="6"
+              >
+                6
+              </div>
+              <div
+                id="dgt_optionMarker-Y7"
+                class="dgt_optionMarker"
+                data-optionMarker="7"
+              >
+                7
+              </div>
+              <div
+                id="dgt_optionMarker-Y8"
+                class="dgt_optionMarker"
+                data-optionMarker="8"
+              >
+                8
+              </div>
+              <div
+                id="dgt_optionMarker-Y9"
+                class="dgt_optionMarker"
+                data-optionMarker="9"
+              >
+                9
+              </div>
             </div>
           </div>
         </div>
