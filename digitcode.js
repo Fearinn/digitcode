@@ -448,22 +448,54 @@ define([
             dialogContent.remove();
             this.dgt.managers.dialog.show();
 
-            ["T", "U", "V", "W", "X", "Y"].forEach((digit_id) => {
+            const digits = ["T", "U", "V", "W", "X", "Y"];
+            digits.forEach((digit_id, index) => {
               const inputElement = document.getElementById(
                 `dgt_input-${digit_id}`
               );
 
-              inputElement.oninput = (event) => {
-                const value = inputElement.value;
-
-                if (value.length > 1) {
-                  inputElement.value = value.slice(-1);
-                }
-              };
-
               inputElement.onkeydown = (event) => {
-                if (["-", "+", "-", ".", "e", ","].includes(event.key) || event.key.match(/a-Z/g)) {
+                if (
+                  ["-", "+", "-", ".", "e", ","].includes(event.key) ||
+                  event.key.match(/a-Z/g)
+                ) {
                   event.preventDefault();
+                  return;
+                }
+
+                if (event.key === "Backspace") {
+                  event.preventDefault();
+                  inputElement.value = "";
+
+                  const previousIndex = index === digits.length ? 0 : index - 1;
+                  const previousDigit_id = digits[previousIndex];
+                  document
+                    .getElementById(`dgt_input-${previousDigit_id}`)
+                    ?.focus();
+                  return;
+                }
+
+                if (
+                  ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(
+                    event.key
+                  )
+                ) {
+                  event.preventDefault();
+
+                  const nextIndex = index === digits.length ? 0 : index + 1;
+                  const nextDigit_id = digits[nextIndex];
+
+                  const nextInputElement = document.getElementById(
+                    `dgt_input-${nextDigit_id}`
+                  );
+
+                  nextInputElement?.focus();
+
+                  if (inputElement.value.length === 0) {
+                    inputElement.value = event.key;
+                  } else if (nextInputElement) {
+                    nextInputElement.value = event.key;
+                  }
                 }
               };
             });
