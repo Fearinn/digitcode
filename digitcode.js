@@ -184,7 +184,7 @@ define([
             return;
           }
 
-          let spaceCount = Number(lineMarker.textContent) + 1;
+          let spaceCount = lineMarker.textContent ? Number(lineMarker.textContent) + 1 : 0;
 
           lineType = lineMarker.dataset.linetype;
           let max = lineType === "row" ? 3 : 4;
@@ -197,15 +197,18 @@ define([
             max = 6;
           }
 
-          if (spaceCount > max) {
-            spaceCount = 0;
-          }
-
           const draftClass = "dgt_draft";
           lineMarker.classList.add(draftClass);
           lineMarker.dataset.draft = lineMarker.classList.contains(draftClass);
           lineMarker.dataset.draftvalue = spaceCount;
           lineMarker.textContent = spaceCount;
+
+          if (spaceCount > max) {
+            lineMarker.textContent = "";
+            lineMarker.dataset.draft = false;
+            lineMarker.classList.remove(draftClass);
+            lineMarker.dataset.draftValue = null;
+          }
         });
       });
 
