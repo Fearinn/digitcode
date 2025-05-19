@@ -707,10 +707,15 @@ class Game extends \Table
      */
     public function getGameProgression()
     {
-        $progression = $this->globals->get(QUESTION_COUNT, 0) / 5 * 50;
+        $questionCount = $this->globals->get(QUESTION_COUNT, 0);
+        $progression = $questionCount / 10 * 50;
 
         if ($progression > 50) {
             $progression = 50;
+        }
+
+        if ($questionCount > 10) {
+            $progression += ($questionCount - 10) / 64 * 49;
         }
 
         return round($progression);
