@@ -38,9 +38,11 @@ define([
         element: document.getElementById("dgt_gameArea"),
         localStorageZoomKey: "dgt-zoom",
         zoomControls: {
-          color: "white",
+          color: "black",
         },
-        zoomLevels: [0.3, 0.4, 0.5, 0.75, 1, 1.25, 1.5],
+        zoomLevels: [
+          0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375, 1.5,
+        ],
         smooth: true,
       });
 
@@ -184,7 +186,9 @@ define([
             return;
           }
 
-          let spaceCount = lineMarker.textContent ? Number(lineMarker.textContent) + 1 : 0;
+          let spaceCount = lineMarker.textContent
+            ? Number(lineMarker.textContent) + 1
+            : 0;
 
           lineType = lineMarker.dataset.linetype;
           let max = lineType === "row" ? 3 : 4;
