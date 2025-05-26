@@ -767,30 +767,29 @@ class Game extends \Table
      */
     protected function getAllDatas(): array
     {
-        $result = [];
+        $gamedatas = [];
 
         $current_player_id = (int) $this->getCurrentPlayerId();
 
-        $result["players"] = $this->getCollectionFromDb(
+        $gamedatas["players"] = $this->getCollectionFromDb(
             "SELECT `player_id` `id`, `player_score` `score`, `player_chances` `chances` FROM `player`"
         );
-        $result["GAME_VERSION"] = (int) $this->gamestate->table_globals[300];
-        $result["code"] = $this->getCode();
-        $result["countedLines"] = $this->globals->get(COUNTED_LINES, []);
-        $result["checkedParities"] = $this->globals->get(CHECKED_PARITIES, []);
-        $result["checkedSpaces"] = $this->globals->get(CHECKED_SPACES, []);
-        $result["comparedDigits"] = $this->globals->get(COMPARED_DIGITS, []);
+        $gamedatas["GAME_VERSION"] = (int) $this->gamestate->table_globals[300];
+        $gamedatas["countedLines"] = $this->globals->get(COUNTED_LINES, []);
+        $gamedatas["checkedParities"] = $this->globals->get(CHECKED_PARITIES, []);
+        $gamedatas["checkedSpaces"] = $this->globals->get(CHECKED_SPACES, []);
+        $gamedatas["comparedDigits"] = $this->globals->get(COMPARED_DIGITS, []);
 
         if (!$this->isSpectator()) {
-            $result["draft"] = $this->globals->get(DRAFT)[$current_player_id];
-            $result["draftValues"] = $this->globals->get(DRAFT_VALUESS)[$current_player_id];
+            $gamedatas["draft"] = $this->globals->get(DRAFT)[$current_player_id];
+            $gamedatas["draftValues"] = $this->globals->get(DRAFT_VALUESS)[$current_player_id];
         }
 
         if ($this->globals->get(CODE_REVEALED)) {
-            $result["codeSpaces"] = $this->codeSpaces();
+            $gamedatas["codeSpaces"] = $this->codeSpaces();
         }
 
-        return $result;
+        return $gamedatas;
     }
 
     /**

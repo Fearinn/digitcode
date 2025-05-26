@@ -833,7 +833,6 @@ define([
     },
 
     actSaveDraft: function (draft, draftValues) {
-      console.log(draft, "draft");
       this.performAction(
         "actSaveDraft",
         {
