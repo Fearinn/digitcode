@@ -556,33 +556,48 @@ class Game extends \Table
         }
 
         $algarisms = range(0, 9);
-        $index = bga_rand(0, 9);
-        $digit = $algarisms[$index];
+        shuffle($algarisms);
 
         $equalAdjacent = false;
 
-        foreach ([1, 3] as $shift) {
-            if (($position === 1 || $position === 4) && $shift === 1) {
-                continue;
+        foreach ($algarisms as $algarism) {
+            foreach ([1, 3] as $shift) {
+                if (
+                    $shift === 1 &&
+                    ($position === 1 || $position === 4)
+                ) {
+                    continue;
+                }
+
+                $adjacent_position = $position - $shift;
+                $adjacent_digit = $this->globals->get("digit-{$adjacent_position}");
+
+                if ($adjacent_digit === $algarism) {
+                    $equalAdjacent = true;
+                    break;
+                }
             }
 
-            $adjacent_position = $position - $shift;
+            $limitReached = $algarismsCounts[$algarism] === 2;
 
-            if ($this->globals->get("digit-{$adjacent_position}") === $digit) {
-                $equalAdjacent = true;
-                break;
+            if (!$equalAdjacent && !$limitReached) {
+                $this->globals->set("digit-{$position}", $algarism);
+                $algarismsCounts[$algarism]++;
+                $this->setupCode($algarismsCounts, $position + 1);
+                return;
             }
         }
 
-        $limitReached = $algarismsCounts[$digit] === 2;
+        $this->resetCode();
+        $algarismsCounts = array_fill(0, 10, 0);
+        $this->setupCode($algarismsCounts);
+    }
 
-        if (!$equalAdjacent && !$limitReached) {
-            $this->globals->set("digit-$position", $digit);
-            $algarismsCounts[$digit]++;
-            $position++;
+    public function resetCode(): void
+    {
+        for ($position = 1; $position <= 6; $position++) {
+            $this->globals->set("digit-{$position}", 0);
         }
-
-        $this->setupCode($algarismsCounts, $position);
     }
 
     public function getCode(): string
