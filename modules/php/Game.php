@@ -223,7 +223,7 @@ class Game extends \Table
             "checkParity",
             clienttranslate('${digit_label} is ${parity_label}'),
             [
-                "parity_label" => $parity === "even" ? _("even") : _("odd"),
+                "parity_label" => $parity === "even" ? clienttranslate("even") : clienttranslate("odd"),
                 "digit_label" => $digit_id,
                 "i18n" => ["parity_label"],
                 "parity" => $parity,
