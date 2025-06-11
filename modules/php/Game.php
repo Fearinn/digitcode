@@ -385,6 +385,10 @@ class Game extends \Table
     ): void {
         $this->checkVersion($CLIENT_VERSION);
 
+        if ($this->gamestate->state_id() === 99) {
+            throw new \BgaUserException("This table is finished");
+        }
+
         $player_id = (int) $this->getCurrentPlayerId();
 
         if ($this->isSpectator()) {
@@ -410,6 +414,10 @@ class Game extends \Table
     public function actDeleteDraft(?int $CLIENT_VERSION): void
     {
         $this->checkVersion($CLIENT_VERSION);
+
+        if ($this->gamestate->state_id() === 99) {
+            throw new \BgaUserException("This table is finished");
+        }
 
         $player_id = (int) $this->getCurrentPlayerId();
 

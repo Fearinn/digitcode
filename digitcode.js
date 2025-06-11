@@ -710,8 +710,10 @@ define([
       });
     },
 
-    deleteDraft: function () {
-      document.querySelectorAll("[data-draft]").forEach((draftElement) => {
+    deleteDraft: function (
+      target = document.getElementById("dgt_solutionSheet")
+    ) {
+      target.querySelectorAll("[data-draft]").forEach((draftElement) => {
         if (draftElement.dataset.draft !== "true") {
           return;
         }
@@ -731,7 +733,23 @@ define([
         return;
       }
 
-      this.deleteDraft();
+      const solutionSheet = document.getElementById(`dgt_solutionSheet`);
+      solutionSheet.querySelectorAll("button").forEach((buttonElement) => {
+        buttonElement.remove();
+      });
+
+      const codeElement = solutionSheet.cloneNode(true);
+
+      document
+        .getElementById("dgt_sheetsContainer")
+        .insertAdjacentElement("afterbegin", codeElement);
+
+      solutionSheet.removeAttribute("id");
+      solutionSheet.querySelectorAll("[id]").forEach((childElement) => {
+        childElement.removeAttribute("id");
+      });
+
+      this.deleteDraft(codeElement);
 
       codeSpaces.forEach((space_id) => {
         const spaceElement = document.getElementById(`dgt_space-${space_id}`);

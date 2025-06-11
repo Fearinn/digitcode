@@ -184,6 +184,15 @@
   color: green;
 }
 
+.dgt_sheetsContainer {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 .dgt_solutionSheet {
   position: relative;
   display: flex;
