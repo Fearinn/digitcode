@@ -219,11 +219,14 @@ class Game extends \Table
             ]
         );
 
+        $even = clienttranslate("even");
+        $odd = clienttranslate("odd");
+
         $this->notify->all(
             "checkParity",
             clienttranslate('${digit_label} is ${parity_label}'),
             [
-                "parity_label" => $parity === "even" ? clienttranslate("even") : clienttranslate("odd"),
+                "parity_label" => $parity === "even" ? $even : $odd,
                 "digit_label" => $digit_id,
                 "i18n" => ["parity_label"],
                 "parity" => $parity,
