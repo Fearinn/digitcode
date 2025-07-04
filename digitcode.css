@@ -568,7 +568,12 @@
   --spaceWidth: 20px;
 }
 
+#bga-zoom-wrapper {
+  direction: ltr;
+}
+
 .dgt_gameArea {
+  direction: ltr;
   font-family: "Alata", sans-serif;
   position: relative;
   display: flex;
