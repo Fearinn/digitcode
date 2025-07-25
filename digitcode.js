@@ -922,8 +922,26 @@ define([
       );
     },
 
+    notif_deleteDraft: function (args) {
+      const messageType =
+        this.bgaAnimationsActive() &&
+        typeof g_replayFrom === "undefined" &&
+        g_archive_mode === false
+          ? "info"
+          : "only_to_log";
+
+      this.showMessage(_("Draft cleared"), messageType);
+    },
+
     notif_saveDraft: function (args) {
-      this.showMessage(_("Draft saved"), "info");
+      const messageType =
+        this.bgaAnimationsActive() &&
+        typeof g_replayFrom === "undefined" &&
+        g_archive_mode === false
+          ? "info"
+          : "only_to_log";
+
+      this.showMessage(_("Draft saved"), messageType);
     },
 
     notif_incorrectSolution: function (args) {
