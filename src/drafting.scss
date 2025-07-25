@@ -50,10 +50,15 @@
 
 .dgt_optionMarker {
   cursor: pointer;
-  &:where(.dgt_draft) {
-    text-decoration-thickness: 2px;
-    text-decoration-color: black;
-    text-decoration-line: line-through;
-    // -webkit-text-decoration-line: line-through;
+
+  &:where(.dgt_draft)::before {
+    content: "X";
+    color: black;
+    font-size: 0.9em;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
