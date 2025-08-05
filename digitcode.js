@@ -781,7 +781,7 @@ define([
         inputElement.onkeydown = (event) => {
           if (
             ["-", "+", "-", ".", "e", ","].includes(event.key) ||
-            event.key.match(/a-Z/g)
+            /^[a-zA-Z]$/.test(event.key)
           ) {
             event.preventDefault();
             return;
