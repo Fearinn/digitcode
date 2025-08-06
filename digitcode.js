@@ -766,60 +766,78 @@ define([
         event.preventDefault();
       };
 
-      ["T", "U", "V", "W", "X", "Y"].forEach((digit_id) => {
+      const digits = ["T", "U", "V", "W", "X", "Y"];
+
+      digits.forEach((digit_id) => {
         formElement.insertAdjacentHTML(
           "beforeend",
           `<input aria-label="${digit_id}" id="dgt_input-${digit_id}" class="dgt_input" data-input="${digit_id}" 
-          inputmode="numeric" type="number" min="0" max="9" placeholder="${digit_id}"></input>`
+        inputmode="numeric" type="number" min="0" max="9" placeholder="${digit_id}">`
         );
       });
 
-      const digits = ["T", "U", "V", "W", "X", "Y"];
+      let isComposing = false;
+
       digits.forEach((digit_id, index) => {
         const inputElement = document.getElementById(`dgt_input-${digit_id}`);
 
-        inputElement.onkeydown = (event) => {
+        inputElement.addEventListener("compositionstart", () => {
+          isComposing = true;
+        });
+
+        inputElement.addEventListener("compositionend", () => {
+          isComposing = false;
+        });
+
+        inputElement.addEventListener("input", (event) => {
+          if (isComposing) {
+            return;
+          }
+
+          let value = inputElement.value;
+
+          if (value.length > 1) {
+            value = value.slice(-1);
+          }
+
+          if (!/^[0-9]$/.test(value)) {
+            inputElement.value = "";
+            return;
+          }
+
+          inputElement.value = value;
+
+          const nextIndex = index + 1;
+          if (nextIndex < digits.length) {
+            const nextInput = document.getElementById(
+              `dgt_input-${digits[nextIndex]}`
+            );
+
+            if (nextInput) {
+              nextInput.focus();
+            }
+          }
+        });
+
+        inputElement.addEventListener("keydown", (event) => {
           if (
-            ["-", "+", "-", ".", "e", ","].includes(event.key) ||
+            ["-", "+", ".", "e", ","].includes(event.key) ||
             /^[a-zA-Z]$/.test(event.key)
           ) {
             event.preventDefault();
-            return;
           }
 
           if (event.key === "Backspace") {
             event.preventDefault();
             inputElement.value = "";
 
-            const previousIndex = index === digits.length ? 0 : index - 1;
-            const previousDigit_id = digits[previousIndex];
-            document.getElementById(`dgt_input-${previousDigit_id}`)?.focus();
-            return;
-          }
-
-          if (
-            ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(
-              event.key
-            )
-          ) {
-            event.preventDefault();
-
-            const nextIndex = index === digits.length ? 0 : index + 1;
-            const nextDigit_id = digits[nextIndex];
-
-            const nextInputElement = document.getElementById(
-              `dgt_input-${nextDigit_id}`
+            const previousIndex = index - 1;
+            const prevInput = document.getElementById(
+              `dgt_input-${digits[previousIndex]}`
             );
-
-            nextInputElement?.focus();
-
-            if (inputElement.value.length === 0) {
-              inputElement.value = event.key;
-            } else if (nextInputElement) {
-              nextInputElement.value = event.key;
-            }
+            prevInput?.focus();
           }
-        };
+        });
       });
 
       document.getElementById("dgt_input-T").focus();
