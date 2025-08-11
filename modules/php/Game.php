@@ -472,6 +472,16 @@ class Game extends \Table
             return;
         }
 
+        $this->notify->player(
+            $player_id,
+            "message",
+            clienttranslate('You submit ${solution_label} as the code'),
+            [
+                "player_id" => $player_id,
+                "solution_label" => $solution,
+            ]
+        );
+
         $this->notify->all(
             "incorrectSolution",
             clienttranslate('${player_name} submits an incorrect solution and loses one chance'),
