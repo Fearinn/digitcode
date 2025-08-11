@@ -475,7 +475,7 @@ class Game extends \Table
         $this->notify->player(
             $player_id,
             "message",
-            clienttranslate('You submit ${solution_label} as the code'),
+            clienttranslate('You submit ${solution_label} as solution'),
             [
                 "player_id" => $player_id,
                 "solution_label" => $solution,

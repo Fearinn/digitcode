@@ -309,7 +309,6 @@ define([
           },
           {
             title: _("Save draft"),
-            color: "secondary",
             classes: ["dgt_draftBtn-save", "dgt_draftBtn"],
             destination: document.getElementById("dgt_solutionSheet"),
           }
@@ -336,8 +335,19 @@ define([
       }
 
       this.revealCode(gamedatas.codeSpaces);
-
       this.setupNotifications();
+
+      this.showMessage(
+        _(`Tip: the floating "?" contains the LED pattern of each algharism`),
+        "only_to_log"
+      );
+
+      this.showMessage(
+        _(
+          "Tip: use the buttons in your solution sheet to save and clear it"
+        ),
+        "only_to_log"
+      );
 
       console.log("Ending game setup");
     },
