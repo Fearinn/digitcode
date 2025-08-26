@@ -180,6 +180,11 @@
   height: 500px;
 }
 
+.player-board-game-specific-content {
+  display: flex;
+  gap: 8px;
+}
+
 .dgt_playerChances-icon {
   color: green;
 }
@@ -407,6 +412,12 @@
   color: gray;
   position: relative;
   text-align: center;
+}
+
+.dgt_lastRoundBanner {
+  display: block;
+  background-color: #92d3e6;
+  margin-top: 8px;
 }
 
 .dgt_draftBtn {

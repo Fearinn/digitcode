@@ -334,20 +334,40 @@ define([
         );
       }
 
-      this.revealCode(gamedatas.codeSpaces);
-      this.setupNotifications();
-
       this.showMessage(
         _(`Tip: the floating "?" contains the LED pattern of each algharism`),
         "only_to_log"
       );
 
       this.showMessage(
-        _(
-          "Tip: use the buttons in your solution sheet to save and clear it"
-        ),
+        _("Tip: use the buttons in your solution sheet to save and clear it"),
         "only_to_log"
       );
+
+      const isLastRound = this.gamedatas.isLastRound;
+
+      const active_player_id = this.getActivePlayerId();
+      const active_order = this.gamedatas.players[active_player_id].order;
+
+      for (const player_id in this.gamedatas.players) {
+        const { order, color } = this.gamedatas.players[player_id];
+
+        this.getPlayerPanelElement(player_id).insertAdjacentHTML(
+          "afterbegin",
+          `<span style="color: #${color}; font-weight: bold">${order}.</span>`
+        );
+
+        if (order < active_order && isLastRound) {
+          this.disablePlayerPanel(player_id);
+        }
+      }
+
+      if (isLastRound) {
+        this.insertLastRoundBanner();
+      }
+
+      this.revealCode(gamedatas.codeSpaces);
+      this.setupNotifications();
 
       console.log("Ending game setup");
     },
@@ -380,61 +400,67 @@ define([
           checkableParities,
           checkableSpaces,
           comparableDigits,
+          isLastRound,
         } = args.args;
 
-        if (countableLines.length > 0) {
-          this.statusBar.addActionButton(
-            _("count spaces of row/column"),
-            () => {
-              this.setClientState("client_countSpaces", {
+        if (!isLastRound) {
+          if (countableLines.length > 0) {
+            this.statusBar.addActionButton(
+              _("count spaces of row/column"),
+              () => {
+                this.setClientState("client_countSpaces", {
+                  descriptionmyturn: _(
+                    "${you} must pick the column or row to count the spaces from"
+                  ),
+                  client_args: {
+                    countableLines,
+                  },
+                });
+              }
+            );
+          }
+
+          if (checkableParities.length > 0) {
+            this.statusBar.addActionButton(_("(number) even or odd?"), () => {
+              this.setClientState("client_checkParity", {
                 descriptionmyturn: _(
-                  "${you} must pick the column or row to count the spaces from"
+                  "${you} must pick a number to check its parity"
                 ),
                 client_args: {
-                  countableLines,
+                  checkableParities,
                 },
               });
-            }
-          );
-        }
-
-        if (checkableParities.length > 0) {
-          this.statusBar.addActionButton(_("(number) even or odd?"), () => {
-            this.setClientState("client_checkParity", {
-              descriptionmyturn: _(
-                "${you} must pick a number to check its parity"
-              ),
-              client_args: {
-                checkableParities,
-              },
             });
-          });
-        }
+          }
 
-        if (checkableSpaces.length > 0) {
-          this.statusBar.addActionButton(_("(space) empty or filled?"), () => {
-            this.setClientState("client_checkSpace", {
-              descriptionmyturn: _(
-                "${you} must pick a space to check if it's filled"
-              ),
-              client_args: {
-                checkableSpaces,
-              },
-            });
-          });
-        }
+          if (checkableSpaces.length > 0) {
+            this.statusBar.addActionButton(
+              _("(space) empty or filled?"),
+              () => {
+                this.setClientState("client_checkSpace", {
+                  descriptionmyturn: _(
+                    "${you} must pick a space to check if it's filled"
+                  ),
+                  client_args: {
+                    checkableSpaces,
+                  },
+                });
+              }
+            );
+          }
 
-        if (comparableDigits.length > 0) {
-          this.statusBar.addActionButton(_("compare numbers"), () => {
-            this.setClientState("client_compareDigits", {
-              descriptionmyturn: _(
-                "${you} must pick two adjacent numbers to compare"
-              ),
-              client_args: {
-                comparableDigits,
-              },
+          if (comparableDigits.length > 0) {
+            this.statusBar.addActionButton(_("compare numbers"), () => {
+              this.setClientState("client_compareDigits", {
+                descriptionmyturn: _(
+                  "${you} must pick two adjacent numbers to compare"
+                ),
+                client_args: {
+                  comparableDigits,
+                },
+              });
             });
-          });
+          }
         }
 
         this.statusBar.addActionButton(
@@ -743,6 +769,8 @@ define([
         return;
       }
 
+      document.getElementById("dgt_lastRoundBanner")?.remove();
+
       const solutionSheet = document.getElementById(`dgt_solutionSheet`);
       solutionSheet.querySelectorAll("button").forEach((buttonElement) => {
         buttonElement.remove();
@@ -899,6 +927,16 @@ define([
       this.performAction("actSubmitSolution", { solution });
     },
 
+    insertLastRoundBanner: function () {
+      const pageTitle = document.getElementById("page-title");
+      pageTitle.insertAdjacentHTML(
+        "beforeend",
+        `<span id="dgt_lastRoundBanner" class="dgt_lastRoundBanner">${_(
+          "This is the last round!"
+        )}<span>`
+      );
+    },
+
     ///////////////////////////////////////////////////
     //// Reaction to cometD notifications
 
@@ -972,9 +1010,23 @@ define([
       this.showMessage(_("Draft saved"), messageType);
     },
 
+    notif_correctSolution: function (args) {
+      const { player_id } = args;
+      this.scoreCtrl[player_id].toValue(1);
+    },
+
     notif_incorrectSolution: function (args) {
       const player_id = args.player_id;
       this.dgt.counters[player_id].chances.incValue(-1);
+    },
+
+    notif_lastRound: function (args) {
+      this.insertLastRoundBanner();
+    },
+
+    notif_disablePanel: function (args) {
+      const { player_id } = args;
+      this.disablePlayerPanel(player_id);
     },
 
     notif_revealCode: function (args) {
