@@ -478,9 +478,11 @@ class Game extends \Table
             $this->setStat(100, STAT_WIN, $player_id);
             $this->DbQuery("UPDATE player SET player_score=1 WHERE player_id={$player_id}");
 
-            $this->revealCode();
-            $this->gamestate->nextState("gameEnd");
-            return;
+            if (!$this->globals->get(LAST_ROUND)) {
+                $this->revealCode();
+                $this->gamestate->nextState("gameEnd");
+                return;
+            }
 
             // if (!$this->globals->get(LAST_ROUND)) {
             //     $showColumns = $this->getUniqueValueFromDB("SHOW COLUMNS FROM `player` LIKE 'player_turns'");
@@ -501,8 +503,8 @@ class Game extends \Table
             //     );
             // }
 
-            // $this->gamestate->nextState("nextPlayer");
-            // return;
+            $this->gamestate->nextState("nextPlayer");
+            return;
         }
 
         $this->notify->player(
@@ -582,34 +584,35 @@ class Game extends \Table
             ]
         );
 
-        // $lastRound = $this->globals->get(LAST_ROUND);
-        // if ($lastRound) {
-        //     $players = $this->loadPlayersBasicInfos();
+        $lastRound = $this->globals->get(LAST_ROUND);
+        if ($lastRound) {
+            $players = $this->loadPlayersBasicInfos();
 
-        //     $endGame = true;
-        //     foreach ($players as $player_id => $player) {
-        //         $turnsPlayed = $this->getTurnsPlayed($player_id);
+            $endGame = true;
+            foreach ($players as $player_id => $player) {
+                $turnsPlayed = $this->getTurnsPlayed($player_id);
 
-        //         if ($turnsPlayed === $lastRound) {
-        //             $this->notify->all(
-        //                 "disablePanel",
-        //                 "",
-        //                 ["player_id" => $player_id]
-        //             );
-        //             continue;
-        //         }
+                if ($turnsPlayed === $lastRound) {
+                    $this->notify->all(
+                        "disablePanel",
+                        "",
+                        ["player_id" => $player_id]
+                    );
+                    continue;
+                }
 
-        //         if ($turnsPlayed < $lastRound) {
-        //             $endGame = false;
-        //             break;
-        //         }
-        //     }
+                if ($turnsPlayed < $lastRound) {
+                    $endGame = false;
+                    break;
+                }
+            }
 
-        //     if ($endGame) {
-        //         $this->revealCode();
-        //         $this->gamestate->nextState("gameEnd");
-        //     }
-        // }
+            if ($endGame) {
+                $this->revealCode();
+                $this->gamestate->nextState("gameEnd");
+                return;
+            }
+        }
 
         $player_id = (int) $this->getActivePlayerId();
         $this->activeNextPlayer();
@@ -627,7 +630,6 @@ class Game extends \Table
         if ($playerChances === 0) {
             if ($isLastPlayer) {
                 $this->revealCode();
-
                 $this->gamestate->nextState("gameEnd");
                 return;
             }
