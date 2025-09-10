@@ -402,7 +402,7 @@ class Game extends \Table
         $this->checkVersion($CLIENT_VERSION);
 
         if ($this->gamestate->state_id() === 99) {
-            throw new \BgaUserException("This table is finished");
+            throw new \BgaUserException(clienttranslate("This table is finished"));
         }
 
         $player_id = (int) $this->getCurrentPlayerId();
@@ -432,7 +432,7 @@ class Game extends \Table
         $this->checkVersion($CLIENT_VERSION);
 
         if ($this->gamestate->state_id() === 99) {
-            throw new \BgaUserException("This table is finished");
+            throw new \BgaUserException(clienttranslate("This table is finished"));
         }
 
         $player_id = (int) $this->getCurrentPlayerId();
@@ -730,7 +730,9 @@ class Game extends \Table
             $limitReached = $algarismsCounts[$algarism] === 2;
 
             if ($limitReached || $equalAdjacent) {
-                throw new \BgaUserException("You must submit a valid solution");
+                throw new \BgaUserException(
+                    clienttranslate("You must submit a valid solution. Check the rules and use the input boxes above your sheet")
+                );
             }
 
             $algarismsCounts[$algarism]++;
