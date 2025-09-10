@@ -469,33 +469,6 @@ define([
             this.setClientState("client_submitSolution", {
               descriptionmyturn: _("${you} must submit a 6-digit solution"),
             });
-
-            this.statusBar.addActionButton(
-              _("confirm"),
-              () => {
-                let solution = "";
-                document
-                  .querySelectorAll("[data-input]")
-                  .forEach((inputElement) => {
-                    const algarism = inputElement.value;
-                    solution = `${solution}${algarism}`;
-                  });
-
-                if (solution.length !== 6) {
-                  this.showMessage(
-                    _("You must submit a valid solution"),
-                    "error"
-                  );
-                  return;
-                }
-
-                this.actSubmitSolution(solution);
-              },
-              {
-                id: "dgt_confirmSolutionBtn",
-                destination: document.getElementById("dgt_formElement"),
-              }
-            );
           },
           {
             classes: ["dgt_submitSolutionBtn"],
@@ -528,7 +501,58 @@ define([
       }
 
       if (stateName === "client_submitSolution") {
+        this.statusBar.addActionButton(
+          _("confirm"),
+          () => {
+            let solution = "";
+            document
+              .querySelectorAll("[data-input]")
+              .forEach((inputElement) => {
+                const algarism = inputElement.value;
+                solution = `${solution}${algarism}`;
+              });
+
+            if (solution.length !== 6) {
+              this.showMessage(
+                _(
+                  "You must submit a valid solution. Check the rules and use the input boxes above your sheet"
+                ),
+                "error"
+              );
+              return;
+            }
+
+            this.actSubmitSolution(solution);
+          },
+          {
+            id: "dgt_confirmSolutionBtn",
+            destination: document.getElementById("dgt_formElement"),
+          }
+        );
+
         this.buildSolutionForm();
+      }
+
+      if (stateName === "submitSolution") {
+        this.statusBar.addActionButton(
+          _("submit solution"),
+          () => {
+            this.setClientState("client_submitSolution", {
+              descriptionmyturn: _("${you} may submit a 6-digit solution"),
+            });
+          },
+          {
+            classes: ["dgt_submitSolutionBtn"],
+          }
+        );
+
+        this.statusBar.addActionButton(
+          _("skip and pass"),
+          () => {
+            this.performAction("actPass");
+          },
+          { color: "alert" }
+        );
       }
     },
 

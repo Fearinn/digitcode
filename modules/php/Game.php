@@ -178,7 +178,7 @@ class Game extends \Table
         $this->incStat(1, STAT_QUESTIONS, $player_id);
         $this->incStat(1, STAT_QUESTIONS_LINE, $player_id);
 
-        $this->gamestate->nextState("nextPlayer");
+        $this->gamestate->nextState("submitSolution");
     }
 
     public function actCheckParity(?int $CLIENT_VERSION, #[StringParam(alphanum: true)] $digit_id): void
@@ -207,7 +207,6 @@ class Game extends \Table
             }
         );
         $this->globals->set(CHECKABLE_PARITIES, array_values($checkableParities));
-
 
         $parity = $algarism % 2 === 0 ? "even" : "odd";
 
@@ -245,7 +244,7 @@ class Game extends \Table
         $this->incStat(1, STAT_QUESTIONS, $player_id);
         $this->incStat(1, STAT_QUESTIONS_PARITY, $player_id);
 
-        $this->gamestate->nextState("nextPlayer");
+        $this->gamestate->nextState("submitSolution");
     }
 
     public function actCheckSpace(?int $CLIENT_VERSION, #[StringParam(alphanum: true)] string $space_id): void
@@ -314,7 +313,7 @@ class Game extends \Table
         $this->incStat(1, STAT_QUESTIONS, $player_id);
         $this->incStat(1, STAT_QUESTIONS_SPACE, $player_id);
 
-        $this->gamestate->nextState("nextPlayer");
+        $this->gamestate->nextState("submitSolution");
     }
 
     public function actCompareDigits(
@@ -390,7 +389,7 @@ class Game extends \Table
         $this->incStat(1, STAT_QUESTIONS, $player_id);
         $this->incStat(1, STAT_QUESTIONS_COMPARISON, $player_id);
 
-        $this->gamestate->nextState("nextPlayer");
+        $this->gamestate->nextState("submitSolution");
     }
 
     #[CheckAction(false)]
@@ -527,6 +526,11 @@ class Game extends \Table
         $this->gamestate->nextState("nextPlayer");
     }
 
+    public function actPass(): void
+    {
+        $this->gamestate->nextState("nextPlayer");
+    }
+
     /**
      * Game state arguments
      *
@@ -564,6 +568,15 @@ class Game extends \Table
         $player_id = (int) $this->getActivePlayerId();
         $this->giveExtraTime($player_id);
         $this->incTurnsPlayed($player_id);
+
+        $this->notify->all(
+            "message",
+            clienttranslate('${player_name} ends his turn'),
+            [
+                "player_id" => $player_id,
+                "player_name" => $this->getPlayerNameById($player_id),
+            ]
+        );
 
         $lastRound = $this->globals->get(LAST_ROUND);
         if ($lastRound) {

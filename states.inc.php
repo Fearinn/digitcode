@@ -1,4 +1,5 @@
 <?php
+
 /**
  *------
  * BGA framework: Gregory Isabelli & Emmanuel Colin & BoardGameArena
@@ -38,7 +39,12 @@ $machinestates = [
             "actCheckSpace",
             "actSubmitSolution",
         ],
-        "transitions" => ["nextPlayer" => 3, "gameEnd" => 99, "zombiePass" => 3],
+        "transitions" => [
+            "submitSolution" => 4,
+            "nextPlayer" => 3,
+            "zombiePass" => 3,
+            "gameEnd" => 99,
+        ],
     ],
 
     3 => [
@@ -47,7 +53,26 @@ $machinestates = [
         "type" => "game",
         "action" => "st_betweenPlayers",
         "updateGameProgression" => true,
-        "transitions" => ["gameEnd" => 99, "nextPlayer" => 2]
+        "transitions" => [
+            "nextPlayer" => 2,
+            "gameEnd" => 99,
+        ]
+    ],
+
+    4 => [
+        "name" => "submitSolution",
+        "description" => clienttranslate('${actplayer} may submit a solution'),
+        "descriptionmyturn" => clienttranslate('${you} may submit a solution'),
+        "type" => "activeplayer",
+        "possibleactions" => [
+            "actPass",
+            "actSubmitSolution",
+        ],
+        "transitions" => [
+            "nextPlayer" => 3,
+            "zombiePass" => 3,
+            "gameEnd" => 99,
+        ],
     ],
 
     // Final state.
@@ -60,6 +85,3 @@ $machinestates = [
         "args" => "argGameEnd"
     ],
 ];
-
-
-
