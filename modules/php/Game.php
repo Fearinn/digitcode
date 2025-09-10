@@ -478,27 +478,31 @@ class Game extends \Table
             $this->setStat(100, STAT_WIN, $player_id);
             $this->DbQuery("UPDATE player SET player_score=1 WHERE player_id={$player_id}");
 
-            if (!$this->globals->get(LAST_ROUND)) {
-                $showColumns = $this->getUniqueValueFromDB("SHOW COLUMNS FROM `player` LIKE 'player_turns'");
-
-                if (!$showColumns) {
-                    $this->revealCode();
-                    $this->gamestate->nextState("gameEnd");
-                    return;
-                }
-
-                $turnsPlayed = $this->getTurnsPlayed($player_id) + 1;
-                $this->globals->set(LAST_ROUND, $turnsPlayed);
-
-                $this->notify->all(
-                    "lastRound",
-                    clienttranslate('This is the last round'),
-                    []
-                );
-            }
-
-            $this->gamestate->nextState("nextPlayer");
+            $this->revealCode();
+            $this->gamestate->nextState("gameEnd");
             return;
+
+            // if (!$this->globals->get(LAST_ROUND)) {
+            //     $showColumns = $this->getUniqueValueFromDB("SHOW COLUMNS FROM `player` LIKE 'player_turns'");
+
+            //     if (!$showColumns) {
+            //         $this->revealCode();
+            //         $this->gamestate->nextState("gameEnd");
+            //         return;
+            //     }
+
+            //     $turnsPlayed = $this->getTurnsPlayed($player_id) + 1;
+            //     $this->globals->set(LAST_ROUND, $turnsPlayed);
+
+            //     $this->notify->all(
+            //         "lastRound",
+            //         clienttranslate('This is the last round'),
+            //         []
+            //     );
+            // }
+
+            // $this->gamestate->nextState("nextPlayer");
+            // return;
         }
 
         $this->notify->player(
@@ -578,34 +582,34 @@ class Game extends \Table
             ]
         );
 
-        $lastRound = $this->globals->get(LAST_ROUND);
-        if ($lastRound) {
-            $players = $this->loadPlayersBasicInfos();
+        // $lastRound = $this->globals->get(LAST_ROUND);
+        // if ($lastRound) {
+        //     $players = $this->loadPlayersBasicInfos();
 
-            $endGame = true;
-            foreach ($players as $player_id => $player) {
-                $turnsPlayed = $this->getTurnsPlayed($player_id);
+        //     $endGame = true;
+        //     foreach ($players as $player_id => $player) {
+        //         $turnsPlayed = $this->getTurnsPlayed($player_id);
 
-                if ($turnsPlayed === $lastRound) {
-                    $this->notify->all(
-                        "disablePanel",
-                        "",
-                        ["player_id" => $player_id]
-                    );
-                    continue;
-                }
+        //         if ($turnsPlayed === $lastRound) {
+        //             $this->notify->all(
+        //                 "disablePanel",
+        //                 "",
+        //                 ["player_id" => $player_id]
+        //             );
+        //             continue;
+        //         }
 
-                if ($turnsPlayed < $lastRound) {
-                    $endGame = false;
-                    break;
-                }
-            }
+        //         if ($turnsPlayed < $lastRound) {
+        //             $endGame = false;
+        //             break;
+        //         }
+        //     }
 
-            if ($endGame) {
-                $this->revealCode();
-                $this->gamestate->nextState("gameEnd");
-            }
-        }
+        //     if ($endGame) {
+        //         $this->revealCode();
+        //         $this->gamestate->nextState("gameEnd");
+        //     }
+        // }
 
         $player_id = (int) $this->getActivePlayerId();
         $this->activeNextPlayer();
