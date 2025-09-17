@@ -61,8 +61,8 @@ $machinestates = [
 
     4 => [
         "name" => "submitSolution",
-        "description" => clienttranslate('${actplayer} may submit a solution'),
-        "descriptionmyturn" => clienttranslate('${you} may submit a solution'),
+        "description" => clienttranslate('${actplayer} may submit a 6-digit solution'),
+        "descriptionmyturn" => clienttranslate('${you} may submit a 6-digit solution'),
         "type" => "activeplayer",
         "possibleactions" => [
             "actPass",
