@@ -36,7 +36,6 @@ const DRAFT = "draft";
 const DRAFT_VALUESS = "draftValues";
 const QUESTION_COUNT = "questionCount";
 const CODE_REVEALED = "isCodeRevealed";
-const LAST_ROUND = "lastRound";
 
 const STAT_WIN = "win%";
 const STAT_CHANCES = "chancesLost";
@@ -89,9 +88,6 @@ class Game extends \Table
     public function actCountSpaces(?int $CLIENT_VERSION, #[StringParam(alphanum: true)] $line_id): void
     {
         $this->checkVersion($CLIENT_VERSION);
-        if ($this->globals->get(LAST_ROUND)) {
-            throw new \BgaVisibleSystemException("You can't ask a question in the last round");
-        }
 
         $player_id = $this->getActivePlayerId();
 
@@ -184,9 +180,6 @@ class Game extends \Table
     public function actCheckParity(?int $CLIENT_VERSION, #[StringParam(alphanum: true)] $digit_id): void
     {
         $this->checkVersion($CLIENT_VERSION);
-        if ($this->globals->get(LAST_ROUND)) {
-            throw new \BgaVisibleSystemException("You can't ask a question in the last round");
-        }
 
         $player_id = (int) $this->getActivePlayerId();
 
@@ -250,9 +243,6 @@ class Game extends \Table
     public function actCheckSpace(?int $CLIENT_VERSION, #[StringParam(alphanum: true)] string $space_id): void
     {
         $this->checkVersion($CLIENT_VERSION);
-        if ($this->globals->get(LAST_ROUND)) {
-            throw new \BgaVisibleSystemException("You can't ask a question in the last round");
-        }
 
         $player_id = (int) $this->getActivePlayerId();
 
@@ -322,9 +312,6 @@ class Game extends \Table
         #[StringParam(enum: ["T", "U", "V", "W", "X", "Y"])] string $digit2_id
     ): void {
         $this->checkVersion($CLIENT_VERSION);
-        if ($this->globals->get(LAST_ROUND)) {
-            throw new \BgaVisibleSystemException("You can't ask a question in the last round");
-        }
 
         $player_id = $this->getActivePlayerId();
 
@@ -484,32 +471,8 @@ class Game extends \Table
             $this->setStat(100, STAT_WIN, $player_id);
             $this->DbQuery("UPDATE player SET player_score=1 WHERE player_id={$player_id}");
 
-            if (!$this->globals->get(LAST_ROUND)) {
-                $this->revealCode();
-                $this->gamestate->nextState("gameEnd");
-                return;
-            }
-
-            // if (!$this->globals->get(LAST_ROUND)) {
-            //     $showColumns = $this->getUniqueValueFromDB("SHOW COLUMNS FROM `player` LIKE 'player_turns'");
-
-            //     if (!$showColumns) {
-            //         $this->revealCode();
-            //         $this->gamestate->nextState("gameEnd");
-            //         return;
-            //     }
-
-            //     $turnsPlayed = $this->getTurnsPlayed($player_id) + 1;
-            //     $this->globals->set(LAST_ROUND, $turnsPlayed);
-
-            //     $this->notify->all(
-            //         "lastRound",
-            //         clienttranslate('This is the last round'),
-            //         []
-            //     );
-            // }
-
-            $this->gamestate->nextState("nextPlayer");
+            $this->revealCode();
+            $this->gamestate->nextState("gameEnd");
             return;
         }
 
@@ -562,7 +525,6 @@ class Game extends \Table
             "checkableParities" => $checkableParities,
             "checkableSpaces" => $checkableSpaces,
             "comparableDigits" => $comparableDigits,
-            "isLastRound" => $this->globals->get(LAST_ROUND),
         ];
     }
 
@@ -589,36 +551,6 @@ class Game extends \Table
                 "player_name" => $this->getPlayerNameById($player_id),
             ]
         );
-
-        $lastRound = $this->globals->get(LAST_ROUND);
-        if ($lastRound) {
-            $players = $this->loadPlayersBasicInfos();
-
-            $endGame = true;
-            foreach ($players as $player_id => $player) {
-                $turnsPlayed = $this->getTurnsPlayed($player_id);
-
-                if ($turnsPlayed === $lastRound) {
-                    $this->notify->all(
-                        "disablePanel",
-                        "",
-                        ["player_id" => $player_id]
-                    );
-                    continue;
-                }
-
-                if ($turnsPlayed < $lastRound) {
-                    $endGame = false;
-                    break;
-                }
-            }
-
-            if ($endGame) {
-                $this->revealCode();
-                $this->gamestate->nextState("gameEnd");
-                return;
-            }
-        }
 
         $player_id = (int) $this->getActivePlayerId();
         $this->activeNextPlayer();
@@ -925,7 +857,6 @@ class Game extends \Table
         $gamedatas["checkedParities"] = $this->globals->get(CHECKED_PARITIES, []);
         $gamedatas["checkedSpaces"] = $this->globals->get(CHECKED_SPACES, []);
         $gamedatas["comparedDigits"] = $this->globals->get(COMPARED_DIGITS, []);
-        $gamedatas["isLastRound"] = !!$this->globals->get(LAST_ROUND);
 
         if (!$this->isSpectator()) {
             $gamedatas["draft"] = $this->globals->get(DRAFT)[$current_player_id];
