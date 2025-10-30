@@ -396,7 +396,8 @@ class Game extends \Table
     public function actSaveDraft(
         ?int $CLIENT_VERSION,
         #[JsonParam(alphanum: true)] array $draft,
-        #[JsonParam(alphanum: true)] array $draftValues
+        #[JsonParam(alphanum: true)] array $draftValues,
+        bool $mustLoad,
     ): void {
         $this->checkVersion($CLIENT_VERSION);
 
@@ -421,7 +422,12 @@ class Game extends \Table
         $this->notify->player(
             $player_id,
             "saveDraft",
-            ""
+            "",
+            [
+                "draft" => $g_draft[$player_id],
+                "draftValues" => $g_draftValues[$player_id],
+                "mustLoad" => $mustLoad,
+            ],
         );
     }
 

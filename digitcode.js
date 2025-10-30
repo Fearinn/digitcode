@@ -32,6 +32,7 @@ define([
       this.dgt = {
         managers: {},
         counters: {},
+        debounceTimeout: {},
       };
 
       this.dgt.managers.zoom = new ZoomManager({
@@ -81,27 +82,8 @@ define([
         counter.setValue(playerChances);
       }
 
-      for (const element_id in gamedatas.draftValues) {
-        const element = document.getElementById(element_id);
-
-        if (element) {
-          const value = gamedatas.draftValues[element_id];
-          element.dataset.draftvalue = value;
-
-          if (element.dataset.linemarker) {
-            element.textContent = value;
-          }
-        }
-      }
-
-      gamedatas.draft?.forEach((draftElement_id) => {
-        const draftElement = document.getElementById(draftElement_id);
-
-        if (draftElement) {
-          draftElement.classList.add("dgt_draft");
-          draftElement.dataset.draft = "true";
-        }
-      });
+      const { draft, draftValues } = gamedatas;
+      this.loadDraft(draft, draftValues);
 
       document.querySelectorAll("[data-space]").forEach((spaceElement) => {
         spaceElement.addEventListener("click", () => {
@@ -127,6 +109,8 @@ define([
 
           spaceElement.dataset.draft =
             spaceElement.classList.contains(draftClass);
+
+          this.debounce(this.saveDraft);
         });
       });
 
@@ -151,8 +135,11 @@ define([
               siblingIcon.classList.remove(draftClass);
               siblingIcon.dataset.draft = "false";
             }
+
+            this.debounce(this.saveDraft);
           });
         });
+
       document
         .querySelectorAll("[data-parityMarker]")
         .forEach((parityMarker) => {
@@ -174,6 +161,8 @@ define([
               siblingMarker.classList.remove(draftClass);
               siblingMarker.dataset.draft = "false";
             }
+
+            this.debounce(this.saveDraft);
           });
         });
 
@@ -213,6 +202,8 @@ define([
             lineMarker.classList.remove(draftClass);
             lineMarker.dataset.draftValue = null;
           }
+
+          this.debounce(this.saveDraft);
         });
       });
 
@@ -228,6 +219,8 @@ define([
             optionMarker.classList.toggle(draftClass);
             optionMarker.dataset.draft =
               optionMarker.classList.contains(draftClass);
+
+            this.debounce(this.saveDraft);
           });
         });
 
@@ -280,32 +273,7 @@ define([
         this.statusBar.addActionButton(
           `<i class="fa fa-solid fa-floppy-o"></i>`,
           () => {
-            const draftValues = {};
-            const draftElements = [];
-            document
-              .querySelectorAll("[data-draft]")
-              .forEach((draftElement) => {
-                if (draftElement.dataset.draft !== "true") {
-                  return;
-                }
-
-                draftElements.push(draftElement.id);
-
-                if (draftElement.dataset.draftvalue) {
-                  draftValues[draftElement.id] =
-                    draftElement.dataset.draftvalue;
-                }
-              });
-
-            if (
-              draftElements.length === 0 &&
-              Object.keys(draftValues).length === 0
-            ) {
-              this.showMessage(_("You may not save an empty draft"), "error");
-              return;
-            }
-
-            this.actSaveDraft(draftElements, draftValues);
+            this.saveDraft(true);
           },
           {
             title: _("Save draft"),
@@ -318,15 +286,14 @@ define([
           `<i class="fa fa-solid fa-trash"></i>`,
           () => {
             this.confirmationDialog(
-              _("Do you really want to delete your draft?"),
+              _("Do you really want to clear your draft?"),
               () => {
-                this.deleteDraft();
                 this.actDeleteDraft();
               }
             );
           },
           {
-            title: _("Delete draft"),
+            title: _("Clear draft"),
             color: "alert",
             classes: ["dgt_draftBtn-delete", "dgt_draftBtn"],
             destination: document.getElementById("dgt_solutionSheet"),
@@ -930,17 +897,83 @@ define([
       this.performAction("actCompareDigits", { digit1_id, digit2_id });
     },
 
-    actSaveDraft: function (draft, draftValues) {
+    actSaveDraft: function (draft, draftValues, mustLoad) {
       this.performAction(
         "actSaveDraft",
         {
           draft: JSON.stringify(draft),
           draftValues: JSON.stringify(draftValues),
+          mustLoad,
         },
         {
           checkAction: false,
+          lock: mustLoad,
         }
       );
+    },
+
+    debounce: function (func, wait = 1000) {
+      if (this.debounceTimeout) {
+        clearTimeout(this.debounceTimeout);
+      }
+
+      this.debounceTimeout = setTimeout(() => {
+        func.call(this);
+      }, wait);
+    },
+
+    saveDraft: function (force = false) {
+      if (!force && this.getGameUserPreference(101) !== 1) {
+        return;
+      }
+
+      clearTimeout(this.debounceTimeout);
+      this.debounceTimeout = null;
+
+      const draftValues = {};
+      const draftElements = [];
+      document.querySelectorAll("[data-draft]").forEach((draftElement) => {
+        if (draftElement.dataset.draft !== "true") {
+          return;
+        }
+
+        draftElements.push(draftElement.id);
+
+        if (draftElement.dataset.draftvalue) {
+          draftValues[draftElement.id] = draftElement.dataset.draftvalue;
+        }
+      });
+
+      if (draftElements.length === 0 && Object.keys(draftValues).length === 0) {
+        this.showMessage(_("You may not save an empty draft"), "error");
+        return;
+      }
+
+      this.actSaveDraft(draftElements, draftValues, force);
+    },
+
+    loadDraft: function (draft, draftValues) {
+      for (const element_id in draftValues) {
+        const element = document.getElementById(element_id);
+
+        if (element) {
+          const value = draftValues[element_id];
+          element.dataset.draftvalue = value;
+
+          if (element.dataset.linemarker) {
+            element.textContent = value;
+          }
+        }
+      }
+
+      draft?.forEach((draftElement_id) => {
+        const draftElement = document.getElementById(draftElement_id);
+
+        if (draftElement) {
+          draftElement.classList.add("dgt_draft");
+          draftElement.dataset.draft = "true";
+        }
+      });
     },
 
     actDeleteDraft: function () {
@@ -1020,18 +1053,24 @@ define([
           ? "info"
           : "only_to_log";
 
+      this.deleteDraft();
       this.showMessage(_("Draft cleared"), messageType);
     },
 
     notif_saveDraft: function (args) {
+      const { draft, draftValues, mustLoad } = args;
+      if (!mustLoad) {
+        return;
+      }
+
       const messageType =
         this.bgaAnimationsActive() &&
         typeof g_replayFrom === "undefined" &&
         g_archive_mode === false
           ? "info"
           : "only_to_log";
-
-      this.showMessage(_("Draft saved"), messageType);
+      this.showMessage(_("Draft manually saved"), messageType);
+      this.loadDraft(draft, draftValues);
     },
 
     notif_correctSolution: function (args) {
