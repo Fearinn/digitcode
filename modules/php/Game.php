@@ -23,6 +23,7 @@ namespace Bga\Games\DigitCode;
 use Bga\GameFramework\Actions\CheckAction;
 use Bga\GameFramework\Actions\Types\JsonParam;
 use Bga\GameFramework\Actions\Types\StringParam;
+use Bga\GameFramework\Table;
 
 const COUNTABLE_LINES = "countableLines";
 const COUNTED_LINES = "countedLines";
@@ -47,7 +48,7 @@ const STAT_QUESTIONS_SPACE = "questionsSpace";
 
 require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
 
-class Game extends \Table
+class Game extends Table
 {
     /**
      * Your global variables labels:
@@ -89,7 +90,7 @@ class Game extends \Table
     {
         $this->checkVersion($CLIENT_VERSION);
 
-        $player_id = $this->getActivePlayerId();
+        $player_id = (int) $this->getActivePlayerId();
 
         $line = (array) $this->LINES[$line_id];
 
@@ -313,7 +314,7 @@ class Game extends \Table
     ): void {
         $this->checkVersion($CLIENT_VERSION);
 
-        $player_id = $this->getActivePlayerId();
+        $player_id = (int) $this->getActivePlayerId();
 
         $digit_ids = [$digit1_id, $digit2_id];
         sort($digit_ids);
@@ -868,16 +869,6 @@ class Game extends \Table
         }
 
         return $gamedatas;
-    }
-
-    /**
-     * Returns the game name.
-     *
-     * IMPORTANT: Please do not modify.
-     */
-    protected function getGameName()
-    {
-        return "digitcode";
     }
 
     /**
