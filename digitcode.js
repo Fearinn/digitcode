@@ -867,17 +867,17 @@ define([
       this.performAction("actCompareDigits", { digit1_id, digit2_id });
     },
 
-    actSaveDraft: function (draft, draftValues, mustLoad) {
+    actSaveDraft: function (draft, draftValues, manual) {
       this.performAction(
         "actSaveDraft",
         {
           draft: JSON.stringify(draft),
           draftValues: JSON.stringify(draftValues),
-          mustLoad,
+          manual,
         },
         {
           checkAction: false,
-          lock: mustLoad,
+          lock: manual,
         }
       );
     },
@@ -892,8 +892,8 @@ define([
       }, wait);
     },
 
-    saveDraft: function (force = false) {
-      if (!force && this.getGameUserPreference(101) !== 1) {
+    saveDraft: function (manual = false) {
+      if (!manual && this.getGameUserPreference(101) !== 1) {
         return;
       }
 
@@ -919,7 +919,7 @@ define([
         return;
       }
 
-      this.actSaveDraft(draftElements, draftValues, force);
+      this.actSaveDraft(draftElements, draftValues, manual);
     },
 
     loadDraft: function (draft, draftValues) {
@@ -1006,6 +1006,8 @@ define([
     },
 
     notif_deleteDraft: function (args) {
+      this.deleteDraft();
+
       const messageType =
         this.bgaAnimationsActive() &&
         typeof g_replayFrom === "undefined" &&
@@ -1013,24 +1015,32 @@ define([
           ? "info"
           : "only_to_log";
 
-      this.deleteDraft();
-      this.showMessage(_("Draft cleared"), messageType);
+      if (messageType === "info") {
+        this.showMessage(_("Draft cleared"), messageType);
+      }
     },
 
     notif_saveDraft: function (args) {
-      const { draft, draftValues, mustLoad } = args;
-      if (!mustLoad) {
+      const { draft, draftValues, manual } = args;
+
+      const isReplay = !(
+        typeof g_replayFrom === "undefined" && g_archive_mode === false
+      );
+
+      if (isReplay) {
+        this.loadDraft(draft, draftValues);
+      }
+
+      if (!manual) {
         return;
       }
 
       const messageType =
-        this.bgaAnimationsActive() &&
-        typeof g_replayFrom === "undefined" &&
-        g_archive_mode === false
-          ? "info"
-          : "only_to_log";
-      this.showMessage(_("Draft manually saved"), messageType);
-      this.loadDraft(draft, draftValues);
+        this.bgaAnimationsActive() && !isReplay ? "info" : "only_to_log";
+
+      if (messageType === "info") {
+        this.showMessage(_("Draft manually saved"), messageType);
+      }
     },
 
     notif_correctSolution: function (args) {
