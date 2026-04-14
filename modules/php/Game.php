@@ -542,7 +542,6 @@ class Game extends Table
     {
         $player_id = (int) $this->getActivePlayerId();
         $this->giveExtraTime($player_id);
-        $this->incTurnsPlayed($player_id);
 
         $this->notify->all(
             "message",
@@ -756,34 +755,11 @@ class Game extends Table
         $this->globals->set(CODE_REVEALED, true);
     }
 
-    public function getTurnsPlayed(int $player_id): int
+    function onConcede(): void
     {
-        $turnsPlayed = (int) $this->getUniqueValueFromDB("SELECT player_turns FROM player 
-        WHERE player_id={$player_id}");
-        return $turnsPlayed;
+        $this->revealCode();
     }
 
-    public function incTurnsPlayed(int $player_id): void
-    {
-        $showColumns = $this->getUniqueValueFromDB("SHOW COLUMNS FROM `player` LIKE 'player_turns'");
-        if (!$showColumns) {
-            return;
-        }
-
-        $this->DbQuery("UPDATE player SET player_turns=player_turns+1 WHERE player_id={$player_id}");
-    }
-
-
-    /**
-     * Compute and return the current game progression.
-     *
-     * The number returned must be an integer between 0 and 100.
-     *
-     * This method is called each time we are in a game state with the "updateGameProgression" property set to true.
-     *
-     * @return int
-     * @see ./states.inc.php
-     */
     public function getGameProgression()
     {
         $questionCount = $this->globals->get(QUESTION_COUNT, 0);
@@ -800,50 +776,8 @@ class Game extends Table
         return round($progression);
     }
 
-    /**
-     * Game state action, example content.
-     *
-     * The action method of state `nextPlayer` is called everytime the current game state is set to `nextPlayer`.
-     */
+    public function upgradeTableDb($from_version) {}
 
-    /**
-     * Migrate database.
-     *
-     * You don't have to care about this until your game has been published on BGA. Once your game is on BGA, this
-     * method is called everytime the system detects a game running with your old database scheme. In this case, if you
-     * change your database scheme, you just have to apply the needed changes in order to update the game database and
-     * allow the game to continue to run with your new version.
-     *
-     * @param int $from_version
-     * @return void
-     */
-    public function upgradeTableDb($from_version)
-    {
-        //       if ($from_version <= 1404301345)
-        //       {
-        //            // ! important ! Use DBPREFIX_<table_name> for all tables
-        //
-        //            $sql = "ALTER TABLE DBPREFIX_xxxxxxx ....";
-        //            $this->applyDbUpgradeToAllDB( $sql );
-        //       }
-        //
-        //       if ($from_version <= 1405061421)
-        //       {
-        //            // ! important ! Use DBPREFIX_<table_name> for all tables
-        //
-        //            $sql = "CREATE TABLE DBPREFIX_xxxxxxx ....";
-        //            $this->applyDbUpgradeToAllDB( $sql );
-        //       }
-    }
-
-    /*
-     * Gather all information about current game situation (visible by the current player).
-     *
-     * The method is called each time the game interface is displayed to a player, i.e.:
-     *
-     * - when the game starts
-     * - when a player refreshes the game page (F5)
-     */
     protected function getAllDatas(): array
     {
         $gamedatas = [];
@@ -871,14 +805,8 @@ class Game extends Table
         return $gamedatas;
     }
 
-    /**
-     * This method is called only once, when a new game is launched. In this method, you must setup the game
-     *  according to the game rules, so that the game is ready to be played.
-     */
     protected function setupNewGame($players, $options = [])
     {
-        // Set the colors of the players with HTML color code. The default below is red/green/blue/orange/brown. The
-        // number of colors defined here must correspond to the maximum number of players allowed for the gams.
         $gameinfos = $this->getGameinfos();
         $default_colors = $gameinfos['player_colors'];
 
@@ -939,22 +867,6 @@ class Game extends Table
         $this->activeNextPlayer();
     }
 
-    /**
-     * This method is called each time it is the turn of a player who has quit the game (= "zombie" player).
-     * You can do whatever you want in order to make sure the turn of this player ends appropriately
-     * (ex: pass).
-     *
-     * Important: your zombie code will be called when the player leaves the game. This action is triggered
-     * from the main site and propagated to the gameserver from a server, not from a browser.
-     * As a consequence, there is no current player associated to this action. In your zombieTurn function,
-     * you must _never_ use `getCurrentPlayerId()` or `getCurrentPlayerName()`, otherwise it will fail with a
-     * "Not logged" error message.
-     *
-     * @param array{ type: string, name: string } $state
-     * @param int $active_player
-     * @return void
-     * @throws feException if the zombie mode is not supported at this game state.
-     */
     protected function zombieTurn(array $state, int $active_player): void
     {
         $state_name = $state["name"];
