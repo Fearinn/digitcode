@@ -239,6 +239,7 @@
 }
 
 .dgt_columnLabels {
+  color: black;
   display: flex;
   gap: var(--digitsGap);
   margin-left: calc(var(--blockSize) * 2);
@@ -248,6 +249,7 @@
 }
 
 .dgt_rowLabels {
+  color: black;
   display: flex;
   flex-direction: column;
 }
